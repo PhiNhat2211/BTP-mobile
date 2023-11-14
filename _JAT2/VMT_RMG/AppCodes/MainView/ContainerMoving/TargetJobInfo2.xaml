@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="VMT_RMG.TargetJobInfo2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="45" d:DesignWidth="540" Loaded="UserControl_Loaded">
+    <Grid x:Name="LayoutRoot">
+        <Image x:Name="BackgroundSample" Source="/VMT_RTG;component/Images/Sample/TargetJob_Sample.png" Margin="0" Stretch="Fill" Visibility="Hidden"/>
+        <Button x:Name="Btn_PartnerNumber" HorizontalAlignment="Left" Width="104" BorderThickness="0" Height="45" VerticalAlignment="Center" IsEnabled="False" Content=""
+                FontSize="24" Style="{DynamicResource SkinButtonStyle_With_Content}" Foreground="{DynamicResource TextBox_Foreground_10}"/>
+        <Button x:Name="Btn_ContainerNumber" BorderThickness="0" Height="45" VerticalAlignment="Center" IsEnabled="False" Content="" Margin="106,0,218,0"
+                FontSize="24" Style="{DynamicResource SkinButtonStyle_With_Content}" Foreground="{DynamicResource TextBox_Foreground_10}"/>
+        <Button x:Name="Btn_ContainerNumber_Twin" HorizontalAlignment="Right" Width="216" BorderThickness="0" Height="45" VerticalAlignment="Center" IsEnabled="False"
+                FontSize="24" Style="{DynamicResource SkinButtonStyle_With_Content}" Foreground="{DynamicResource TextBox_Foreground_10}"/>
+        <Image x:Name="Image_Twin" Source="/VMT_RTG;component/Images/MainView/Icon/Icon_Twin_ContainerDetailView.png" HorizontalAlignment="Right" Width="44" Height="24" Margin="0,0,194,0" VerticalAlignment="Center" Visibility="Hidden" />
+    </Grid>
+</UserControl>

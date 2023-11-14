@@ -1,0 +1,736 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+ xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+ xmlns:ee="http://schemas.microsoft.com/expression/2010/effects"
+ xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+ mc:Ignorable="d">
+
+    <Style x:Key="SkinToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid x:Name="Layout_Root">
+                        <Image x:Name="Image_Default" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Source="/VMT_Res;component/Images/Common/common_btn_default.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Press" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_pressed.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Disable" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_disable.png" Stretch="Fill"/>
+                        <TextBlock x:Name="TextBlock_Title" HorizontalAlignment="Center" Margin="0,8" TextWrapping="Wrap" Text="{TemplateBinding Content}" VerticalAlignment="Center" FontFamily="/VMT_Res;component/Fonts/#Neo Sans Pro" FontSize="26.667" FontWeight="Bold" TextAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!-- Main Template -->
+    <!-- Common Control Template -->
+    <Style x:Key="SkinButtonStyle_ForegroundChange" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid x:Name="Layout_Root">
+                        <Image x:Name="Image_Default" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Source="/VMT_Res;component/Images/Common/common_btn_default.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Press" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_pressed.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Disable" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_disable.png" Stretch="Fill"/>
+                        <TextBlock x:Name="TextBlock_Title" HorizontalAlignment="Center" Margin="0,8" TextWrapping="Wrap" Text="{TemplateBinding Content}" VerticalAlignment="Center" FontFamily="/VMT_Res;component/Fonts/#Neo Sans Pro" FontSize="26.667" FontWeight="Bold" TextAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Visible"/>
+                            <Setter Property="Foreground" Value="Gray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SkinButtonStyle_CorrectionContainerItem" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid x:Name="Layout_Root">
+                        <Image x:Name="Image_Default" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Source="/VMT_Res;component/Images/Common/common_btn_default.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Press" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_pressed.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Disable" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_disable.png" Stretch="Fill"/>
+                        <TextBlock x:Name="TextBlock_Title" HorizontalAlignment="Center" Margin="0,8" TextWrapping="Wrap" Text="{TemplateBinding Content}" VerticalAlignment="Top" FontFamily="/VMT_Res;component/Fonts/#Neo Sans Pro" FontSize="10" TextAlignment="Left"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SkinButtonStyle_15" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid x:Name="Layout_Root">
+                        <Image x:Name="Image_Default" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Source="/VMT_Res;component/Images/Common/common_btn_default.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Press" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_pressed.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Disable" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_disable.png" Stretch="Fill"/>
+                        <TextBlock x:Name="TextBlock_Title" HorizontalAlignment="Center" Margin="0,8" TextWrapping="Wrap" Text="{TemplateBinding Content}" VerticalAlignment="Center" FontFamily="/VMT_Res;component/Fonts/#Neo Sans Pro" FontSize="15" FontWeight="Bold" TextAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                            <Setter Property="Foreground" TargetName="TextBlock_Title" Value="Black"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                            <Setter Property="IsEnabled" TargetName="TextBlock_Title" Value="True"/>
+                            <Setter Property="Foreground" TargetName="TextBlock_Title" Value="Black"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Visible"/>
+                            <Setter Property="IsEnabled" TargetName="TextBlock_Title" Value="False"/>
+                            <Setter Property="Foreground" TargetName="TextBlock_Title" Value="Gray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    
+
+    <Style x:Key="SkinButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid x:Name="Layout_Root">
+                        <Image x:Name="Image_Default" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Source="/VMT_Res;component/Images/Common/common_btn_default.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Press" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_pressed.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Disable" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_disable.png" Stretch="Fill"/>
+                        <TextBlock x:Name="TextBlock_Title" HorizontalAlignment="Center" Margin="0,8" TextWrapping="Wrap" Text="{TemplateBinding Content}" VerticalAlignment="Center" FontFamily="/VMT_Res;component/Fonts/#Neo Sans Pro" FontSize="26.667" FontWeight="Bold" TextAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+	
+	<Style x:Key="SkinButtonStyle_Without_FontSize" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid x:Name="Layout_Root">
+                        <Image x:Name="Image_Default" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Source="/VMT_Res;component/Images/Common/common_btn_default.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Press" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_pressed.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Disable" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_disable.png" Stretch="Fill"/>
+                        <TextBlock x:Name="TextBlock_Title" HorizontalAlignment="Center" Margin="0,8" TextWrapping="Wrap" Text="{TemplateBinding Content}" VerticalAlignment="Center" FontFamily="/VMT_Res;component/Fonts/#Neo Sans Pro" FontWeight="Bold" TextAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <SolidColorBrush x:Key="CheckBoxStroke" Color="#8E8F8F"/>
+    <Style x:Key="CheckRadioFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="true" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <Style x:Key="SkinRadioButtonStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background" Value="#F4F4F4"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CheckBoxStroke}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid x:Name="GridRoot" Margin="0">
+                        <Image x:Name="Image_Check" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_radio_check.png"/>
+                        <Image x:Name="Image_Uncheck" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_radio_uncheck.png" Visibility="Hidden"/>
+                        <Image x:Name="Image_Disable" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_radio_disable.png" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SkinRadioButtonStyle_Without_FontSize" TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background" Value="#F4F4F4"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CheckBoxStroke}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid x:Name="GridRoot" Margin="0">
+                        <Image x:Name="Image_Check" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_radio_check.png"/>
+                        <Image x:Name="Image_Uncheck" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_radio_uncheck.png" Visibility="Hidden"/>
+                        <Image x:Name="Image_Disable" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_radio_disable.png" Visibility="Hidden"/>
+                        <TextBlock x:Name="TextBlock_Title" HorizontalAlignment="Center" Margin="0,8" TextWrapping="Wrap" Text="{TemplateBinding Content}" VerticalAlignment="Center" FontFamily="/VMT_Res;component/Fonts/#Neo Sans Pro" FontWeight="Bold" TextAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <SolidColorBrush x:Key="CheckBoxFillNormal" Color="#F4F4F4"/>
+    <Style x:Key="EmptyCheckBoxFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="1" SnapsToDevicePixels="true" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SkinCheckBox" TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background" Value="{StaticResource CheckBoxFillNormal}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CheckBoxStroke}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyCheckBoxFocusVisual}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid x:Name="GridRoot" Margin="0">
+                        <Image x:Name="Image_Check" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_checkbox_check.png"/>
+                        <Image x:Name="Image_Uncheck" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_checkbox_uncheck.png" Visibility="Hidden"/>
+                        <Image x:Name="Image_Disable" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_checkbox_disable.png" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+	
+	<Style x:Key="SkinCheckBox_NaviItem" TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background" Value="{StaticResource CheckBoxFillNormal}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CheckBoxStroke}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyCheckBoxFocusVisual}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid x:Name="GridRoot" Margin="0">
+                        <Image x:Name="Image_Check" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_naviItem_check.png"/>
+                        <Rectangle x:Name="Image_Uncheck" Fill="#00FF0000" Stroke="White" StrokeThickness="2" Visibility="Hidden"/>
+                        <!--
+                        <Border x:Name="MyBorderedButton" BorderThickness="1" >
+                            <Border.BorderBrush>
+                                <VisualBrush>
+                                    <VisualBrush.Visual>
+                                        <Rectangle Stroke="White"
+		                                      StrokeThickness="1"
+		                                      RadiusX="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.TopRight}"
+		                                      RadiusY="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.BottomLeft}"
+		                                      Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
+		                                      Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"/>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Border.BorderBrush>
+                        </Border>
+                        -->
+                        <!--<Image x:Name="Image_Uncheck" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_naviItem_uncheck.png" Visibility="Hidden"/>-->
+                        <Image x:Name="Image_Disable" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_naviItem_disable.png" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="JobListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Padding" Value="2,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Height="47">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true"/>
+                                <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="JobListBoxItemStyleSmall" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Padding" Value="2,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <StackPanel>
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Height="74">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>                        
+                        </Border>
+                        <TextBlock x:Name="Separator" Height="3.1" Margin="0,0,1,0" Background="Black"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true"/>
+                                <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                            <!--
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                            -->
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="JobListBoxItemStyleSmall_ECH" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Padding" Value="0,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Height="85">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true"/>
+                                <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                            <!--
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                            -->
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="JobListBoxItemStyleSmall_YC" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Padding" Value="0,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Height="85">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true"/>
+                                <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                            <!--
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                            -->
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--스크롤바 S-->
+    <Style x:Key="ScrollBarButton" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Margin="0">
+                        <Rectangle Fill="#02000000" Margin="0"/>
+                        <Path x:Name="ScrollBtn" Stretch="Fill" Fill="{DynamicResource LightColor}" Data="F1 M 1047.86,84.9712L 1044.17,91.3633L 1051.55,91.3633L 1047.86,84.9712 Z " Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="6" Height="6" Opacity="0.85"/>
+                        <Path x:Name="ScrollBtn_B" Stretch="Fill" Fill="{DynamicResource MainColor}" Data="F1 M 1047.86,84.9712L 1044.17,91.3633L 1051.55,91.3633L 1047.86,84.9712 Z " Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="6" Height="6" Opacity="0.25"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" TargetName="ScrollBtn" Value="0.8"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Opacity" TargetName="ScrollBtn" Value="0.3"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" TargetName="ScrollBtn" Value="0.15"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="VerticalScrollBarPageButton" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Rectangle x:Name="Bg" Fill="{TemplateBinding Background}"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="true"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Grid x:Name="grid" Margin="1,0">
+                        <Rectangle x:Name="ThumBG" Fill="{DynamicResource LightColor}" Margin="0" HorizontalAlignment="Center" Width="8" RadiusX="4" RadiusY="4" Opacity="0.85" Height="Auto"/>
+                        <Rectangle x:Name="ThumEmboss" Fill="{DynamicResource MainColor}" Margin="0" HorizontalAlignment="Center" Width="8" RadiusX="4" RadiusY="4" Opacity="0.25" Visibility="Hidden" Height="Auto"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDragging" Value="False">
+                            <Setter Property="Opacity" TargetName="ThumBG" Value="0.50"/>
+                            <Setter Property="Visibility" TargetName="ThumEmboss" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="HorizontalScrollBarPageButton" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Rectangle x:Name="Bg" Fill="{TemplateBinding Background}"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="true">
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="mPlayerScrollBar" TargetType="{x:Type ScrollBar}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Width" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+        <Setter Property="MinWidth" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid SnapsToDevicePixels="true" Width="10" HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}" Height="14"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}" Height="14"/>
+                        </Grid.RowDefinitions>
+                        <RepeatButton Command="{x:Static ScrollBar.LineUpCommand}" Style="{StaticResource ScrollBarButton}" Microsoft_Windows_Themes:ScrollChrome.ScrollGlyph="UpArrow" Height="10" Grid.Row="0" VerticalAlignment="Top" Background="{x:Null}"/>
+                        <Rectangle Fill="{DynamicResource MainColor_20}" Height="Auto" Grid.Row="1" Stroke="{x:Null}" VerticalAlignment="Stretch" RadiusX="4" RadiusY="4" HorizontalAlignment="Center" Width="8" Opacity="0.5"/>
+                        <Track x:Name="PART_Track" IsDirectionReversed="true" Grid.Row="1" Margin="0">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource VerticalScrollBarPageButton}"/>
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource VerticalScrollBarPageButton}" />
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource ScrollBarThumb}" Microsoft_Windows_Themes:ScrollChrome.ScrollGlyph="VerticalGripper" Height="Auto" VerticalAlignment="Stretch" />
+                            </Track.Thumb>
+                        </Track>
+                        <RepeatButton Command="{x:Static ScrollBar.LineDownCommand}" Grid.Row="2" Style="{StaticResource ScrollBarButton}" Microsoft_Windows_Themes:ScrollChrome.ScrollGlyph="DownArrow" RenderTransformOrigin="0.5,0.5">
+                            <RepeatButton.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="180"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </RepeatButton.RenderTransform>
+                        </RepeatButton>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="MinWidth" Value="0"/>
+                <Setter Property="Height" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}"/>
+                <Setter Property="MinHeight" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"/>
+                                    <ColumnDefinition Width="0.00001*"/>
+                                    <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"/>
+                                </Grid.ColumnDefinitions>
+                                <RepeatButton Command="{x:Static ScrollBar.LineLeftCommand}" Style="{StaticResource ScrollBarButton}" Microsoft_Windows_Themes:ScrollChrome.ScrollGlyph="LeftArrow"/>
+                                <Track x:Name="PART_Track" Grid.Column="1">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource HorizontalScrollBarPageButton}"/>
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource HorizontalScrollBarPageButton}"/>
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{StaticResource ScrollBarThumb}" Microsoft_Windows_Themes:ScrollChrome.ScrollGlyph="HorizontalGripper"/>
+                                    </Track.Thumb>
+                                </Track>
+                                <RepeatButton Grid.Column="2" Command="{x:Static ScrollBar.LineRightCommand}" Style="{StaticResource ScrollBarButton}" Microsoft_Windows_Themes:ScrollChrome.ScrollGlyph="RightArrow"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--스크롤바 E-->
+    <!--ScrollViewerControl E-->
+    <ControlTemplate x:Key="ScrollViewerControl" TargetType="{x:Type ScrollViewer}">
+        <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Rectangle x:Name="Corner" Grid.Column="1" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1"/>
+            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="0" Margin="{TemplateBinding Padding}" Grid.Row="0"/>
+            <ScrollBar x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}" Style="{DynamicResource mPlayerScrollBar}" Width="12" MinWidth="12"/>
+            <ScrollBar x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="1" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}" Style="{DynamicResource mPlayerScrollBar}" Height="12" MinHeight="12"/>
+        </Grid>
+    </ControlTemplate>
+    <!--ScrollViewerControl E-->
+
+
+</ResourceDictionary>

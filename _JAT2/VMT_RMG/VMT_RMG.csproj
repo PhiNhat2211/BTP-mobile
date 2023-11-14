@@ -1,0 +1,1709 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AB412D37-E49D-43B1-B4F4-1E83C63C848D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VMT_RMG</RootNamespace>
+    <AssemblyName>VMT_RTG</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20901.0</ExpressionBlendVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>VMT_RMG.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\VMT_ECH.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\VMT_ECH.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\packages\Log4net\net35-full\log4net.dll</HintPath>
+    </Reference>
+	<Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.13.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="AppCodes\AppCfgMgr.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\Common\CommonConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\Common\ExtendedCommands.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\Common\JobTypeItem.xaml.cs">
+      <DependentUpon>JobTypeItem.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\Common\Keypad.xaml.cs">
+      <DependentUpon>Keypad.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\DataMgr.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\EventMgr.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\Indicator\IndicatorView.xaml.cs">
+      <DependentUpon>IndicatorView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\LogInView\LogInView.xaml.cs">
+      <DependentUpon>LogInView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\LogMessageView\LogMsgItem.xaml.cs">
+      <DependentUpon>LogMsgItem.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\LogMessageView\LogWindow.xaml.cs">
+      <DependentUpon>LogWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MachineSettingView.xaml.cs">
+      <DependentUpon>MachineSettingView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\AvailableView\AvailableControl.xaml.cs">
+      <DependentUpon>AvailableControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\AvailableView\AvailableView.xaml.cs">
+      <DependentUpon>AvailableView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\AvailableView\BreakTimeView.xaml.cs">
+      <DependentUpon>BreakTimeView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\BayView\BayView.xaml.cs">
+      <DependentUpon>BayView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\BayView\ContainerArea.xaml.cs">
+      <DependentUpon>ContainerArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\BayView\ContainerItem.xaml.cs">
+      <DependentUpon>ContainerItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\BayView\ContainerItemOld.xaml.cs">
+      <DependentUpon>ContainerItemOld.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\BayJobControl2.xaml.cs">
+      <DependentUpon>BayJobControl2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\BayJobControl1.xaml.cs">
+      <DependentUpon>BayJobControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\BaySelectionView2.xaml.cs">
+      <DependentUpon>BaySelectionView2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\BaySelectionView1.xaml.cs">
+      <DependentUpon>BaySelectionView1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\BayViewMoving1.xaml.cs">
+      <DependentUpon>BayViewMoving1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\BayViewMoving2.xaml.cs">
+      <DependentUpon>BayViewMoving2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\BayViewMoving2_old.xaml.cs">
+      <DependentUpon>BayViewMoving2_old.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\BayViewMoving1_old.xaml.cs">
+      <DependentUpon>BayViewMoving1_old.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\BlockJobControl2.xaml.cs">
+      <DependentUpon>BlockJobControl2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\BlockJobControl1.xaml.cs">
+      <DependentUpon>BlockJobControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\BlockSelectionView2.xaml.cs">
+      <DependentUpon>BlockSelectionView2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\BlockSelectionView1.xaml.cs">
+      <DependentUpon>BlockSelectionView1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\ContainerItemMoving.xaml.cs">
+      <DependentUpon>ContainerItemMoving.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\ContainerItemMoving_old.xaml.cs">
+      <DependentUpon>ContainerItemMoving_old.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\InfoBayView1.xaml.cs">
+      <DependentUpon>InfoBayView1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\InfoBayView2.xaml.cs">
+      <DependentUpon>InfoBayView2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\ContainerMoving.xaml.cs">
+      <DependentUpon>ContainerMoving.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\InfoMovingView2.xaml.cs">
+      <DependentUpon>InfoMovingView2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\InfoMovingView1.xaml.cs">
+      <DependentUpon>InfoMovingView1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\NavigatorViewMoving.xaml.cs">
+      <DependentUpon>NavigatorViewMoving.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\TargetJobInfo2.xaml.cs">
+      <DependentUpon>TargetJobInfo2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\ContainerMoving\TargetJobInfo1.xaml.cs">
+      <DependentUpon>TargetJobInfo1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\DriverWorking\DriverWorkingHistory.xaml.cs">
+      <DependentUpon>DriverWorkingHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\HessianView\HessianView.xaml.cs">
+      <DependentUpon>HessianView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\InfomationView\BlockBayInfo.xaml.cs">
+      <DependentUpon>BlockBayInfo.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\InfomationView\InfomationView.xaml.cs">
+      <DependentUpon>InfomationView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\InfomationView\TargetJobInfo.xaml.cs">
+      <DependentUpon>TargetJobInfo.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\JobList\SwapListItem.xaml.cs">
+      <DependentUpon>SwapListItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\JobList\JobListSwap.xaml.cs">
+      <DependentUpon>JobListSwap.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\JobList\JobList.xaml.cs">
+      <DependentUpon>JobList.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\JobList\JobListItem.xaml.cs">
+      <DependentUpon>JobListItem.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\JobTypeFilterView\JobTypeFilterControl.xaml.cs">
+      <DependentUpon>JobTypeFilterControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\JobTypeFilterView\JobTypeFilterView.xaml.cs">
+      <DependentUpon>JobTypeFilterView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\Navigator\NavigatorItem.xaml.cs">
+      <DependentUpon>NavigatorItem.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\Navigator\NavigatorView.xaml.cs">
+      <DependentUpon>NavigatorView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\PopupView\EmptySwapPopupView.xaml.cs">
+      <DependentUpon>EmptySwapPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\PopupView\ExternalTruckNoView.xaml.cs">
+      <DependentUpon>ExternalTruckNoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\PopupView\ListJobEmptyContainerView.xaml.cs">
+      <DependentUpon>ListJobEmptyContainerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\PopupView\ListJobPopupView.xaml.cs">
+      <DependentUpon>ListJobPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\PopupView\MultiJobPopupView.xaml.cs">
+      <DependentUpon>MultiJobPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\PopupView\OtherMachineJobListView.xaml.cs">
+      <DependentUpon>OtherMachineJobListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\PopupView\SwapPopupView.xaml.cs">
+      <DependentUpon>SwapPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\PopupView\DisconnectPopupView.xaml.cs">
+      <DependentUpon>DisconnectPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\PopupView\BlockPopupView.xaml.cs">
+      <DependentUpon>BlockPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\PopupView\PopupView.xaml.cs">
+      <DependentUpon>PopupView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\PopupView\VehicleContainerPositionView.xaml.cs">
+      <DependentUpon>VehicleContainerPositionView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SearchView\ContainerDetailView.xaml.cs">
+      <DependentUpon>ContainerDetailView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SearchView\ContainerSearchControl.xaml.cs">
+      <DependentUpon>ContainerSearchControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SearchView\ContainerSearchView.xaml.cs">
+      <DependentUpon>ContainerSearchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SearchView\ContainerSelectionView.xaml.cs">
+      <DependentUpon>ContainerSelectionView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SearchView\JobOrderControl.xaml.cs">
+      <DependentUpon>JobOrderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SearchView\MachineSearchControl.xaml.cs">
+      <DependentUpon>MachineSearchControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SearchView\MachineSearchView.xaml.cs">
+      <DependentUpon>MachineSearchView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SearchView\TwinSelectionView.xaml.cs">
+      <DependentUpon>TwinSelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SearchView\YtSwapView.xaml.cs">
+      <DependentUpon>YtSwapView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SelectionView\BlockBayJobControl.xaml.cs">
+      <DependentUpon>BlockBayJobControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SelectionView\BayJobControl.xaml.cs">
+      <DependentUpon>BayJobControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SelectionView\BaySelectionView.xaml.cs">
+      <DependentUpon>BaySelectionView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SelectionView\BayControl.xaml.cs">
+      <DependentUpon>BayControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SelectionView\VirtualBlockJobControl.xaml.cs">
+      <DependentUpon>VirtualBlockJobControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SelectionView\BlockJobControl.xaml.cs">
+      <DependentUpon>BlockJobControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SelectionView\BlockBaySelectionView.xaml.cs">
+      <DependentUpon>BlockBaySelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SelectionView\VirtualBlockSelectionView.xaml.cs">
+      <DependentUpon>VirtualBlockSelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\SelectionView\BlockSelectionView.xaml.cs">
+      <DependentUpon>BlockSelectionView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\Swap\SwapView.xaml.cs">
+      <DependentUpon>SwapView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\VirtualBlockView\VBlockChangeView.xaml.cs">
+      <DependentUpon>VBlockChangeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\VirtualBlockView\VBlockView.xaml.cs">
+      <DependentUpon>VBlockView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\MainView\VirtualBlockView\VirtualBlockItem.xaml.cs">
+      <DependentUpon>VirtualBlockItem.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainView\VirtualBlockView\VirtualBlockView.xaml.cs">
+      <DependentUpon>VirtualBlockView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\PopupOutView\PopupOutView.xaml.cs">
+      <DependentUpon>PopupOutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCodes\PopupProgressView.xaml.cs">
+      <DependentUpon>PopupProgressView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\PresentationMgr.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\UIThemeMgr.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppCodes\ViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScheduleMgr.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SplashForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashForm.Designer.cs">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </Compile>
+    <Page Include="AppCodes\Common\JobTypeItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\Common\Keypad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\Indicator\IndicatorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\LogInView\LogInView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\LogMessageView\LogMsgItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\LogMessageView\LogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MachineSettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\AvailableView\AvailableControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\AvailableView\AvailableView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\AvailableView\BreakTimeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\BayView\BayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\BayView\ContainerArea.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\BayView\ContainerItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\BayView\ContainerItemOld.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\BayJobControl2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\BayJobControl1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\BaySelectionView2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\BaySelectionView1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\BayViewMoving1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\BayViewMoving2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\BayViewMoving2_old.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\BayViewMoving1_old.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\BlockJobControl2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\BlockJobControl1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\BlockSelectionView2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\BlockSelectionView1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\ContainerItemMoving.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\ContainerItemMoving_old.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\InfoBayView1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\InfoBayView2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\ContainerMoving.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\InfoMovingView2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\InfoMovingView1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\NavigatorViewMoving.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\TargetJobInfo2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\ContainerMoving\TargetJobInfo1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\DriverWorking\DriverWorkingHistory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\HessianView\HessianView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\InfomationView\BlockBayInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\InfomationView\InfomationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\InfomationView\TargetJobInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\JobList\SwapListItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\JobList\JobListSwap.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\JobList\JobList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\JobList\JobListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\JobTypeFilterView\JobTypeFilterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\JobTypeFilterView\JobTypeFilterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\Navigator\NavigatorItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\Navigator\NavigatorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\PopupView\EmptySwapPopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\PopupView\ExternalTruckNoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\PopupView\ListJobEmptyContainerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\PopupView\ListJobPopupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\PopupView\MultiJobPopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\PopupView\OtherMachineJobListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\PopupView\SwapPopupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\PopupView\DisconnectPopupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\PopupView\BlockPopupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\PopupView\PopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\PopupView\VehicleContainerPositionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\SearchView\ContainerDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\SearchView\ContainerSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\SearchView\ContainerSearchView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\SearchView\ContainerSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\SearchView\JobOrderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\SearchView\MachineSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\SearchView\MachineSearchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\SearchView\TwinSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\SearchView\YtSwapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\SelectionView\BlockBayJobControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\SelectionView\BayJobControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\SelectionView\BaySelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\SelectionView\BayControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\SelectionView\VirtualBlockJobControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\SelectionView\BlockJobControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\SelectionView\BlockBaySelectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\SelectionView\VirtualBlockSelectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\SelectionView\BlockSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\Swap\SwapView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\MainView\VirtualBlockView\VBlockChangeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\VirtualBlockView\VBlockView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\VirtualBlockView\VirtualBlockItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainView\VirtualBlockView\VirtualBlockView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppCodes\PopupOutView\PopupOutView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppCodes\PopupProgressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
+    <Page Include="Resource_Dic\ResDic_RMG_Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resource_Dic\ResDic_RMG_Properties_Day.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resource_Dic\ResDic_RMG_Properties_Night.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="InterfaceMessageLoader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashForm.resx">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <Resource Include="Fonts\malgun.ttf" />
+    <Resource Include="Fonts\malgunbd.ttf" />
+    <Resource Include="Fonts\NeoSansPro-Bold.otf" />
+    <Resource Include="Fonts\NeoSansPro-Bold.ttf" />
+    <Resource Include="Fonts\NeoSansPro-BoldItalic.ttf" />
+    <Resource Include="Fonts\NeoSansPro-Italic.ttf" />
+    <Resource Include="Fonts\NeoSansPro-Light.ttf" />
+    <Resource Include="Fonts\NeoSansPro-LightItalic.ttf" />
+    <Resource Include="Fonts\NeoSansPro-Medium.otf" />
+    <None Include="ClassDiagram1.cd" />
+    <Resource Include="Fonts\VHARIALN.TTF" />
+    <Resource Include="Fonts\VHHELS.TTF" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <Resource Include="Fonts\NeoSansPro-Medium.ttf" />
+    <Resource Include="Fonts\NeoSansPro-Regular.ttf" />
+    <Resource Include="Fonts\NeoSansPro-Ultra.ttf" />
+    <Resource Include="Images\Common\JobList\JobList_btn_down_default.png" />
+    <Resource Include="Images\Common\JobList\JobList_btn_down_disable.png" />
+    <Resource Include="Images\Common\JobList\JobList_btn_up_default.png" />
+    <Resource Include="Images\Common\JobList\JobList_btn_up_disable.png" />
+    <Resource Include="Images\Common\JobList\JobList_Item_Border.png" />
+    <Resource Include="Images\Common\JobList\JobList_MV_BG.png" />
+    <Resource Include="Images\Common\JobList\JobList_TitleTexture.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobAH.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobAH_L.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobDS.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobDS_L.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobGC.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobGC_L.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobGI.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobGI_L.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobGO.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobGO_L.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobLC.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobLC_L.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobLD.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobLD_L.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobMI.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobMI_L.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobMO.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobMO_L.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobRH.png" />
+    <Resource Include="Images\Common\JobType\common_icon_jobRH_L.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_close_default.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_close_press.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_gps_default.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_gps_disable.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_logout_default.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_logout_press.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_power_default.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_power_disable.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_Screen.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_Screen1.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_wifi_default.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_wifi_disable.png" />
+    <Resource Include="Images\LogInView\LogInView_connect_default.png" />
+    <Resource Include="Images\LogInView\LogInView_connect_disable.png" />
+    <Resource Include="Images\LogInView\LogInView_connect_press.png" />
+    <Resource Include="Images\LogInView\LogInView_day_default.png" />
+    <Resource Include="Images\LogInView\LogInView_day_press.png" />
+    <Resource Include="Images\LogInView\LogInView_login_default.png" />
+    <Resource Include="Images\LogInView\LogInView_login_disable.png" />
+    <Resource Include="Images\LogInView\LogInView_login_press.png" />
+    <Resource Include="Images\LogInView\LogInView_logout_default.png" />
+    <Resource Include="Images\LogInView\LogInView_logout_disable.png" />
+    <Resource Include="Images\LogInView\LogInView_logout_press.png" />
+    <Resource Include="Images\LogInView\LogInView_night_default.png" />
+    <Resource Include="Images\LogInView\LogInView_night_press.png" />
+    <Resource Include="Images\LogInView\LogInView_reset_default.png" />
+    <Resource Include="Images\LogInView\LogInView_reset_disable.png" />
+    <Resource Include="Images\LogInView\LogInView_reset_press.png" />
+    <Resource Include="Images\LogInView\LogInView_Screen.png" />
+    <Resource Include="Images\LogInView\LogInView_team_default.png" />
+    <Resource Include="Images\LogInView\LogInView_team_press.png" />
+    <Resource Include="Images\LogInView\LogInView_TextBox.png" />
+    <Resource Include="Images\MainView\AvailableView\AvailableControl_default.png" />
+    <Resource Include="Images\MainView\AvailableView\AvailableControl_disable.png" />
+    <Resource Include="Images\MainView\AvailableView\AvailableControl_press.png" />
+    <Resource Include="Images\MainView\AvailableView\AvailableView_Screen.png" />
+    <Resource Include="Images\MainView\AvailableView\Available_menu_default.png" />
+    <Resource Include="Images\MainView\AvailableView\Available_menu_press.png" />
+    <Resource Include="Images\MainView\MenuBar\Menubar_btn_available_default.png" />
+    <Resource Include="Images\MainView\MenuBar\Menubar_btn_available_disable.png" />
+    <Resource Include="Images\MainView\MenuBar\Menubar_btn_available_press.png" />
+    <Resource Include="Images\MainView\MenuBar\MenuBar_Screen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Modules\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\PopupProgress\g_img_loading_play01.png" />
+    <Resource Include="Images\PopupProgress\g_img_loading_play02.png" />
+    <Resource Include="Images\PopupProgress\g_img_loading_play03.png" />
+    <Resource Include="Images\PopupProgress\g_img_loading_play04.png" />
+    <Resource Include="Images\PopupProgress\g_img_loading_play05.png" />
+    <Resource Include="Images\PopupProgress\g_img_loading_play06.png" />
+    <Resource Include="Images\PopupProgress\g_img_loading_play07.png" />
+    <Resource Include="Images\PopupProgress\g_img_loading_play08.png" />
+    <Resource Include="Images\PopupProgress\g_img_loading_play09.png" />
+    <Resource Include="Images\PopupProgress\g_img_loading_play10.png" />
+    <Resource Include="Images\PopupProgress\g_img_loading_play11.png" />
+    <Resource Include="Images\PopupProgress\g_img_loading_play12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\PopupButton\popup_btn_default.png" />
+    <Resource Include="Images\Common\PopupButton\popup_btn_press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Keypad\keyboard_btn_abcOR123_default.png" />
+    <Resource Include="Images\Common\Keypad\keyboard_btn_abcOR123_press.png" />
+    <Resource Include="Images\Common\Keypad\keyboard_btn_del_default.png" />
+    <Resource Include="Images\Common\Keypad\keyboard_btn_del_press.png" />
+    <Resource Include="Images\Common\Keypad\keyboard_btn_done_default.png" />
+    <Resource Include="Images\Common\Keypad\keyboard_btn_done_press.png" />
+    <Resource Include="Images\Common\Keypad\keyboard_btn_en_default.png" />
+    <Resource Include="Images\Common\Keypad\keyboard_btn_en_press.png" />
+    <Resource Include="Images\Common\Keypad\keyboard_btn_number_default.png" />
+    <Resource Include="Images\Common\Keypad\keyboard_btn_number_press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="VMT_RMG.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{36DC71F7-B929-4E76-AA61-BB58F3CBC17E}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HessianComm\HessianComm.csproj">
+      <Project>{2F97EAEE-2B88-46D8-AAF8-817962512ECA}</Project>
+      <Name>HessianComm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HessianCSharp\HessianCSharp.csproj">
+      <Project>{981C2E02-11B4-49DA-A462-48C9AC1FD095}</Project>
+      <Name>HessianCSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VMT_Res\VMT_Res.csproj">
+      <Project>{8CC27843-97CF-4FA8-AEC4-3B91275DC04C}</Project>
+      <Name>VMT_Res</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\WPSocketComm\WPSocketComm.csproj">
+      <Project>{3D321321-DBD4-4CCD-B3F6-04FA60B8E435}</Project>
+      <Name>WPSocketComm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VMT_Data_JAT2\VMT_Data_JAT2.csproj">
+      <Project>{7C64ED8B-AF11-4483-B81D-74A5CC549DB2}</Project>
+      <Name>VMT_Data_JAT2</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Sample\BayView_Sample.png" />
+    <Resource Include="Images\Sample\BlockBayInfo_Sample.png" />
+    <Resource Include="Images\Sample\IndicatorView_Sample.png" />
+    <Resource Include="Images\Sample\JobList_Sample.png" />
+    <Resource Include="Images\Sample\MainView_Sample.png" />
+    <Resource Include="Images\Sample\TargetJob_Sample.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\JobList\JobList_btn_type_default.png" />
+    <Resource Include="Images\Common\JobList\JobList_btn_type_press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\Button\Button_default.png" />
+    <Resource Include="Images\MainView\Button\Button_press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\BayView_BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Sample\NavigatorView_Sample.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SelectionView\BlockJobControl.png" />
+    <Resource Include="Images\MainView\SelectionView\BlockSelectionInfo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Sample\BaySelectionView_Sample.png" />
+    <Resource Include="Images\Sample\BlockJobControl_Sample.png" />
+    <Resource Include="Images\Sample\BlockSelectionView_Sample.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SearchView\ContainerSearchViewControl.png" />
+    <Resource Include="Images\MainView\SearchView\ContainerSearchViewHeader.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Sample\ContainerDetailView_Sample.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\JobList\Icon\HotJob.png" />
+    <Resource Include="Images\Common\JobList\Icon\OOG.png" />
+    <Resource Include="Images\Common\JobList\Icon\Reefer.png" />
+    <Resource Include="Images\Common\JobList\Icon\Twin.png" />
+    <Resource Include="Images\Common\JobList\JobType\job_ds.png" />
+    <Resource Include="Images\Common\JobList\JobType\job_gi.png" />
+    <Resource Include="Images\Common\JobList\JobType\job_go.png" />
+    <Resource Include="Images\Common\JobList\JobType\job_ld.png" />
+    <Resource Include="Images\Common\JobList\JobType\job_mi.png" />
+    <Resource Include="Images\Common\JobList\JobType\job_mo.png" />
+    <Resource Include="Images\Common\JobList\JobType\job_rh.png" />
+    <Resource Include="Images\Common\JobList\Vehicle\Vehicle_20F_After.png" />
+    <Resource Include="Images\Common\JobList\Vehicle\Vehicle_20F_Fore.png" />
+    <Resource Include="Images\Common\JobList\Vehicle\Vehicle_40F.png" />
+    <Resource Include="Images\Common\JobList\Vehicle\Vehicle_Twin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\JobList\JobList_btn_left_default.png" />
+    <Resource Include="Images\Common\JobList\JobList_btn_left_disable.png" />
+    <Resource Include="Images\Common\JobList\JobList_btn_left_press.png" />
+    <Resource Include="Images\Common\JobList\JobList_btn_right_default.png" />
+    <Resource Include="Images\Common\JobList\JobList_btn_right_disable.png" />
+    <Resource Include="Images\Common\JobList\JobList_btn_right_press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\Button\Button_JobSet_Default.png" />
+    <Resource Include="Images\MainView\Button\Button_JobSet_Enable.png" />
+    <Resource Include="Images\MainView\Button\Button_JobSet_Lock.png" />
+    <Resource Include="Images\MainView\Button\Button_NavigatorView_On.png" />
+    <Resource Include="Images\MainView\Button\Button_Navigator_Off.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\Button\Button_Block_Off.png" />
+    <Resource Include="Images\MainView\Button\Button_Block_On.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\Icon\Icon_Search_Default.png" />
+    <Resource Include="Images\MainView\Icon\Icon_Search_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SelectionView\Button_Down_Default.png" />
+    <Resource Include="Images\MainView\SelectionView\Button_Down_Disable.png" />
+    <Resource Include="Images\MainView\SelectionView\Button_Up_Default.png" />
+    <Resource Include="Images\MainView\SelectionView\Button_Up_Disable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Sample\ContainerSearchViewControl_Sample.png" />
+    <Resource Include="Images\Sample\ContainerSearchViewHeader_Sample.png" />
+    <Resource Include="Images\Sample\ContainerSearchView_Sample.png" />
+    <Resource Include="Images\Sample\JobListItem_Sample.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\Button\Button_Down_Default.png" />
+    <Resource Include="Images\MainView\Button\Button_Down_Disable.png" />
+    <Resource Include="Images\MainView\Button\Button_Up_Default.png" />
+    <Resource Include="Images\MainView\Button\Button_Up_Disable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\Button\Button_default_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\PopupButton\popup_img_bg.png" />
+    <Resource Include="Images\Common\PopupButton\popup_img_title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SelectionView\BayJobControl.png" />
+    <Resource Include="Images\MainView\SelectionView\BayJobControl_Img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Sample\BayJobControl_Sample.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IndicatorView\IndicatorView_Back_Default.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_Back_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IndicatorView\IndicatorView_Logout_Default_1.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_Logout_Press_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\NavigatorView\NavigatorView_Down_Default.png" />
+    <Resource Include="Images\MainView\NavigatorView\NavigatorView_Down_Press.png" />
+    <Resource Include="Images\MainView\NavigatorView\NavigatorView_Left_Default.png" />
+    <Resource Include="Images\MainView\NavigatorView\NavigatorView_Left_Press.png" />
+    <Resource Include="Images\MainView\NavigatorView\NavigatorView_Right_Default.png" />
+    <Resource Include="Images\MainView\NavigatorView\NavigatorView_Right_Press.png" />
+    <Resource Include="Images\MainView\NavigatorView\NavigatorView_Up_Default.png" />
+    <Resource Include="Images\MainView\NavigatorView\NavigatorView_Up_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\Button\Button_Search_Default.png" />
+    <Resource Include="Images\MainView\Button\Button_Search_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IndicatorView\IndicatorView_giemems_default.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_giemems_disable.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_power_default_1.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_power_disable_1.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_wifi_default_1.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_wifi_disable_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SelectionView\Button_Down_Press.png" />
+    <Resource Include="Images\MainView\SelectionView\Button_Up_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\Button\Button_Down_Press.png" />
+    <Resource Include="Images\MainView\Button\Button_Up_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Inventory\Inventory_Empty.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_Extend40ft.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_Hold.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_NoWorkArea.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_NoWorkTier.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_Select.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_Tunnel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\JobList\Vehicle\Vehicle_20F_After_Selected.png" />
+    <Resource Include="Images\Common\JobList\Vehicle\Vehicle_20F_Fore_Selected.png" />
+    <Resource Include="Images\Common\JobList\Vehicle\Vehicle_40F_Selected.png" />
+    <Resource Include="Images\Common\JobList\Vehicle\Vehicle_Twin_Selected.png" />
+    <Resource Include="Images\Common\JobList\Vehicle\Vehicle_Unknown.png" />
+    <Resource Include="Images\Common\JobList\Vehicle\Vehicle_Unknown_Selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\PopupView\Image_Trailer_Chassis.png" />
+    <Resource Include="Images\MainView\PopupView\Image_Trailer_Head.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\PopupView\Image_Trailer_Container_20F.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Inventory\Inventory_Default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Inventory\Inventory_Damaged.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\JobList\JobType\job_ah.png" />
+    <Resource Include="Images\Common\JobList\JobType\job_gc.png" />
+    <Resource Include="Images\Common\JobList\JobType\job_lc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SelectionView\BayJobControl_Select.png" />
+    <Resource Include="Images\MainView\SelectionView\BaySelectionVeiw_Left_Default.png" />
+    <Resource Include="Images\MainView\SelectionView\BaySelectionVeiw_Left_Disable.png" />
+    <Resource Include="Images\MainView\SelectionView\BaySelectionVeiw_Left_Press.png" />
+    <Resource Include="Images\MainView\SelectionView\BaySelectionVeiw_Right_Default.png" />
+    <Resource Include="Images\MainView\SelectionView\BaySelectionVeiw_Right_Disable.png" />
+    <Resource Include="Images\MainView\SelectionView\BaySelectionVeiw_Right_Press.png" />
+    <Resource Include="Images\MainView\SelectionView\BlockJobControl_Img.png" />
+    <Resource Include="Images\MainView\SelectionView\BlockJobControl_Select.png" />
+    <Resource Include="Images\MainView\SelectionView\BlockSelectionView_Left_Default.png" />
+    <Resource Include="Images\MainView\SelectionView\BlockSelectionView_Left_Disable.png" />
+    <Resource Include="Images\MainView\SelectionView\BlockSelectionView_Left_Press.png" />
+    <Resource Include="Images\MainView\SelectionView\BlockSelectionView_Right_Default.png" />
+    <Resource Include="Images\MainView\SelectionView\BlockSelectionView_Right_Disable.png" />
+    <Resource Include="Images\MainView\SelectionView\BlockSelectionView_Right_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\AvailableView\Title_Available.png" />
+    <Resource Include="Images\MainView\AvailableView\Title_BreakTime.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SearchView\ContainerSearchView_Search_Default.png" />
+    <Resource Include="Images\MainView\SearchView\ContainerSearchView_Search_Press.png" />
+    <Resource Include="Images\MainView\SearchView\MachineSearchView_Down_Default.png" />
+    <Resource Include="Images\MainView\SearchView\MachineSearchView_Down_Disable.png" />
+    <Resource Include="Images\MainView\SearchView\MachineSearchView_Down_Press.png" />
+    <Resource Include="Images\MainView\SearchView\MachineSearchView_Search_Default.png" />
+    <Resource Include="Images\MainView\SearchView\MachineSearchView_Search_Press.png" />
+    <Resource Include="Images\MainView\SearchView\MachineSearchView_Up_Default.png" />
+    <Resource Include="Images\MainView\SearchView\MachineSearchView_Up_Disable.png" />
+    <Resource Include="Images\MainView\SearchView\MachineSearchView_Up_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\AvailableView\Icon_BreakTime.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SearchView\ContainerSearchView_Down_Default.png" />
+    <Resource Include="Images\MainView\SearchView\ContainerSearchView_Down_Disable.png" />
+    <Resource Include="Images\MainView\SearchView\ContainerSearchView_Down_Press.png" />
+    <Resource Include="Images\MainView\SearchView\ContainerSearchView_Up_Default.png" />
+    <Resource Include="Images\MainView\SearchView\ContainerSearchView_Up_Disable.png" />
+    <Resource Include="Images\MainView\SearchView\ContainerSearchView_Up_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_Damaged.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_Default.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_Empty.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_Extend40ft.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_Hold.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_NoWorkArea.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_NoWorkTier.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_Select.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_Tunnel.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Icon\HotJob.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Icon\OOG.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Icon\Reefer.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Icon\Twin.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_btn_down_default.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_Btn_Down_Disable.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_btn_left_default.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_btn_left_disable.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_btn_left_press.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_btn_right_default.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_btn_right_disable.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_btn_right_press.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_btn_type_default.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_btn_type_press.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_btn_up_default.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_Btn_Up_Disable.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_MV_BG.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobList_TitleTexture.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobType\job_ah.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobType\job_ds.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobType\job_gc.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobType\job_gi.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobType\job_go.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobType\job_lc.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobType\job_ld.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobType\job_mi.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobType\job_mo.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\JobType\job_rh.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Vehicle\Vehicle_20F_After.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Vehicle\Vehicle_20F_After_Selected.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Vehicle\Vehicle_20F_Fore.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Vehicle\Vehicle_20F_Fore_Selected.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Vehicle\Vehicle_40F.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Vehicle\Vehicle_40F_Selected.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Vehicle\Vehicle_Twin.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Vehicle\Vehicle_Twin_Selected.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Vehicle\Vehicle_Unknown.png" />
+    <Resource Include="Images%28Night%29\Common\JobList\Vehicle\Vehicle_Unknown_Selected.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobAH.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobAH_L.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobDS.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobDS_L.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobGC.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobGC_L.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobGI.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobGI_L.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobGO.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobGO_L.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobLC.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobLC_L.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobLD.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobLD_L.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobMI.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobMI_L.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobMO.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobMO_L.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobRH.png" />
+    <Resource Include="Images%28Night%29\Common\JobType\common_icon_jobRH_L.png" />
+    <Resource Include="Images%28Night%29\Common\Keypad\keyboard_btn_abcOR123_default.png" />
+    <Resource Include="Images%28Night%29\Common\Keypad\keyboard_btn_abcOR123_press.png" />
+    <Resource Include="Images%28Night%29\Common\Keypad\keyboard_btn_del_default.png" />
+    <Resource Include="Images%28Night%29\Common\Keypad\keyboard_btn_del_press.png" />
+    <Resource Include="Images%28Night%29\Common\Keypad\keyboard_btn_done_default.png" />
+    <Resource Include="Images%28Night%29\Common\Keypad\keyboard_btn_done_press.png" />
+    <Resource Include="Images%28Night%29\Common\Keypad\keyboard_btn_en_default.png" />
+    <Resource Include="Images%28Night%29\Common\Keypad\keyboard_btn_en_press.png" />
+    <Resource Include="Images%28Night%29\Common\Keypad\keyboard_btn_number_default.png" />
+    <Resource Include="Images%28Night%29\Common\Keypad\keyboard_btn_number_press.png" />
+    <Resource Include="Images%28Night%29\Common\PopupButton\popup_btn_default.png" />
+    <Resource Include="Images%28Night%29\Common\PopupButton\popup_btn_press.png" />
+    <Resource Include="Images%28Night%29\Common\PopupButton\popup_img_bg.png" />
+    <Resource Include="Images%28Night%29\Common\PopupButton\popup_img_title.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_Back_Default.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_Back_Press.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_close_default.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_close_press.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_giemems_default.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_giemems_disable.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_gps_default.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_gps_disable.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_logout_default.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_Logout_Default_1.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_logout_press.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_Logout_Press_1.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_power_default.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_power_default_1.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_power_disable.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_power_disable_1.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_Screen.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_Screen1.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_wifi_default.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_wifi_default_1.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_wifi_disable.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_wifi_disable_1.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_connect_default.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_connect_disable.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_connect_press.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_day_default.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_day_press.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_login_default.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_login_disable.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_login_press.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_logout_default.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_logout_disable.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_logout_press.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_night_default.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_night_press.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_reset_default.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_reset_disable.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_reset_press.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_Screen.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_team_default.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_team_press.png" />
+    <Resource Include="Images%28Night%29\LogInView\LogInView_TextBox.png" />
+    <Resource Include="Images%28Night%29\MainView\AvailableView\AvailableControl_default.png" />
+    <Resource Include="Images%28Night%29\MainView\AvailableView\AvailableControl_disable.png" />
+    <Resource Include="Images%28Night%29\MainView\AvailableView\AvailableControl_press.png" />
+    <Resource Include="Images%28Night%29\MainView\AvailableView\AvailableView_Screen.png" />
+    <Resource Include="Images%28Night%29\MainView\AvailableView\Available_menu_default.png" />
+    <Resource Include="Images%28Night%29\MainView\AvailableView\Available_menu_press.png" />
+    <Resource Include="Images%28Night%29\MainView\AvailableView\Icon_BreakTime.png" />
+    <Resource Include="Images%28Night%29\MainView\AvailableView\Title_Available.png" />
+    <Resource Include="Images%28Night%29\MainView\AvailableView\Title_BreakTime.png" />
+    <Resource Include="Images%28Night%29\MainView\BayView_BG.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_Block_Off.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_Block_On.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_default.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_default_1.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_Down_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_Down_Disable.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_Down_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_JobSet_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_JobSet_Enable.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_JobSet_Lock.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_NavigatorView_On.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_Navigator_Off.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_press.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_Search_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_Search_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_Up_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_Up_Disable.png" />
+    <Resource Include="Images%28Night%29\MainView\Button\Button_Up_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\Icon\Icon_Search_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\Icon\Icon_Search_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\Icon\Icon_Twin_ContainerDetailView.png" />
+    <Resource Include="Images%28Night%29\MainView\Icon\Icon_Twin_JobList.png" />
+    <Resource Include="Images%28Night%29\MainView\MenuBar\Menubar_btn_available_default.png" />
+    <Resource Include="Images%28Night%29\MainView\MenuBar\Menubar_btn_available_disable.png" />
+    <Resource Include="Images%28Night%29\MainView\MenuBar\Menubar_btn_available_press.png" />
+    <Resource Include="Images%28Night%29\MainView\MenuBar\MenuBar_Screen.png" />
+    <Resource Include="Images%28Night%29\MainView\NavigatorView\NavigatorView_Down_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\NavigatorView\NavigatorView_Down_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\NavigatorView\NavigatorView_Left_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\NavigatorView\NavigatorView_Left_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\NavigatorView\NavigatorView_Right_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\NavigatorView\NavigatorView_Right_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\NavigatorView\NavigatorView_Up_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\NavigatorView\NavigatorView_Up_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\PopupView\Image_Trailer_Chassis.png" />
+    <Resource Include="Images%28Night%29\MainView\PopupView\Image_Trailer_Container_20F.png" />
+    <Resource Include="Images%28Night%29\MainView\PopupView\Image_Trailer_Head.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\ContainerSearchViewControl.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\ContainerSearchViewHeader.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\ContainerSearchView_Down_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\ContainerSearchView_Down_Disable.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\ContainerSearchView_Down_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\ContainerSearchView_Search_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\ContainerSearchView_Search_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\ContainerSearchView_Up_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\ContainerSearchView_Up_Disable.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\ContainerSearchView_Up_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\MachineSearchView_Down_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\MachineSearchView_Down_Disable.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\MachineSearchView_Down_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\MachineSearchView_Search_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\MachineSearchView_Search_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\MachineSearchView_Up_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\MachineSearchView_Up_Disable.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\MachineSearchView_Up_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BayJobControl.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BayJobControl_Img.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BayJobControl_Select.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BaySelectionVeiw_Left_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BaySelectionVeiw_Left_Disable.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BaySelectionVeiw_Left_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BaySelectionVeiw_Right_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BaySelectionVeiw_Right_Disable.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BaySelectionVeiw_Right_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BlockJobControl.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BlockJobControl_Img.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BlockJobControl_Select.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BlockSelectionInfo.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BlockSelectionView_Left_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BlockSelectionView_Left_Disable.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BlockSelectionView_Left_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BlockSelectionView_Right_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BlockSelectionView_Right_Disable.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BlockSelectionView_Right_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\Button_Down_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\Button_Down_Disable.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\Button_Down_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\Button_Up_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\Button_Up_Disable.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\Button_Up_Press.png" />
+    <Resource Include="Images%28Night%29\PopupProgress\g_img_loading_play01.png" />
+    <Resource Include="Images%28Night%29\PopupProgress\g_img_loading_play02.png" />
+    <Resource Include="Images%28Night%29\PopupProgress\g_img_loading_play03.png" />
+    <Resource Include="Images%28Night%29\PopupProgress\g_img_loading_play04.png" />
+    <Resource Include="Images%28Night%29\PopupProgress\g_img_loading_play05.png" />
+    <Resource Include="Images%28Night%29\PopupProgress\g_img_loading_play06.png" />
+    <Resource Include="Images%28Night%29\PopupProgress\g_img_loading_play07.png" />
+    <Resource Include="Images%28Night%29\PopupProgress\g_img_loading_play08.png" />
+    <Resource Include="Images%28Night%29\PopupProgress\g_img_loading_play09.png" />
+    <Resource Include="Images%28Night%29\PopupProgress\g_img_loading_play10.png" />
+    <Resource Include="Images%28Night%29\PopupProgress\g_img_loading_play11.png" />
+    <Resource Include="Images%28Night%29\PopupProgress\g_img_loading_play12.png" />
+    <Resource Include="Images%28Night%29\Sample\BayJobControl_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\BaySelectionView_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\BayView_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\BlockBayInfo_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\BlockJobControl_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\BlockSelectionView_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\ContainerDetailView_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\ContainerSearchViewControl_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\ContainerSearchViewHeader_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\ContainerSearchView_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\IndicatorView_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\JobListItem_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\JobList_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\MainView_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\NavigatorView_Sample.png" />
+    <Resource Include="Images%28Night%29\Sample\TargetJob_Sample.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\Button\Button_disable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\MainView\Button\Button_disable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\Icon\Icon_Twin_ContainerDetailView.png" />
+    <Resource Include="Images\MainView\Icon\Icon_Twin_JobList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SelectionView\Button_Default.png" />
+    <Resource Include="Images\MainView\SelectionView\Button_Left_Default.png" />
+    <Resource Include="Images\MainView\SelectionView\Button_Left_Press.png" />
+    <Resource Include="Images\MainView\SelectionView\Button_Press.png" />
+    <Resource Include="Images\MainView\SelectionView\Button_Right_Default.png" />
+    <Resource Include="Images\MainView\SelectionView\Button_Right_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\MainView\SelectionView\Button_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\Button_Left_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\Button_Left_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\Button_Press.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\Button_Right_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SelectionView\Button_Right_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SelectionView\BaySelectionInfo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\MainView\SelectionView\BaySelectionInfo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\AvailableView\Button_Default.png" />
+    <Resource Include="Images\MainView\AvailableView\Button_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\MainView\AvailableView\Button_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\AvailableView\Button_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\MainView\SearchView\ContainerSearchViewTitle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SearchView\ContainerSearchViewTitle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SearchView\Button_Default.png" />
+    <Resource Include="Images\MainView\SearchView\Button_Disable.png" />
+    <Resource Include="Images\MainView\SearchView\Button_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\MainView\SearchView\Button_Default.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\Button_Disable.png" />
+    <Resource Include="Images%28Night%29\MainView\SearchView\Button_Press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Inventory\Inventory_Reefer_PlugIn.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_Reefer_PlugOut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_Reefer_PlugIn.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_Reefer_PlugOut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Inventory\Inventory_NoWorkAreaNTier.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_NoWorkAreaNTunnel.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_NoWorkAreaNTunnelNTier.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_NoWorkTunnelNTier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_NoWorkAreaNTier.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_NoWorkAreaNTunnel.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_NoWorkAreaNTunnelNTier.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_NoWorkTunnelNTier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\JobList\Icon\Hazard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\Common\JobList\Icon\Hazard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_Hazard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Inventory\Inventory_Hazard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Inventory\Inventory_OvervalueB.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_OvervalueL.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_OvervalueLB.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_OvervalueLR.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_OvervalueLRB.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_OvervalueR.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_OvervalueRB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_OvervalueB.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_OvervalueL.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_OvervalueLB.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_OvervalueLR.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_OvervalueLRB.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_OvervalueR.png" />
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_OvervalueRB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Inventory\Inventory_CorrectionSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SearchView\Checkbox_Select_Cont.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainView\SearchView\Checkbox_Select_ITV.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\MainView\SearchView\Checkbox_Select_Cont.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\MainView\SearchView\Checkbox_Select_ITV.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\JobList\Vehicle\Vehicle_ITV_PowIn.png" />
+    <Resource Include="Images\Common\JobList\Vehicle\Vehicle_OTR_PowIn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\JobList\Icon\IMDG.png" />
+    <Resource Include="Images\Common\JobList\Icon\IMDG_L.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Inventory\Inventory_Reefer_PlugIn_1.png" />
+    <Resource Include="Images\Common\Inventory\Inventory_Reefer_PlugOut_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\JobList\JobType\job_mv.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\Common\JobList\JobType\job_mv.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="common_checkbox_check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="common_checkbox_uncheck.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="common_checkbox_disable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="common_btn_default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="common_btn_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="common_btn_disable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="common_checkbox_check1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="common_checkbox_uncheck1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="common_checkbox_disable1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\JAT2_VMT_RMG.cfg.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Inventory\Inventory_Disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_Disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Inventory\quarantine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Inventory\Inventory_SetDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Common\Inventory\Inventory_PickUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_PickUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\Common\Inventory\Inventory_SetDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images%28Night%29\Common\Inventory\quarantine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IndicatorView\IndicatorView_Setting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IndicatorView\IndicatorView_WS_default.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_WS_green.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_WS_red.png" />
+    <Resource Include="Images\IndicatorView\IndicatorView_WS_yellow.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_WS_default.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_WS_green.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_WS_red.png" />
+    <Resource Include="Images%28Night%29\IndicatorView\IndicatorView_WS_yellow.png" />
+    <Resource Include="Images\MainView\Icon\Icon_Lock.png" />
+    <Resource Include="Images\MainView\Icon\Icon_Unlock.png" />
+    <Content Include="sound\Windows Background_soundup.wav" />
+    <Content Include="sound\Windows Exclamation.wav" />
+    <Content Include="sound\Windows Foreground_soundup.wav" />
+    <Content Include="sound\Windows Notify System Generic_soundup.wav" />
+    <Content Include="sound\Windows User Account Control_soundup.wav" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

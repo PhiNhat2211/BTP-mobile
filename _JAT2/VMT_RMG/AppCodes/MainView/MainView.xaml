@@ -1,0 +1,155 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:VMT_RMG"
+	mc:Ignorable="d"
+	x:Class="VMT_RMG.MainView"
+	x:Name="UserControl"
+	d:DesignWidth="1024" d:DesignHeight="704" Loaded="UserControl_Loaded">
+
+    <Grid x:Name="LayoutRoot" Background="{DynamicResource Gird_Background_4}">
+        <!--
+		<Grid.RowDefinitions>
+			<RowDefinition Height="80"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		<local:MenuBar x:Name="UC_MenuBar"/>
+		<local:JobRelationView x:Name="UC_BlockJobView" Grid.Row="1" Margin="0"/>
+		-->
+        <Image x:Name="BackgroundSample" Source="/VMT_RTG;component/Images/Sample/MainView_Sample.png" Visibility="Hidden"/>
+        <!--
+		<Grid x:Name="Grid_Top_Button" HorizontalAlignment="Right" Width="460" Height="44" VerticalAlignment="Top" Margin="0,8,556,0">
+			<Button x:Name="Btn_Available" Width="240" HorizontalAlignment="Left" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" VerticalAlignment="Top" Height="44" Margin="0" Content="Available" FontSize="20"/>
+			<Button x:Name="Btn_Search" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" VerticalAlignment="Top" Height="44" HorizontalAlignment="Right" Width="129" Content="Search" Margin="0,0,87,0" FontSize="20"/>
+			<Button x:Name="Btn_Refresh" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" VerticalAlignment="Top" Height="44" HorizontalAlignment="Right" Width="83" Content="Refresh" FontSize="20"/>
+		</Grid>
+		-->
+        <local:JobList x:Name="UC_JobList" HorizontalAlignment="Left" Margin="8,101,0,60" Width="429"/>
+        <Grid x:Name="Grid_Left_Bottom_Button" Margin="8,0,0,0" Height="60" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="429" Background="{DynamicResource Gird_Background_6}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="Btn_BlockText" HorizontalAlignment="Right" Width="109" Style="{DynamicResource SkinButtonStyle}" Visibility="Hidden" IsEnabled="True" Content="" Margin="0,8,113,8" Foreground="#FFFFFF"/>
+            <Button x:Name="Btn_Block" HorizontalAlignment="Right" Width="109" FontSize="18" Style="{DynamicResource SkinButtonStyle}" VerticalAlignment="Center" IsEnabled="True" Content="Block" Margin="0,8,113,8" Foreground="#FFFFFF" Visibility="Hidden"/>
+            <Button x:Name="Btn_All" HorizontalAlignment="Right" Width="109" FontSize="18" Style="{DynamicResource SkinButtonStyle}" VerticalAlignment="Center" IsEnabled="True" Content="All" Margin="0,8" Foreground="#FFFFFF" Visibility="Hidden"/>
+
+            <Grid x:Name="Grid_Block_All" Margin="8,8,0,8" HorizontalAlignment="Left" Width="205" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="Lb_Block" Grid.Column="0" Content="BLOCK" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="Black" Background="LightGray" FontSize="18"/>
+                <Label x:Name="Lb_All" Content="ALL" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="White" Background="Black" FontSize="18" Grid.Column="1"/>
+            </Grid>
+            <CheckBox x:Name="Btn_JobSet" Style="{DynamicResource SkinCheckBox}" Grid.Column="1" Margin="8,8,10,8" Visibility="Hidden"/>
+            <Label x:Name="Label_JobSet" VerticalAlignment="Top" Grid.Column="1" Content="Job Set" IsEnabled="True" Margin="5,8,10,0" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#444444" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="White" Visibility="Visible" Height="44"/>
+        </Grid>
+        <local:InfomationView x:Name="UC_InfomationView" Margin="8,3,8,0" VerticalAlignment="Top" Height="98"/>
+        <local:BayView x:Name="UC_BayView" Margin="452,101,0,53"/>
+        <local:ContainerArea x:Name="UC_ContainerArea" Margin="452,101,8,53" Visibility="Hidden"/>
+        <local:VirtualBlockView x:Name="UC_VirtualBlockView" Margin="476,112,8,60" Visibility="Hidden"/>
+        <local:NavigatorView x:Name="UC_NavigatorView" Margin="298.475,101,8,52.5" Visibility="Hidden"/>
+        <Grid x:Name="Grid_Right_Bottom_Button" Margin="442,0,8,8" Height="44.5" VerticalAlignment="Bottom">
+            <!--<Grid.ColumnDefinitions><ColumnDefinition Width="5*"/><ColumnDefinition Width="3*"/><ColumnDefinition Width="3*"/></Grid.ColumnDefinitions>-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="18*"/>
+                <ColumnDefinition Width="14*"/>
+                <ColumnDefinition Width="14*"/>
+                <ColumnDefinition x:Name="Col_ChgLoc" Width="14*"/>
+                <ColumnDefinition Width="15*"/>
+            </Grid.ColumnDefinitions>
+            <Image Name="Image_Lock" Source="/VMT_RTG;component/Images/MainView/Icon/Icon_Unlock.png"/>
+            <CheckBox x:Name="Btn_Navigator" Style="{DynamicResource SkinCheckBox}" Grid.Column="1" Margin="0" Content="Navigator" IsChecked="False" Visibility="Hidden"/>
+            <Grid x:Name="Grid_Navigator_Off" Grid.Column="1" Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Visible" MouseLeftButtonDown="Grid_Navigator_MouseLeftButtonDown">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="Btn_Left" Visibility="Visible" Grid.Column="0" Margin="3,0,2,0" BorderThickness="0" Style="{DynamicResource SkinButtonStyle}" IsEnabled="True" />
+                <Button x:Name="Btn_Right" Visibility="Visible" Grid.Column="1" Margin="2,0,3,0" BorderThickness="0" Style="{DynamicResource SkinButtonStyle}" IsEnabled="True" />
+                <Label x:Name="Lbl_Off" Visibility="Hidden" Content="OFF" Grid.Column="0" Foreground="White" Background="DimGray" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="16"/>
+                <Label x:Name="Lbl_Navigator_Off" Visibility="Hidden" Content="Navigator" Grid.Column="1" Foreground="Black" Background="WhiteSmoke" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="18"/>
+            </Grid>
+            <Grid x:Name="Grid_Navigator_On" Grid.Column="1" Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden" MouseLeftButtonDown="Grid_Navigator_MouseLeftButtonDown">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="Lbl_On" Content="ON" Grid.Column="1" Foreground="White" Background="Red" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="16"/>
+                <Label x:Name="Lbl_Navigator_On" Content="Navigator" Grid.Column="0" Foreground="Black" Background="WhiteSmoke" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="18"/>
+            </Grid>
+
+            <Button x:Name="Btn_Search" Style="{DynamicResource SkinButtonStyle_With_Content}" VerticalAlignment="Top" Grid.Column="2" Content="Search" Margin="4,0,0,0" FontSize="18" Foreground="{DynamicResource TextBox_Foreground_10}"/>
+            <Button x:Name="Btn_Available" Style="{DynamicResource SkinButtonStyle_With_Content}" VerticalAlignment="Top" Grid.Column="3" Content="Available" Margin="4,0,0,0" FontSize="18" Foreground="{DynamicResource TextBox_Foreground_10}" Visibility="Collapsed"/>
+            <Button x:Name="Btn_Notice" Visibility="Visible" Style="{DynamicResource SkinButtonStyle_With_Content}" VerticalAlignment="Top" Grid.Column="3" Content="Notice" Margin="4,0,0,0" FontSize="18" Foreground="{DynamicResource TextBox_Foreground_10}"/>
+            <Button x:Name="Btn_Chg_Loc" Style="{DynamicResource SkinButtonStyle_With_Content}" VerticalAlignment="Top" Grid.Column="4" Content="CHG LOC" IsEnabled="False" Margin="4,0,0,0" FontSize="18" Foreground="{DynamicResource TextBox_Foreground_10}"/>
+            <Button x:Name="Btn_JobDone" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" VerticalAlignment="Top" Grid.Column="5" Content="On Chassis" IsEnabled="True" Margin="4,0,0,0" FontSize="18" Foreground="{DynamicResource TextBox_Foreground_6}" Visibility="Visible"/>
+        </Grid>
+        <local:AvailableView x:Name="UC_AvailableView" Visibility="Hidden"/>
+        <local:SwapView x:Name="UC_SwapView" Visibility="Hidden"/>
+        <local:BlockPopupView x:Name="UC_BlockPopupView" Visibility="Hidden"/>
+        <local:BreakTimeView x:Name="UC_BreakTimeView" Visibility="Hidden"/>
+        <local:ContainerSearchView x:Name="UC_ContainerSearchView" Visibility="Hidden"/>
+        <local:JobTypeFilterView x:Name="UC_JobTypeFilterView" Visibility="Hidden"/>
+        <local:BlockBaySelectionView x:Name="UC_BlockSelectionView" Visibility="Hidden"/>
+        <local:VirtualBlockSelectionView x:Name="UC_VirtualBlockSelectionView" Visibility="Hidden"/>
+        <local:VBlockView x:Name="UC_VBlockView" Visibility="Hidden"/>
+        <local:VBlockChangeView x:Name="UC_VBlockChangeView" Visibility="Hidden"/>
+        <local:BaySelectionView x:Name="UC_BaySelectionView" Visibility="Hidden" />
+        <local:MachineSearchView x:Name="UC_MachineSearchView" Visibility="Hidden"/>
+        <local:YtSwapView x:Name="UC_YtSwapView" Visibility="Hidden"/>
+        <local:ContainerDetailView x:Name="UC_ContainerDetailView" Visibility="Hidden"/>
+        <local:VehicleContainerPositionView x:Name="UC_VehiclePositionView" Visibility="Hidden"/>
+        <local:ContainerSelectionView x:Name="UC_ContainerSelectionView" Visibility="Hidden"/>
+        <local:TwinSelectionView x:Name="UC_TwinSelectionView" Visibility="Hidden"/>
+        <local:ContainerMoving x:Name="UC_ContainerMoving" Visibility="Hidden"/>
+        <local:BlockSelectionView1 x:Name="UC_BlockSelectionView1" Visibility="Hidden"/>
+        <local:BaySelectionView1 x:Name="UC_BaySelectionView1" Visibility="Hidden" />
+        <local:BlockSelectionView2 x:Name="UC_BlockSelectionView2" Visibility="Hidden"/>
+        <local:BaySelectionView2 x:Name="UC_BaySelectionView2" Visibility="Hidden" />
+        <!--<local:CorrectionView x:Name="UC_CorrectionView" Visibility="Hidden"/>-->
+        <local:DriverWorkingHistory x:Name="UC_DriverWorkingHistory" Visibility="Hidden"/>
+        <local:OtherMachineJobListView x:Name="UC_OtherMachineJobListView" Visibility="Hidden"/>
+        <local:ListJobPopupView x:Name="UC_ListJobPopupView" Visibility="Hidden"/>
+        <local:ListJobEmptyContainerView x:Name="UC_ListJobEmptyContainerView" Visibility="Hidden"/>
+        <local:MultiJobPopupView x:Name="UC_MultiJobPopupView" Visibility="Hidden"/>
+        <local:EmptySwapPopupView x:Name="UC_EmptySwapPopupView" Visibility="Hidden" />
+        <local:ExternalTruckNoView x:Name="UC_ExternalTruckNoView" Visibility="Hidden"/>
+
+        <Grid x:Name="inputPopup" Visibility="Hidden">
+            <Rectangle Fill="#CC000000" Stroke="Black"/>
+            <Grid Margin="0,0,0,150" VerticalAlignment="Center" Width="660" HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="*"  MinHeight="200"/>
+                    <RowDefinition Height="90"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" VerticalAlignment="Top">
+                    <Image Source="/VMT_RTG;component/Images/Common/PopupButton/popup_img_title.png" Stretch="Fill"/>
+                    <TextBlock x:Name="TextBlock_popup_title" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Container Input" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="40" TextAlignment="Center" Foreground="White"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/VMT_RTG;component/Images/Common/PopupButton/popup_img_bg.png" Stretch="Fill"/>
+                    </Grid.Background>
+                    <!--<Image Source="/VMT_RTG;component/Images/Common/PopupButton/popup_img_bg.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                    <TextBlock x:Name="TextBlock_popup_message" Grid.Row="0" Margin="10" TextWrapping="Wrap" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="40" TextAlignment="Center" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center">Can not find container in system. Please input container no</TextBlock>
+                    <TextBox x:Name="TbCntrNo" Margin="16,10.5" Grid.Row="1" TextWrapping="Wrap" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="48" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterCasing="Upper" Width="628"/>
+                </Grid>
+                <Grid Grid.Row="2" x:Name="Grid_TwoButton" VerticalAlignment="Bottom" Margin="1,-1,1,1" Visibility="Visible">
+                    <Button x:Name="Button_TwoButton_Left" Content="OK" Width="330" Height="90" VerticalAlignment="Bottom" Margin="0,0,330,0" BorderThickness="0" FontSize="45" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" Foreground="{DynamicResource TextBox_Foreground_6}" HorizontalAlignment="Left" Click="Button_TwoButton_Left_Click"/>
+                    <Button x:Name="Button_TwoButton_Right" Content="Cancel" Width="330" Height="90" VerticalAlignment="Bottom" Margin="330,0,0,0" BorderThickness="0" FontSize="45" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" Foreground="{DynamicResource TextBox_Foreground_6}" HorizontalAlignment="Right" Click="Button_TwoButton_Right_Click"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+
+</UserControl>

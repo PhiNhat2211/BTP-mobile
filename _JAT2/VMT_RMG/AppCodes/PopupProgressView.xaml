@@ -1,0 +1,20 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="VMT_RMG.PopupProgressView"
+	x:Name="UserControl"
+	d:DesignWidth="800" d:DesignHeight="480">
+
+    <Grid x:Name="LayoutRoot" Background="#B2000000">
+		<Rectangle Stroke="Black" MouseLeftButtonUp="Image_progress_MouseLeftButtonUp">
+			<Rectangle.Fill>
+				<SolidColorBrush x:Name="BG_PopupProgress" Color="Black" Opacity="0"/>
+			</Rectangle.Fill>
+		</Rectangle>
+		<Image x:Name="Image_progress" HorizontalAlignment="Center" Height="50" Source="/VMT_RTG;component/Images/PopupProgress/g_img_loading_play01.png" Stretch="Fill" VerticalAlignment="Center" Width="50" MouseLeftButtonUp="Image_progress_MouseLeftButtonUp"/>
+        <TextBlock x:Name="ProgressBar_Text" TextWrapping="NoWrap" Text="" HorizontalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontSize="18.667" Height="24" TextAlignment="Center" Foreground="{DynamicResource TextBox_Foreground_2}" Visibility="Hidden" VerticalAlignment="Center" Margin="0,288,0,168" DataContext="{Binding}" TextTrimming="None" Width="Auto" />
+	</Grid>
+</UserControl>

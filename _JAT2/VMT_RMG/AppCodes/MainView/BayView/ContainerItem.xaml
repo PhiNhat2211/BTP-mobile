@@ -1,0 +1,210 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="VMT_RMG.ContainerItem"
+	x:Name="UserControl"
+
+    d:DesignWidth="45" d:DesignHeight="46" Width="75" Height="75" Loaded="UserControl_Loaded">
+
+    <!--d:DesignWidth="45" d:DesignHeight="46" Width="110" Height="75" Loaded="UserControl_Loaded">-->
+
+    <Grid x:Name="LayoutRoot">
+        <!--design 9*7-->
+        <Grid x:Name="Grid9x7" Visibility="Visible">
+            <Grid x:Name="Layout" Margin="0.8, 0.8, 0.8, 0.8" Width="73" Background="White"/>
+            <Image x:Name="Image_ContainerType" Stretch="Fill"/>
+            <Image x:Name="Image_ContainerType_Cover" Stretch="Fill"/>
+            <Grid Name="Blinked_Up" Visibility="Hidden">
+                <Polygon Name="Up" Points="2,1 4,8  0,8" Fill="Gray" Stretch="Fill" Visibility="Visible" Margin="0,7.33,2.5,10" HorizontalAlignment="Right" Width="68.666" RenderTransformOrigin="0.5,0.5"/>
+            </Grid>
+            <Grid Name="Blinked_Down" Visibility="Hidden" Margin="-0.167,0.498,0.167,0.751" RenderTransformOrigin="0.5,0.5">
+                <Polygon Name="Down" Points="2,0 1,7 0,0" Fill="Gray" Stretch="Fill" Visibility="Visible" Margin="0,6.671,3.167,4.51" HorizontalAlignment="Right" Width="68.666" RenderTransformOrigin="0.5,0.5"/>
+            </Grid>
+            <Image x:Name="Image_Container_CorrectionSelect" Source="/VMT_RTG;component/Images/Common/Inventory/Inventory_CorrectionSelect.png" Stretch="Fill" Visibility="Hidden" />
+
+            <Border x:Name="Swap_Circle"  CornerRadius="40" BorderThickness="2" BorderBrush="Black"  Visibility="Visible" Margin="2" />
+
+            <Grid x:Name="Grid_TextArear">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="15*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="12*"/>
+                    <ColumnDefinition Width="17*"/>
+                    <ColumnDefinition Width="12*"/>
+                    <ColumnDefinition Width="17*"/>
+                    <ColumnDefinition Width="12*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <Polygon Name="Pol_Up" Points="2,1 4,8  0,8"  Fill="Black" Stretch="Fill" Grid.ColumnSpan="3" Visibility="Visible" Grid.Column="2" Grid.Row="0" Margin="-7,2,-6,10" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2"/>
+                <Polygon Name="Pol_SetDown" Points="2,0 1,7 0,0" StrokeThickness="1" Stroke="Black" Stretch="Fill" Grid.ColumnSpan="7" Visibility="Visible" Margin="1,1,1,2.296" Grid.RowSpan="7"/>
+                <Polygon Name="Pol_PickUp" Points="2,1 4,8  0,8"  StrokeThickness="1" Stroke="Black" Stretch="Fill" Grid.ColumnSpan="7"  Margin="1,1,1,2.296" Visibility="Visible" Grid.RowSpan="7" Height="73.182" VerticalAlignment="Bottom"/>
+                <TextBlock x:Name="TextBlock_VesselCode" Text="MRSM" HorizontalAlignment="Left" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="10"  Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="2" Grid.Column="1"/>
+                <TextBlock x:Name="TextBlock_Operator" Text="OPR" HorizontalAlignment="Left" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="10" Grid.Row="1" Margin="4,0,0,0" Grid.Column="3" Grid.ColumnSpan="2"/>
+                <TextBlock x:Name="TextBlock_SizeType" Text="40GE" HorizontalAlignment="Left" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="10"  Grid.Row="2" Margin="4,0,1.5,0" Grid.ColumnSpan="2" Grid.Column="1"/>
+                <TextBlock x:Name="TextBlock_Fm" Text="F/18" HorizontalAlignment="Right" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="10" Grid.Row="2" Margin="0,0,3,0" Grid.Column="2" Grid.ColumnSpan="3"/>
+                <TextBlock x:Name="TextBlock_JobType" Text="LD" HorizontalAlignment="Right" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="11" Grid.Row="1" Margin="0,1,0,-2" Grid.Column="4" Grid.ColumnSpan="2"/>
+                <TextBlock x:Name="TextBlock_JobTypeKor" Text="W" HorizontalAlignment="Right" FontWeight="Bold" Foreground="DarkGray" FontSize="12" Margin="0,0,1,-3" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2"/>
+
+                <Polygon Name="Pol_Left" Points="1,0 1,2 0,1" Stretch="Fill" Fill="Black" Opacity="0.8" Visibility="Visible" Grid.Row="2" Grid.RowSpan="4" RenderTransformOrigin="0.5,0.5" Margin="0,-8,-3,0"/>
+                <TextBlock x:Name="TextBlock_ReFlug" Text="Plug" HorizontalAlignment="Left" FontWeight="Bold" Foreground="DarkGray" FontSize="12" Grid.Row="3" Margin="-5,-1,0,0" Grid.Column="2" Grid.ColumnSpan="2"/>
+                <Image x:Name="Img_PluggedIn" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3" Margin="0,0,10,0" Source="/VMT_RTG;component/Images/Common/Inventory/Inventory_Reefer_PlugIn_1.png" Stretch="Fill" Visibility="Visible" />
+                <TextBlock x:Name="TextBlock_TruckNo" Text="TRUC" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Foreground="DimGray" FontSize="12" Grid.Row="3" Margin="0,-1,3,-1" Grid.Column="3" Grid.ColumnSpan="3"/>
+                <Polygon Name="Pol_Right" Points="1,3 2,2 1,1" Stretch="Fill" Fill="Black" Margin="9,-8,0,0" Opacity="0.8" Visibility="Visible" Grid.Row="2" Grid.RowSpan="4" RenderTransformOrigin="0.5,0.5" Grid.Column="5" Grid.ColumnSpan="2"/>
+
+                <TextBlock x:Name="TextBlock_Hold" Text="H" HorizontalAlignment="Right" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="10" Grid.Row="5" Margin="0,4,0,0" Grid.Column="1"/>
+                <TextBlock x:Name="TextBlock_Inventory_Number" Text="1379" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DimGray" FontSize="20" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,7,0"/>
+
+                <TextBlock x:Name="Tbl_QcNo" Text="P05" HorizontalAlignment="Right" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="10" Grid.Row="4" Margin="0,0,-8,0" Grid.Column="1"/>
+                <TextBlock x:Name="Tbl_QcEtw" Text="10 17:00" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="10" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,4,0"/>
+
+                <Grid x:Name="TextBlock_Bundle" Grid.Row="6" HorizontalAlignment="Right" Background="Red" Width="9" Margin="0,0,0,2" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_Bundle_Content" Text="B" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="#FF464848" FontSize="7"/>
+                </Grid>
+                <Grid x:Name="TextBlock_HighCubic" Grid.Row="6" HorizontalAlignment="Right" Background="Blue" Width="9" Grid.Column="2" Margin="0,0,0,2"/>
+                <Grid x:Name="TextBlock_Damage" Grid.Row="6" HorizontalAlignment="Left" Background="HotPink" Width="9" Grid.Column="4" Margin="0,0,0,2"/>
+                <Grid x:Name="TextBlock_RMK" Grid.Row="6" HorizontalAlignment="Left" Background="Green" Width="9" Grid.Column="5" Margin="0,0,0,2"/>
+            </Grid>
+
+        </Grid>
+
+        <!--design 6*7-->
+        <Grid x:Name="Grid6x7" Visibility="Hidden">
+            <Border BorderThickness="1" BorderBrush="DimGray"/>
+            <Grid x:Name="Layout1" Margin="1, 1, 1, 1" Width="108" Background="White"/>
+            <Image x:Name="Image_ContainerType1" Stretch="Fill"/>
+            <Image x:Name="Image_ContainerType_Cover1" Stretch="Fill"/>
+            <Grid Name="Blinked_Up1" Visibility="Hidden">
+                <Polygon Name="Up1" Points="2,1 4,8  0,8" Fill="Gray" Stretch="Fill" Visibility="Visible" Margin="0,10,21.166,10" HorizontalAlignment="Right" Width="68.333" RenderTransformOrigin="0.5,0.5"/>
+            </Grid>
+            <Grid Name="Blinked_Down1" Visibility="Hidden" Margin="-0.167,0.498,0.167,0.751" RenderTransformOrigin="0.5,0.5">
+                <Polygon Name="Down1" Points="2,0 1,7 0,0" Fill="Gray" Stretch="Fill" Visibility="Visible" Margin="0,10,21.167,9.253" HorizontalAlignment="Right" Width="68.999" RenderTransformOrigin="0.5,0.5"/>
+            </Grid>
+            <Image x:Name="Image_Container_CorrectionSelect1" Source="/VMT_RTG;component/Images/Common/Inventory/Inventory_CorrectionSelect.png" Stretch="Fill" Visibility="Hidden" />
+
+            <Border x:Name="Swap_Circle1"  CornerRadius="40" BorderThickness="2" BorderBrush="Black"  Visibility="Visible" Margin="2" />
+
+            <Grid x:Name="Grid_TextArear1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="15*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="12*"/>
+                    <ColumnDefinition Width="17*"/>
+                    <ColumnDefinition Width="12*"/>
+                    <ColumnDefinition Width="17*"/>
+                    <ColumnDefinition Width="11*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <Polygon Name="Pol_Up1" Points="2,1 4,8  0,8"  Fill="Black" Stretch="Fill" Grid.ColumnSpan="5" Visibility="Visible" Grid.Column="1" Margin="0,2,0,-4" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5"/>
+                <Polygon Name="Pol_SetDown1" Points="2,0 1,7 0,0" StrokeThickness="1" Stroke="Black" Stretch="Fill" Grid.ColumnSpan="7" Visibility="Visible" Margin="1,1,1,2.296" Grid.RowSpan="7"/>
+                <Polygon Name="Pol_PickUp1" Points="2,1 4,8  0,8"  StrokeThickness="1" Stroke="Black" Stretch="Fill" Grid.ColumnSpan="7"  Margin="1,1,1,2.296" Visibility="Visible" Grid.RowSpan="7" Height="73.182" VerticalAlignment="Bottom"/>
+                <TextBlock x:Name="TextBlock_VesselCode1" Text="WWWW" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="13" Grid.Row="0" Grid.RowSpan="2" Margin="2,0,0,-3" Grid.ColumnSpan="3" Grid.Column="1"/>
+                <TextBlock x:Name="TextBlock_Operator1" Text="OPR" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="13" Grid.Row="0" Margin="7.75,0,0,-3" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                <TextBlock x:Name="TextBlock_SizeType1" Text="40GE" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="12" Grid.Row="2" Margin="0,0,10,-1" Grid.ColumnSpan="2" Grid.Column="1"/>
+                <TextBlock x:Name="TextBlock_Fm1" Text="F/181" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="12" Grid.Row="2" Margin="0,0,10,-1" Grid.Column="2" Grid.ColumnSpan="3"/>
+                <TextBlock x:Name="TextBlock_JobType1" Text="LD" HorizontalAlignment="Right" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="13" Grid.Row="1" Margin="0,2,1,-5" Grid.Column="4" Grid.ColumnSpan="2"/>
+                <TextBlock x:Name="TextBlock_JobTypeKor1" Text="KO" HorizontalAlignment="Right" FontWeight="Bold" Foreground="DarkGray" FontSize="14" Grid.Row="1" Margin="0,0,2,-6" Grid.Column="4" Grid.ColumnSpan="2"/>
+
+                <Polygon Name="Pol_Left1" Points="1,0 1,2 0,1" Stretch="Fill" Fill="Black" Opacity="0.8" Visibility="Visible" Grid.Row="1" Grid.RowSpan="5" RenderTransformOrigin="0.5,0.5" Margin="1,3,-2,-3"/>
+                <TextBlock x:Name="TextBlock_ReFlug1" Text="Plug" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="DarkGray" FontSize="14" Grid.Row="3" Margin="7,-4,0,-3" Grid.Column="2" Grid.ColumnSpan="2"/>
+                <Image x:Name="Img_PluggedIn1" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3" Margin="5,0,5,0" Source="/VMT_RTG;component/Images/Common/Inventory/Inventory_Reefer_PlugIn_1.png" Stretch="Fill" Visibility="Hidden"/>
+                <TextBlock x:Name="TextBlock_TruckNo1" Text="TRUC" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Foreground="DimGray" FontSize="15" Grid.Row="3" Margin="0,-4,2,-3" Grid.Column="3" Grid.ColumnSpan="3"/>
+                <Polygon Name="Pol_Right1" Points="1,3 2,2 1,1" Stretch="Fill" Fill="Black" Margin="-2,3,1,-3" Opacity="0.8" Visibility="Visible" Grid.Row="1" Grid.RowSpan="5" RenderTransformOrigin="0.5,0.5" Grid.Column="6"/>
+
+                <TextBlock x:Name="Tbl_QcNo1" Text="P05" HorizontalAlignment="Right" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="12" Grid.Row="4" Margin="0,0,-12,0" Grid.Column="1"/>
+                <TextBlock x:Name="Tbl_QcEtw1" Text="10 17:00" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="12" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="5" HorizontalAlignment="Right" Margin="0,0,7,0"/>
+
+                <TextBlock x:Name="TextBlock_Hold1" Text="H" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="13" Grid.Row="5" Margin="0,5,15,2" Grid.ColumnSpan="2" Grid.Column="1"/>
+                <TextBlock x:Name="TextBlock_Inventory_Number1" Text="1379" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DimGray" FontSize="22" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="6" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
+
+                <Grid x:Name="TextBlock_Bundle1" Grid.Row="6" HorizontalAlignment="Right" Background="Red" Width="9" Margin="0,0,0,2" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_Bundle_Content1" Text="B" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" Foreground="#FF464848" FontSize="7"/>
+                </Grid>
+                <Grid x:Name="TextBlock_HighCubic1" Grid.Row="6" HorizontalAlignment="Right" Background="Blue" Width="9" Grid.Column="2" Margin="0,0,0,2"/>
+                <Grid x:Name="TextBlock_Damage1" Grid.Row="6" HorizontalAlignment="Left" Background="HotPink" Width="9" Grid.Column="4" Margin="0,0,0,2"/>
+                <Grid x:Name="TextBlock_RMK1" Grid.Row="6" HorizontalAlignment="Left" Background="Green" Width="9" Grid.Column="5" Margin="0,0,0,2"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
+
+<!--design 6*7-->
+
+<!--<Grid x:Name="LayoutRoot">
+        <Border BorderThickness="1" BorderBrush="DimGray"/>
+        <Grid x:Name="Layout" Margin="1, 1, 1, 1" Background="White"/>
+        <Image x:Name="Image_ContainerType" Stretch="Fill"/>
+        <Grid Name="Blinked_Up" Visibility="Hidden">
+            <Polygon Name="Up" Points="2,1 4,8  0,8" Fill="Gray" Stretch="Fill" Visibility="Visible" Margin="0,10,21.166,10" HorizontalAlignment="Right" Width="68.333" RenderTransformOrigin="0.5,0.5"/>
+        </Grid>
+        <Grid Name="Blinked_Down" Visibility="Hidden" Margin="-0.167,0.498,0.167,0.751" RenderTransformOrigin="0.5,0.5">
+            <Polygon Name="Down" Points="2,0 1,7 0,0" Fill="Gray" Stretch="Fill" Visibility="Visible" Margin="0,10,21.167,9.253" HorizontalAlignment="Right" Width="68.999" RenderTransformOrigin="0.5,0.5"/>
+        </Grid>
+        <Image x:Name="Image_Container_CorrectionSelect" Source="/VMT_RTG;component/Images/Common/Inventory/Inventory_CorrectionSelect.png" Stretch="Fill" Visibility="Hidden" />
+
+        <Grid x:Name="Grid_TextArear">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="15*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="12*"/>
+                <ColumnDefinition Width="17*"/>
+                <ColumnDefinition Width="12*"/>
+                <ColumnDefinition Width="17*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Polygon Name="Pol_Up" Points="2,1 4,8  0,8"  Fill="Black" Stretch="Fill" Grid.ColumnSpan="5" Visibility="Visible" Grid.Column="1" Margin="0,2,0,-4" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5"/>
+            <Polygon Name="Pol_SetDown" Points="2,0 1,7 0,0" StrokeThickness="1" Stroke="Black" Stretch="Fill" Grid.ColumnSpan="7" Visibility="Visible" Margin="1,1,1,2.296" Grid.RowSpan="6"/>
+            <Polygon Name="Pol_PickUp" Points="2,1 4,8  0,8"  StrokeThickness="1" Stroke="Black" Stretch="Fill" Grid.ColumnSpan="7"  Margin="1,1,1,2.296" Visibility="Visible" Grid.RowSpan="6" Height="73.182" VerticalAlignment="Bottom"/>
+            <TextBlock x:Name="TextBlock_VesselCode" Text="VSL" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="12" Grid.Row="0" Grid.RowSpan="2" Margin="0,6,10,0" Grid.ColumnSpan="2" Grid.Column="1"/>
+            <TextBlock x:Name="TextBlock_Operator" Text="OPR" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="12" Grid.Row="0" Grid.RowSpan="2" Margin="0,6,15,0" Grid.Column="2" Grid.ColumnSpan="3"/>
+            <TextBlock x:Name="TextBlock_SizeType" Text="40GE" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="12" Grid.Row="2" Margin="0,2,10,0" Grid.ColumnSpan="2" Grid.Column="1"/>
+            <TextBlock x:Name="TextBlock_Fm" Text="F/181" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="12" Grid.Row="2" Margin="0,2,10,0" Grid.Column="2" Grid.ColumnSpan="3"/>
+            <TextBlock x:Name="TextBlock_JobType" Text="LD" HorizontalAlignment="Right" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="14" Grid.Row="1" Margin="0,2,3,-3" Grid.Column="4" Grid.ColumnSpan="2"/>
+            <TextBlock x:Name="TextBlock_JobTypeKor" Text="KO" HorizontalAlignment="Right" FontWeight="Bold" Foreground="DarkGray" FontSize="15" Grid.Row="1" Margin="0,0,5,-3" Grid.Column="4" Grid.ColumnSpan="2"/>
+
+            <Polygon Name="Pol_Left" Points="1,0 1,2 0,1" Stretch="Fill" Fill="Black" Opacity="0.8" Visibility="Visible" Grid.Row="1" Grid.RowSpan="4" RenderTransformOrigin="0.5,0.5" Margin="1,3,-2,-3"/>
+            <TextBlock x:Name="TextBlock_Grade" Text="Gra" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="12" Width="22" Grid.Row="3" Margin="0,1,13,0" Grid.ColumnSpan="2" Grid.Column="1"/>
+            <TextBlock x:Name="TextBlock_ReFlug" Text="Plug" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="12" Grid.Row="3" Grid.RowSpan="2" Margin="0,0,3,20" Grid.Column="2" Grid.ColumnSpan="2"/>
+            <TextBlock x:Name="TextBlock_TruckNo" Text="TRUC" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DimGray" FontSize="15" Grid.Row="3" Margin="0,0,2,0" Grid.Column="3" Grid.ColumnSpan="3"/>
+            <Polygon Name="Pol_Right" Points="1,3 2,2 1,1" Stretch="Fill" Fill="Black" Margin="-2,3,1,-3" Opacity="0.8" Visibility="Visible" Grid.Row="1" Grid.RowSpan="4" RenderTransformOrigin="0.5,0.5" Grid.Column="6"/>
+
+            <TextBlock x:Name="TextBlock_Hold" Text="H" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DarkGray" FontSize="13" Grid.Row="4" Margin="0,5,15,2" Grid.ColumnSpan="2" Grid.Column="1"/>
+            <TextBlock x:Name="TextBlock_Inventory_Number" Text="1379" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" Foreground="DimGray" FontSize="23" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="6" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
+
+            <Grid x:Name="TextBlock_Bundle" Grid.Row="5" HorizontalAlignment="Right" Background="Red" Width="9" Margin="0,0,0,2" Grid.Column="1">
+                <TextBlock x:Name="TextBlock_Bundle_Content" Text="B" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" Foreground="#FF464848" FontSize="8"/>
+            </Grid>
+            <Grid x:Name="TextBlock_HighCubic" Grid.Row="5" HorizontalAlignment="Right" Background="Blue" Width="9" Grid.Column="3" Margin="0,0,0,2"/>
+            <Grid x:Name="TextBlock_Damage" Grid.Row="5" HorizontalAlignment="Right" Background="HotPink" Width="9" Grid.Column="5" Margin="0,0,0,2"/>
+        </Grid>
+    </Grid>
+</UserControl>-->

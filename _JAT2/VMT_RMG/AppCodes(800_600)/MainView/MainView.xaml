@@ -1,0 +1,58 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:VMT_RMG_800by600"
+	mc:Ignorable="d"
+	x:Class="VMT_RMG_800by600.MainView"
+	x:Name="UserControl"
+	d:DesignWidth="1024" d:DesignHeight="704" Loaded="UserControl_Loaded">
+
+    <Grid x:Name="LayoutRoot" Background="{DynamicResource Gird_Background_4}">
+		<!--
+		<Grid.RowDefinitions>
+			<RowDefinition Height="80"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		<local:MenuBar x:Name="UC_MenuBar"/>
+		<local:JobRelationView x:Name="UC_BlockJobView" Grid.Row="1" Margin="0"/>
+		-->
+		<Image x:Name="BackgroundSample" Source="/VMT_RMG;component/Images/Sample/MainView_Sample.png" Visibility="Hidden"/>
+		<!--
+		<Grid x:Name="Grid_Top_Button" HorizontalAlignment="Right" Width="460" Height="44" VerticalAlignment="Top" Margin="0,8,556,0">
+			<Button x:Name="Btn_Available" Width="240" HorizontalAlignment="Left" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" VerticalAlignment="Top" Height="44" Margin="0" Content="Available" FontSize="20"/>
+			<Button x:Name="Btn_Search" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" VerticalAlignment="Top" Height="44" HorizontalAlignment="Right" Width="129" Content="Search" Margin="0,0,87,0" FontSize="20"/>
+			<Button x:Name="Btn_Refresh" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" VerticalAlignment="Top" Height="44" HorizontalAlignment="Right" Width="83" Content="Refresh" FontSize="20"/>
+		</Grid>
+		-->
+		<local:JobList x:Name="UC_JobList" HorizontalAlignment="Left" Margin="8,8,0,100" Width="462"/>
+        <Grid x:Name="Grid_Left_Bottom_Button" Margin="8,0,0,8" Height="92" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="460" Background="{DynamicResource Gird_Background_6}">
+			<Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+			<CheckBox x:Name="CheckBox_Block_All" Content="CheckBox" HorizontalAlignment="Center" Margin="8" BorderThickness="0" Style="{DynamicResource SkinCheckBox}" RenderTransformOrigin="1.633,0.5"/>
+			<CheckBox x:Name="Btn_JobSet" Style="{DynamicResource SkinCheckBox}" Grid.Column="1" Margin="8"/>
+		</Grid>
+		<local:InfomationView x:Name="UC_InfomationView" Margin="476,8,8,0" VerticalAlignment="Top" Height="98"/>
+		<local:BayView x:Name="UC_BayView" Margin="476,112,8,60"/>
+        <local:VirtualBlockView x:Name="UC_VirtualBlockView" Margin="476,112,8,60" Visibility="Hidden"/>
+		<local:NavigatorView x:Name="UC_NavigatorView" Margin="476,112,8,60" Visibility="Hidden"/>
+		<Grid x:Name="Grid_Right_Bottom_Button" Margin="476,0,8,8" Height="44" VerticalAlignment="Bottom">
+			<!--<Grid.ColumnDefinitions><ColumnDefinition Width="5*"/><ColumnDefinition Width="3*"/><ColumnDefinition Width="3*"/></Grid.ColumnDefinitions>-->
+			<Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+			<CheckBox x:Name="Btn_Navigator" Style="{DynamicResource SkinCheckBox}" Grid.Column="0" Margin="0" Content="Navigator" IsChecked="False"/>
+            <Button x:Name="Btn_Chg_Loc" Style="{DynamicResource SkinButtonStyle_With_Content}" VerticalAlignment="Top" Grid.Column="1" Content="CHG LOC" IsEnabled="False" Margin="8,0,0,0" FontSize="18" Foreground="{DynamicResource TextBox_Foreground_10}"/>
+            <Button x:Name="Btn_JobDone" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" VerticalAlignment="Top" Grid.Column="2" Content="On Chassis" IsEnabled="True" Margin="8,0,0,0" FontSize="18" Foreground="{DynamicResource TextBox_Foreground_6}"/>
+		</Grid>
+		<local:AvailableView x:Name="UC_AvailableView" Visibility="Hidden"/>
+		<local:BreakTimeView x:Name="UC_BreakTimeView" Visibility="Hidden"/>
+		<local:ContainerSearchView x:Name="UC_ContainerSearchView" Visibility="Hidden"/>
+		<local:JobTypeFilterView x:Name="UC_JobTypeFilterView" Visibility="Hidden"/>
+		<local:BlockSelectionView x:Name="UC_BlockSelectionView" Visibility="Hidden"/>
+		<local:BaySelectionView x:Name="UC_BaySelectionView" Visibility="Hidden" />
+		<local:MachineSearchView x:Name="UC_MachineSearchView" Visibility="Hidden"/>
+		<local:ContainerDetailView x:Name="UC_ContainerDetailView" Visibility="Hidden"/>
+        <local:VehicleContainerPositionView x:Name="UC_VehiclePositionView" Visibility="Hidden"/>
+        <local:ContainerSelectionView x:Name="UC_ContainerSelectionView" Visibility="Hidden"/>
+        <!--<local:CorrectionView x:Name="UC_CorrectionView" Visibility="Hidden"/>-->
+	</Grid>
+</UserControl>

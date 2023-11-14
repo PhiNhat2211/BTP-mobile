@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="VMT_RMG_800by600.JobTypeFilterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:local="clr-namespace:VMT_RMG_800by600" 
+             mc:Ignorable="d" 
+             d:DesignWidth="1024" d:DesignHeight="704" Loaded="UserControl_Loaded">
+	
+    <Grid x:Name="LayoutRoot" Background="#CC000000">
+            <local:JobTypeFilterControl HorizontalAlignment="Left" Width="462" Margin="8,56,0,116"/>
+    </Grid>
+</UserControl>

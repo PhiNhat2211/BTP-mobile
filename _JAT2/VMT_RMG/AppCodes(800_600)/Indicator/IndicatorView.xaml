@@ -1,0 +1,39 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="VMT_RMG_800by600.IndicatorView"
+	x:Name="UserControl"
+	d:DesignWidth="1024" d:DesignHeight="64" Loaded="UserControl_Loaded">
+	<!--<Grid x:Name="LayoutRoot" Background="{DynamicResource IndicatorView_BG_Color}" MouseLeftButtonDown="LayoutRoot_MouseLeftButtonDown">-->
+    <Grid x:Name="LayoutRoot" Background="{DynamicResource Gird_Background_1}" MouseLeftButtonDown="LayoutRoot_MouseLeftButtonDown">
+		<!--
+		<TextBlock x:Name="TextBlock_MachineID" HorizontalAlignment="Left" Margin="37,20,0,0" TextWrapping="Wrap" Text="RMG" Width="90" FontSize="18.667" FontFamily="/VMT_RMG;component/Fonts/#Neo Sans Pro Medium" VerticalAlignment="Top" Foreground="{DynamicResource Common_Text_White}" d:IsHidden="True"/>
+		<TextBlock x:Name="Label_UserID" HorizontalAlignment="Left" Margin="135,20,0,0" TextWrapping="Wrap" Text="User ID : " Width="75" FontSize="18.667" FontFamily="/VMT_RMG;component/Fonts/#Neo Sans Pro Medium" VerticalAlignment="Top" Foreground="{DynamicResource IndicatorView_Text_Color}" d:IsHidden="True"/>
+		<TextBlock x:Name="TextBox_UserID" HorizontalAlignment="Left" Margin="211,20,0,0" TextWrapping="Wrap" Width="75" FontSize="18.667" FontFamily="/VMT_RMG;component/Fonts/#Neo Sans Pro Medium" VerticalAlignment="Top" Foreground="{DynamicResource Common_Text_White}" d:IsHidden="True"/>
+		<TextBlock x:Name="Label_JobCount" HorizontalAlignment="Left" Margin="302,20,0,0" TextWrapping="Wrap" Text="Job Count :" Width="95" FontSize="18.667" FontFamily="/VMT_RMG;component/Fonts/#Neo Sans Pro Medium" VerticalAlignment="Top" Foreground="{DynamicResource IndicatorView_Text_Color}" d:IsHidden="True"/>
+		<TextBlock x:Name="TextBox_JobCount" HorizontalAlignment="Left" Margin="400,20,0,0" TextWrapping="Wrap" Width="75" FontSize="18.667" FontFamily="/VMT_RMG;component/Fonts/#Neo Sans Pro Medium" VerticalAlignment="Top" Foreground="{DynamicResource Common_Text_White}" d:IsHidden="True"/>
+		<TextBlock x:Name="TextBox_Version" HorizontalAlignment="Left" Margin="499,0,0,0" TextWrapping="Wrap" Text="Software Version 0.1" Width="180" FontFamily="/VMT_RMG;component/Fonts/#Neo Sans Pro Medium" Foreground="{DynamicResource IndicatorView_Text_Color}" VerticalAlignment="Center" FontSize="14.667" d:IsHidden="True"/>
+		<CheckBox x:Name="CheckBox_Power" Content="CheckBox" HorizontalAlignment="Right" Height="22" Margin="0,21,302,0" VerticalAlignment="Top" Width="23" BorderThickness="0" Style="{DynamicResource SkinCheckBox}" d:IsHidden="True"/>
+		<CheckBox x:Name="CheckBox_Wifi" Content="CheckBox" HorizontalAlignment="Right" Height="22" Margin="0,21,243,0" VerticalAlignment="Top" Width="30" BorderThickness="0" Style="{DynamicResource SkinCheckBox}" d:IsHidden="True"/>
+		<CheckBox x:Name="CheckBox_GPS" Content="CheckBox" HorizontalAlignment="Right" Height="22" Margin="0,21,191,0" VerticalAlignment="Top" Width="22" BorderThickness="0" Style="{DynamicResource SkinCheckBox}" d:IsHidden="True"/>
+		<Image x:Name="Image_CloseButton" HorizontalAlignment="Right" Source="/VMT_RMG;component/Images/IndicatorView/IndicatorView_close_default.png" Stretch="Fill" Width="154" d:IsHidden="True"/>
+		<Button x:Name="Btn_Close" Margin="0" Width="154" Height="64" HorizontalAlignment="Right" Style="{DynamicResource SkinButtonStyle}" Click="Btn_Close_Click" d:IsHidden="True"/>
+		<Button x:Name="Btn_Logout" Content="Button" Margin="0" Width="97" HorizontalAlignment="Right" Style="{DynamicResource SkinButtonStyle}" VerticalAlignment="Top" Visibility="Hidden" d:IsHidden="True"/>
+		-->
+		<Image x:Name="BackgroundSample" Source="/VMT_RMG;component/Images/Sample/IndicatorView_Sample.png" d:IsHidden="True" Visibility="Hidden" />
+		<Button x:Name="Btn_GoToMain" Width="85" HorizontalAlignment="Left" Style="{DynamicResource SkinButtonStyle}" VerticalAlignment="Top" Visibility="Hidden"/>
+		<TextBlock x:Name="TextBlock_MachineID" HorizontalAlignment="Left" Margin="108,21,0,0" TextWrapping="Wrap" Text="RMG" Width="95" FontSize="18.667" FontFamily="/VMT_RMG;component/Fonts/#Neo Sans Pro Medium" VerticalAlignment="Top" Foreground="{DynamicResource Common_Text_White}"/>
+		<TextBlock x:Name="Label_UserID" HorizontalAlignment="Left" Margin="203,21,0,0" TextWrapping="Wrap" Text="User ID : " Width="75" FontSize="18.667" FontFamily="/VMT_RMG;component/Fonts/#Neo Sans Pro Medium" VerticalAlignment="Top" Foreground="{DynamicResource IndicatorView_Text_Color}"/>
+		<TextBlock x:Name="TextBox_UserID" HorizontalAlignment="Left" Margin="278,21,0,0" TextWrapping="Wrap" Width="75" FontSize="18.667" FontFamily="/VMT_RMG;component/Fonts/#Neo Sans Pro Medium" VerticalAlignment="Top" Foreground="{DynamicResource Common_Text_White}" Text=""/>
+		<TextBlock x:Name="Label_JobCount" Margin="373,20,0,0" TextWrapping="Wrap" Text="Job Count :" FontSize="18.667" FontFamily="/VMT_RMG;component/Fonts/#Neo Sans Pro Medium" VerticalAlignment="Top" Foreground="{DynamicResource IndicatorView_Text_Color}" HorizontalAlignment="Left" Width="95"/>
+		<TextBlock x:Name="TextBox_JobCount" Margin="468,20,481,0" TextWrapping="Wrap" FontSize="18.667" FontFamily="/VMT_RMG;component/Fonts/#Neo Sans Pro Medium" VerticalAlignment="Top" Foreground="{DynamicResource Common_Text_White}" Text=""/>
+		<TextBlock x:Name="TextBox_Version" HorizontalAlignment="Left" Margin="547,24,0,22.163" TextWrapping="Wrap" Text="Software Version 3.16.0.71" Width="202" FontFamily="/VMT_RMG;component/Fonts/#Neo Sans Pro Medium" Foreground="{DynamicResource IndicatorView_Text_Color}" FontSize="14.667" d:LayoutOverrides="Height"/>
+        <CheckBox x:Name="CheckBox_Power" Content="CheckBox" HorizontalAlignment="Right" Height="40" Margin="0,0,235,0" VerticalAlignment="Center" Width="40" BorderThickness="0" Style="{DynamicResource SkinCheckBox}" IsHitTestVisible="False"/>
+		<CheckBox x:Name="CheckBox_Wifi" Content="CheckBox" HorizontalAlignment="Right" Height="40" Margin="0,0,185,0" VerticalAlignment="Center" Width="40" BorderThickness="0" Style="{DynamicResource SkinCheckBox}" RenderTransformOrigin="1.633,0.5" IsHitTestVisible="False"/>
+		<CheckBox x:Name="CheckBox_Siemens" Content="CheckBox" HorizontalAlignment="Right" Height="40" Margin="0,0,135,0" VerticalAlignment="Center" Width="40" BorderThickness="0" Style="{DynamicResource SkinCheckBox}" IsHitTestVisible="False"/>
+		<Button x:Name="Btn_Close" Margin="0" Width="95" Height="64" HorizontalAlignment="Right" Style="{DynamicResource SkinButtonStyle}"/>
+	</Grid>
+</UserControl>

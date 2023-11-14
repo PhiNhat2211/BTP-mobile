@@ -1,0 +1,78 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:VMT_RMG"
+	mc:Ignorable="d"
+	x:Class="VMT_RMG.JobList"
+	x:Name="UserControl"
+	d:DesignWidth="429" d:DesignHeight="543" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <local:IntToStringConverter x:Key="IntToStringConverter"/>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="{DynamicResource Gird_Background_4}">
+        <Grid x:Name="Grid_SeparateType" Height="45" Margin="0,0,0,0" VerticalAlignment="Top" d:LayoutOverrides="GridBox" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <CheckBox x:Name="CheckBox_All" Grid.Column="0" Content="All" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" RenderTransformOrigin="1.633,0.5" IsChecked="True" Margin="0,0,2,0"
+                      FontSize="18" Style="{DynamicResource SkinCheckBox_Joblist}"/>
+            <CheckBox x:Name="CheckBox_Status_Active" Content="Active" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0"  RenderTransformOrigin="1.633,0.5" Grid.Column="1" IsChecked="False" Margin="2,0"
+                      FontSize="18" Style="{DynamicResource SkinCheckBox_Joblist}"/>
+            <Button x:Name="Btn_Available" Style="{DynamicResource SkinButtonStyle_With_Content}" Margin="2,0" Content="Available" Grid.Column="2"
+                    FontSize="18" Foreground="{DynamicResource TextBox_Foreground_10}"/>
+            <Button x:Name="Btn_Search" Style="{DynamicResource SkinButtonStyle_With_Content}" Grid.Column="3" Content="Search" Margin="2,0"
+                    FontSize="18" Foreground="{DynamicResource TextBox_Foreground_10}"/>
+            <Button x:Name="Btn_GC" Style="{DynamicResource SkinButtonStyle_With_Content}" Grid.Column="4" Content="G.C" Margin="2,0"
+                    FontSize="18" Foreground="{DynamicResource TextBox_Foreground_10}"/>
+            <Grid x:Name="Btn_GC_dis" Background="Black" Grid.Column="4"  Margin="2,0" Opacity="0.5" Visibility="Hidden"/>
+            <CheckBox x:Name="CheckBox_Refresh" Style="{DynamicResource SkinCheckBox_Joblist}" Grid.Column="5" Content="Refresh" Margin="2,0,0,0"
+                    FontSize="18" Foreground="{DynamicResource TextBox_Foreground_10}" IsChecked="True" />
+        </Grid>
+        <!--<Grid x:Name="Grid_SeparateTypeClick" Height="45" Margin="0,0,0,0" Background="#01000000" VerticalAlignment="Top" d:LayoutOverrides="GridBox" MouseLeftButtonUp="Grid_SeparateType_MouseLeftButtonUp"/>-->
+        <Grid x:Name="Grid_JobList">
+            <Grid Height="45" VerticalAlignment="Top" Visibility="Hidden">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <CheckBox x:Name="CheckBox_Type_GI" Content="GI" BorderThickness="0" RenderTransformOrigin="1.633,0.5" Margin="0,0,2,0" Grid.Column="0" IsChecked="False" FontSize="20"
+                          Style="{DynamicResource SkinCheckBox_Joblist}"/>
+                <CheckBox x:Name="CheckBox_Type_GO" Content="GO" BorderThickness="0" RenderTransformOrigin="1.633,0.5" Margin="2,0" Grid.Column="1" IsChecked="False" FontSize="20"
+                          Style="{DynamicResource SkinCheckBox_Joblist}"/>
+                <CheckBox x:Name="CheckBox_Type_MI" Content="MI"  BorderThickness="0" RenderTransformOrigin="1.633,0.5" Margin="2,0" Grid.Column="2" IsChecked="False" FontSize="20"
+                          Style="{DynamicResource SkinCheckBox_Joblist}"/>
+                <CheckBox x:Name="CheckBox_Type_MO" Content="MO" BorderThickness="0" RenderTransformOrigin="1.633,0.5" Margin="1,0,3,0" Grid.Column="3" IsChecked="False" FontSize="20"
+                          Style="{DynamicResource SkinCheckBox_Joblist}"/>
+                <CheckBox x:Name="CheckBox_Type_DS" Content="DS" BorderThickness="0" RenderTransformOrigin="1.633,0.5" Margin="2,0" Grid.Column="4" IsChecked="False" FontSize="20"
+                           Style="{DynamicResource SkinCheckBox_Joblist}"/>
+                <CheckBox x:Name="CheckBox_Type_LD" Content="LD" BorderThickness="0" RenderTransformOrigin="1.633,0.5" Margin="2,0" Grid.Column="5" IsChecked="False" FontSize="20"
+                          Style="{DynamicResource SkinCheckBox_Joblist}"/>
+                <CheckBox x:Name="CheckBox_Type_RH" Content="RH" BorderThickness="0" RenderTransformOrigin="1.633,0.5" Margin="2,0,0,0" Grid.Column="6" FontSize="20"
+                          Style="{DynamicResource SkinCheckBox_Joblist}"/>
+            </Grid>
+            <Button x:Name="Btn_PageUp" HorizontalAlignment="Left" Width="50" BorderThickness="0" Style="{DynamicResource SkinButtonStyle}" IsEnabled="False" Margin="0,10,0,0" Height="231" VerticalAlignment="Top"/>
+            <Grid x:Name="Grid_PageInfo" Margin="0,241.386,0,241.614" Background="{DynamicResource Gird_Background_5}" HorizontalAlignment="Left" Width="50">
+                <TextBlock x:Name="TextBlock_PageNum" Margin="0" TextWrapping="Wrap" Text="1/1" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="/VMT_RMG;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" FontSize="18"/>
+            </Grid>
+            <Button x:Name="Btn_PageDown" HorizontalAlignment="Left" Width="50" BorderThickness="0" Style="{DynamicResource SkinButtonStyle}" Height="231" VerticalAlignment="Bottom" IsEnabled="False" Margin="0,0,0,10"/>
+            <ListBox x:Name="ListBox_Job" Margin="55,2,0,2" BorderThickness="0" ItemContainerStyle="{DynamicResource JobListBoxItemStyleSmall}" 
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="-3,0,-1,0" HorizontalContentAlignment="Stretch" ClipToBounds="True"
+                     Background="{DynamicResource Gird_Background_4}" ScrollViewer.CanContentScroll="False" Focusable="False" HorizontalAlignment="Left" Width="374">
+
+            </ListBox>
+        </Grid>
+    </Grid>
+</UserControl>

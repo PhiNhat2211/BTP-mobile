@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="VMT_RMG.ExternalTruckNoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VMT_RMG"
+             mc:Ignorable="d" 
+             d:DesignHeight="704" d:DesignWidth="1024" Loaded="UserControl_Loaded">
+    <Grid x:Name="Grid_Root" Background="#CC000000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="Grid_Content" Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="Grid_Title" Background="#212121">
+                <TextBlock x:Name="Tbl_Title" Text="DISPLAY OPTION" FontSize="40" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFFFFFF"/>
+            </Grid>
+            <Grid x:Name="Grid_Option" Grid.Row="1" Background="LightGray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid x:Name="Grid_ExternalTruck" Grid.Row="0" Visibility="Hidden">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="Tbl_ExternalTruck" Text="External Truck No" FontSize="40" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_All" Grid.Column="1" Text="All" FontSize="45" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <CheckBox x:Name="Checkbox_ExternalTruckAll" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="4" ScaleY="4" />
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                </Grid>
+
+                <Grid x:Name="Grid_YTAssigned" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="0*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="Tbl_YTAssigned" Text="Only YT assigned job display" FontSize="40" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_YTAssignedSelect" Grid.Column="1" Text="" FontSize="45" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <CheckBox x:Name="Checkbox_YTAssigned" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="4" ScaleY="4" />
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                </Grid>
+                
+                <Grid x:Name="Grid_ExternalTruckBay" Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="0*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="Tbl_HideExternalTruckBay" Text="Hide BAT NO in Bay View" FontSize="40" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_ExternalTruckBaySelect" Grid.Column="1" Text="" FontSize="45" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <CheckBox x:Name="Checkbox_HideExternalTruckBay" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="4" ScaleY="4" />
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                </Grid>
+            </Grid>
+            <Grid x:Name="Grid_Close" Grid.Row="2" Background="#212121">
+                <TextBlock x:Name="Tbl_Close" Text="CLOSE" FontSize="40" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFFFFFF"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

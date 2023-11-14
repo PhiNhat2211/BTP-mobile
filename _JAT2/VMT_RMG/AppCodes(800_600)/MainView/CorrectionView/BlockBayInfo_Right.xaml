@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="VMT_RMG_800by600.BlockBayInfo_Right"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="45" d:DesignWidth="540" Loaded="UserControl_Loaded">
+	
+    <Grid x:Name="LayoutRoot">
+    	<Grid.ColumnDefinitions>
+    		<ColumnDefinition/>
+    		<ColumnDefinition/>
+    	</Grid.ColumnDefinitions>
+        <Image x:Name="BackgroundSample" Source="/VMT_RMG;component/Images/Sample/BlockBayInfo_Sample.png" Visibility="Hidden" Margin="0" Stretch="Fill" Grid.Column="0" Grid.ColumnSpan="2"/>
+		
+		<Button x:Name="Btn_BlockDown" HorizontalAlignment="Left" Width="60" BorderThickness="0" Style="{DynamicResource SkinButtonStyle}" Height="45" VerticalAlignment="Center" IsEnabled="True"
+			Grid.Column="0"/>
+		<Button x:Name="Btn_BlockText" HorizontalAlignment="Center" Width="140" BorderThickness="0" Style="{DynamicResource SkinButtonStyle}" Height="45" VerticalAlignment="Center" IsEnabled="False" Content="" Margin="0,0,4,0" Foreground="#FFFFFF"
+			Grid.Column="0"/>
+		<Button x:Name="Btn_BlockUp" HorizontalAlignment="Right" Height="45" VerticalAlignment="Center" Width="60" BorderThickness="0" Style="{DynamicResource SkinButtonStyle}" IsEnabled="True" Margin="0,0,4,0"
+			Grid.Column="0"/>
+		
+		<Button x:Name="Btn_BayDown" BorderThickness="0" Style="{DynamicResource SkinButtonStyle}" Height="45" VerticalAlignment="Center" IsEnabled="True" Margin="4,0,0,0"
+			Grid.Column="1" HorizontalAlignment="Left" Width="60"/>
+		<Button x:Name="Btn_BayText" HorizontalAlignment="Center" Width="140" BorderThickness="0" Style="{DynamicResource SkinButtonStyle}" Height="45" VerticalAlignment="Center" IsEnabled="False" Content="" Margin="4,0,0,0" Foreground="#FFFFFF"
+			Grid.Column="1"/>
+		<Button x:Name="Btn_BayUp" Width="60" BorderThickness="0" Style="{DynamicResource SkinButtonStyle}" Height="45" VerticalAlignment="Center" IsEnabled="True" Margin="0"
+			Grid.Column="1" HorizontalAlignment="Right"/>
+    </Grid>
+</UserControl>

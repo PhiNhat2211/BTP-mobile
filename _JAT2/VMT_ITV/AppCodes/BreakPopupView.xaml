@@ -1,0 +1,85 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="VMT_ITV.BreakPopupView"
+	x:Name="UserControl"
+	d:DesignWidth="800" d:DesignHeight="600" Loaded="UserControl_Loaded">
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Grid.RowSpan="2" Grid.ColumnSpan="2" Fill="#80000000"/>
+        <Grid x:Name="Grid_Break" Grid.Row="1" Background="#FFEFF2F3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="Grid_break_Start_Time" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Name="Lbl_ByControl" Margin="20,0,0,0" Text="By Control" FontSize="30" FontWeight="Bold" Foreground="Red" VerticalAlignment="Center"/>
+                <TextBlock x:Name="TextBlock_Season_Name" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Name" FontWeight="Bold" FontSize="40" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" Margin="0,0,50,0"/>
+                <TextBlock x:Name="TextBlock_Start_Time" FontWeight="Bold" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Start time" FontSize="26.667" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro"/>
+                <Grid Grid.Row="1" Grid.Column="1" Margin="0,0,50,0">
+                    <Image Source="/VMT_ITV;component/Images/MainView/day/main_available_input01_default.png" Stretch="Fill"/>
+                    <TextBlock x:Name="TextBlock_Break_Start_Date" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="26.667" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontWeight="Normal" d:LayoutOverrides="Height"><Run Text="2013/02/22"/></TextBlock>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1" Margin="0,0,50,0" Visibility="Hidden">
+                    <Image Source="/VMT_ITV;component/Images/MainView/day/main_available_input01_default.png" Stretch="Fill"/>
+                    <TextBlock x:Name="TextBlock_Break_Start_Time" TextWrapping="Wrap" Text="10:22" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="26.667" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontWeight="Bold" d:LayoutOverrides="Height"/>
+                </Grid>
+            </Grid>
+
+            <Grid x:Name="Grid_break_End_Time" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="TextBlock_End_Time" FontWeight="Bold" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Text="End time" FontSize="26.667" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro"/>
+                <Grid Grid.Row="0" Grid.Column="1" Margin="0,0,50,0">
+                    <Image Source="/VMT_ITV;component/Images/MainView/day/main_available_input01_default.png" Stretch="Fill"/>
+                    <TextBlock x:Name="TextBlock_Break_End_Date" TextWrapping="Wrap" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontWeight="Normal" d:LayoutOverrides="Height"><Run Text="2013/02/22"/></TextBlock>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1" Margin="0,0,50,0" Visibility="Hidden">
+                    <Image Source="/VMT_ITV;component/Images/MainView/day/main_available_input01_default.png" Stretch="Fill"/>
+                    <TextBlock x:Name="TextBlock_Break_End_Time" TextWrapping="Wrap" Text="10:22" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontWeight="Bold" d:LayoutOverrides="Height"/>
+                </Grid>
+            </Grid>
+
+            <Grid x:Name="Grid_Button_Break" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btn_Complete_Job" Grid.Row="0" Grid.Column="0" Margin="0,2,5,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Complete Job" Background="#FF7FBCF1" Visibility="Hidden"
+                    FontSize="26" Foreground="{DynamicResource TextBox_Foreground_1}" FontFamily="/VMT_SC;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" BorderBrush="{x:Null}" Click="btn_Complete_Job_Click"/>
+                <Button x:Name="btn_Release_Job" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,2,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Release Job" Background="#FF7FBCF1"
+                    FontSize="26" Foreground="{DynamicResource TextBox_Foreground_1}" FontFamily="/VMT_SC;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" BorderBrush="{x:Null}" Click="btn_Release_Job_Click"/>
+                <Button x:Name="btn_Cancel" Grid.Row="1" Grid.Column="0" Margin="0,2,5,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Cancel" Background="#FF4F4E4E" 
+                    FontSize="26" Foreground="{DynamicResource TextBox_Foreground_6}" FontFamily="/VMT_SC;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" BorderBrush="{x:Null}" Click="Btn_Cancel_Click"/>
+                <Button x:Name="btn_Complete" Grid.Row="1" Grid.Column="1" Margin="5,2,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Finish" Background="#FF4F4E4E" 
+                    FontSize="26" Foreground="{DynamicResource TextBox_Foreground_6}" FontFamily="/VMT_SC;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" BorderBrush="{x:Null}" Click="Btn_Complete_Click"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

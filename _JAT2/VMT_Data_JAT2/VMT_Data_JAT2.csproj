@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7C64ED8B-AF11-4483-B81D-74A5CC549DB2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VMT_Data_JAT2</RootNamespace>
+    <AssemblyName>VMT_Data</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ForeignInfo.cs" />
+    <Compile Include="Ini.cs" />
+    <Compile Include="Interface\Hessian\VMT_DataMgr_Common_HessianCallback.cs" />
+    <Compile Include="Interface\Hessian\VMT_DataMgr_ITV_HessianCallback.cs" />
+    <Compile Include="Interface\Hessian\VMT_DataMgr_RMG_HessianCallback.cs" />
+    <Compile Include="Interface\TCP\VMT_DataMgr_Common_TCPCallback.cs" />
+    <Compile Include="Interface\TCP\VMT_DataMgr_RMG_TCPCallback.cs" />
+    <Compile Include="Interface\VMT_DataMgr_Common.cs" />
+    <Compile Include="Interface\VMT_DataMgr_ITV.cs" />
+    <Compile Include="Interface\VMT_DataMgr_RMG.cs" />
+    <Compile Include="Interface\VMT_DataMgr.cs" />
+    <Compile Include="Marshalling\VMT_Geo.cs" />
+    <Compile Include="Objects\cVMT_Data_Common_JAT2.cs" />
+    <Compile Include="Objects\cVMT_Data_ECH_JAT2.cs" />
+    <Compile Include="Objects\cVMT_Data_ITV_JAT2.cs" />
+    <Compile Include="Objects\cVMT_Data_RMG_JAT2.cs" />
+    <Compile Include="Objects\cVMT_Data_RTG_JAT2.cs" />
+    <Compile Include="Objects\VMT_Data_SIEMENS.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{36DC71F7-B929-4E76-AA61-BB58F3CBC17E}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HessianComm\HessianComm.csproj">
+      <Project>{2F97EAEE-2B88-46D8-AAF8-817962512ECA}</Project>
+      <Name>HessianComm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HessianCSharp\HessianCSharp.csproj">
+      <Project>{981C2E02-11B4-49DA-A462-48C9AC1FD095}</Project>
+      <Name>HessianCSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UDPComm\UDPComm.csproj">
+      <Project>{39DE44D8-4D0F-46E0-A151-1DBC7E28AD83}</Project>
+      <Name>UDPComm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VMT_Res\VMT_Res.csproj">
+      <Project>{8CC27843-97CF-4FA8-AEC4-3B91275DC04C}</Project>
+      <Name>VMT_Res</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\WPSocketComm\WPSocketComm.csproj">
+      <Project>{3D321321-DBD4-4CCD-B3F6-04FA60B8E435}</Project>
+      <Name>WPSocketComm</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

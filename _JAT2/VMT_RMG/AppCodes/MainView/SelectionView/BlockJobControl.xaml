@@ -1,0 +1,43 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="VMT_RMG.BlockJobControl"
+	x:Name="UserControl"
+	d:DesignWidth="220" d:DesignHeight="84" Width="220" Height="84" Focusable="True">
+
+    <Grid x:Name="LayoutRoot">
+        <Border x:Name="Border_BG" BorderThickness="2">
+            <Grid x:Name="Grid_Inner" Margin="8,3">
+                <Image x:Name="BackgroundSample" Source="/VMT_RTG;component/Images/MainView/SelectionView/BlockJobControl.png"/>
+                <Grid x:Name="Grid_BlockName" HorizontalAlignment="Left" Width="66">
+                    <TextBlock x:Name="TextBlock_BlockName" HorizontalAlignment="Center" Margin="0,11,0,0" TextWrapping="Wrap" Text="NA" VerticalAlignment="Top" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontSize="24" Foreground="White" TextAlignment="Center" d:LayoutOverrides="VerticalAlignment"/>
+                    <TextBlock x:Name="TextBlock_UserCode" HorizontalAlignment="Center" Margin="7,0,5,7" TextWrapping="Wrap" Text="511" VerticalAlignment="Bottom" Width="50" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontSize="15" Foreground="Black" TextAlignment="Center" Height="17"/>
+                    <TextBlock x:Name="TextBlock_LoginUser" Visibility="Hidden" HorizontalAlignment="Center" Margin="7.729,0,5.237,4.22" TextWrapping="Wrap" Text="User Id" VerticalAlignment="Bottom" Width="53.034" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontSize="10" Foreground="Black" TextAlignment="Center" Height="11.5"/>
+                </Grid>
+                <Grid x:Name="Grid_JobType" Margin="65,0,3,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="TextBlock_DS" Margin="0,11,0,0" TextWrapping="Wrap" Text="0" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontSize="16" Foreground="Black" TextAlignment="Center" Grid.Row="0" Grid.Column="0"/>
+                    <TextBlock x:Name="TextBlock_MO" Margin="0,11,2.381,0" TextWrapping="Wrap" Text="0" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontSize="16" Foreground="Black" TextAlignment="Center" Grid.Row="0" Grid.Column="1"/>
+                    <TextBlock x:Name="TextBlock_GI" Margin="0,11,3.271,0" TextWrapping="Wrap" Text="0" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontSize="16" Foreground="Black" TextAlignment="Center" Grid.Row="0" Grid.Column="2"/>
+                    <TextBlock x:Name="TextBlock_ETC" Margin="32.466,11,3.737,0" TextWrapping="Wrap" Text="0" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontSize="16" Foreground="Black" TextAlignment="Center" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"/>
+                    <TextBlock x:Name="TextBlock_LD" Margin="0,8,0,0" TextWrapping="Wrap" Text="0" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontSize="16" Foreground="Black" TextAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+                    <TextBlock x:Name="TextBlock_MI" Margin="0,8,2.381,0" TextWrapping="Wrap" Text="0" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontSize="16" Foreground="Black" TextAlignment="Center" Grid.Row="1" Grid.Column="1"/>
+                    <TextBlock x:Name="TextBlock_GO" Margin="0,8,3.271,0" TextWrapping="Wrap" Text="0" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontSize="16" Foreground="Black" TextAlignment="Center" Grid.Row="1" Grid.Column="2"/>
+                    <TextBlock x:Name="TextBlock_Total" Margin="31.466,8,3.737,0" TextWrapping="Wrap" Text="0" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontSize="16" Foreground="Black" TextAlignment="Center" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

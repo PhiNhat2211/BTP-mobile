@@ -1,0 +1,167 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="VMT_ITV.MachineInfo"
+	x:Name="UserControl"
+	d:DesignWidth="800" d:DesignHeight="363.333" Height="600" Loaded="UserControl_Loaded">
+
+    <Grid x:Name="LayoutRoot" Background="#CC000000">
+        <Grid x:Name="Grid_Modal" Margin="0,60,0,0">
+            <Rectangle Fill="{DynamicResource Gird_Background_5}" Stroke="Black"/>
+            <Grid Margin="50,30" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="12*"/>
+                    <ColumnDefinition Width="18*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="8*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="Label_MachineType" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Machine Type : " Margin="0,5" Height="35" 
+					Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="0" Grid.Column="0" Width="205"/>
+                <TextBox x:Name="TextBox_MachineType" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TC" Margin="5" Width="119"
+					Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Column="1" Padding="5,0" GotFocus="TextBox_GotFocus" />
+
+                <TextBlock x:Name="Label_MachineID" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Machine ID : " Margin="0,5" Height="35" 
+					Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="1" Grid.Column="0" Width="205"/>
+                <TextBox x:Name="TextBox_MachineID" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="ITV01" Margin="5" Width="120"
+					Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="1" Grid.Column="1" Padding="5,0" GotFocus="TextBox_GotFocus" TextChanged="TextBox_MachineID_TextChanged"/>
+
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="TOS IP / Port: "  Margin="0,5" Height="35" 
+					Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="2" Grid.Column="0" Width="205"/>
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="TextBox_Tos_IP1" TextWrapping="Wrap" Margin="5" Text="116"
+						Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" GotFocus="TextBox_GotFocus" TextAlignment="Center"/>
+                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="." Margin="0,16,0,0" 
+						Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="29.333" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="TextBox_Tos_IP2" TextWrapping="Wrap" Margin="5" Text="127"
+						 Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Column="1" GotFocus="TextBox_GotFocus" TextChanged="TextBox_MachineID_TextChanged" TextAlignment="Center"/>
+                    <TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="." Margin="0,16,0,0"
+						 Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="29.333" Grid.Column="1" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="TextBox_Tos_IP3" TextWrapping="Wrap" Margin="5" Text="223"
+						Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Column="2" GotFocus="TextBox_GotFocus" TextChanged="TextBox_MachineID_TextChanged" TextAlignment="Center"/>
+                    <TextBlock TextWrapping="Wrap" Text="." Margin="0,16,0,0" HorizontalAlignment="Center"
+						Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="29.333" Grid.Column="2" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="TextBox_Tos_IP4" TextWrapping="Wrap" Margin="5" Text="207"
+						Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Column="3" GotFocus="TextBox_GotFocus" TextChanged="TextBox_MachineID_TextChanged" TextAlignment="Center" />
+                </Grid>
+
+                <TextBlock Text="/" 
+					Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="2" Grid.Column="2" TextAlignment="Center" Margin="0,10,0,0"/>
+
+                <!--<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Tos Port :" Margin="0" Height="35" 
+					Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667"  Grid.Row="2" Grid.Column="3"/>-->
+                <TextBox x:Name="TextBox_Tos_Port" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="5" Width="120" Text="7310"
+					Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="2" Grid.Column="3" GotFocus="TextBox_GotFocus" TextAlignment="Center"/>
+
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Update IP / Port: "  Margin="0" Height="35" 
+					Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="3" Grid.Column="0"/>
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="TextBox_Update_IP1" TextWrapping="Wrap" Margin="5" Text="-"
+						Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" GotFocus="TextBox_GotFocus" TextAlignment="Center"/>
+                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="." Margin="0,16,0,0" 
+						Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="29.333" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="TextBox_Update_IP2" TextWrapping="Wrap" Margin="5" Text="-"
+						 Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Column="1" GotFocus="TextBox_GotFocus" TextChanged="TextBox_MachineID_TextChanged" TextAlignment="Center"/>
+                    <TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="." Margin="0,16,0,0"
+						 Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="29.333" Grid.Column="1" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="TextBox_Update_IP3" TextWrapping="Wrap" Margin="5" Text="-"
+						Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Column="2" GotFocus="TextBox_GotFocus" TextChanged="TextBox_MachineID_TextChanged" TextAlignment="Center"/>
+                    <TextBlock TextWrapping="Wrap" Text="." Margin="0,16,0,0" HorizontalAlignment="Center"
+						Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="29.333" Grid.Column="2" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="TextBox_Update_IP4" TextWrapping="Wrap" Margin="5" Text="-"
+						Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Column="3" GotFocus="TextBox_GotFocus" TextChanged="TextBox_MachineID_TextChanged" TextAlignment="Center" />
+                </Grid>
+
+                <TextBlock Text="/" 
+					Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="3" Grid.Column="2" TextAlignment="Center" Margin="0,10,0,0"/>
+
+                <!--<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Siemens Port :" Margin="0" Height="35" 
+					Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667"  Grid.Row="3" Grid.Column="3"/>-->
+                <TextBox x:Name="TextBox_Update_Port" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="5" Width="120" Text="None"
+					Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="3" Grid.Column="3" GotFocus="TextBox_GotFocus" TextAlignment="Center"/>
+
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="GPS : " Margin="0,5" Height="35" 
+					Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="4" Grid.Column="0" Width="203"/>
+                <TextBox x:Name="TextBox_GPSComPort" HorizontalAlignment="Left" TextWrapping="Wrap" Text="2" Margin="5" Width="50"
+					Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="4" Grid.Column="1" Padding="5,0" GotFocus="TextBox_GotFocus" TextAlignment="Center" />
+
+                <TextBlock x:Name="Static_Sensor" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Sensor : " Margin="0,5" Height="35" 
+					Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="5" Grid.Column="0" Width="205"/>
+                <TextBox x:Name="TextBox_SensorComPort" HorizontalAlignment="Left" TextWrapping="Wrap" Text="1" Margin="5" Width="50"
+					Foreground="{DynamicResource TextBox_Foreground_2}" Background="{DynamicResource TextBox_Background_3}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="5" Grid.Column="1" Padding="5,0" GotFocus="TextBox_GotFocus" TextAlignment="Center" />
+
+                <TextBlock TextWrapping="Wrap" Text="UI Size:" Margin="0" Height="35"  HorizontalAlignment="Right"
+					Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="5" Grid.Column="1"/>
+                <RadioButton x:Name="Rad_Size1024" GroupName="FormSize" Grid.Row="5" Grid.Column="4" Margin="0,0,0,0" FontSize="18">1024x768</RadioButton>
+                <RadioButton x:Name="Rad_Size1280" GroupName="FormSize" Grid.Row="5" Grid.Column="4" Margin="0,22,0,0" FontSize="18">1280x800</RadioButton>
+                
+                <TextBlock Name="Label_Language" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0" Height="35" 
+				    Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" Grid.Row="6" Grid.Column="0" />
+                <Grid Grid.Row="6" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="161.5"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="Button_Select_Language" Content="Select Language..."  Grid.Column="0" Foreground="{DynamicResource TextBox_Foreground_10}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="24" Click="Button_Select_Language_Clicked" Margin="-213.913,0,171.13,0"/>
+                    <TextBlock x:Name="Label_LanguageFileName" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" Margin="4.785,0,-200.567,-11.478" 
+					    Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="20
+                               " Width="518.782" Grid.ColumnSpan="2"/>
+                </Grid>
+
+                <Button x:Name="Button_OK" Content="OK" HorizontalAlignment="Left" Width="130" Margin="0,13.559,0,-13.559" 
+					Foreground="{DynamicResource TextBox_Foreground_10}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="24" Grid.Row="7" Grid.Column="1"
+					Click="Button_OK_Click"/>
+                <Button x:Name="Button_Cancel" Content="Cancel" HorizontalAlignment="Left" Width="130" Margin="135,13.559,0,-13.559" 
+					Foreground="{DynamicResource TextBox_Foreground_10}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="24" Grid.Row="7" Grid.Column="1"
+					Click="Button_Cancel_Click"/>
+
+                <TextBlock x:Name="TextBox_VersionInfo" HorizontalAlignment="Right" TextWrapping="Wrap" Text="Software Version" VerticalAlignment="Center" 
+					Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" Margin="0,22.109,0,0" FontSize="14.667" Grid.Row="7" Grid.Column="3" Height="22.891" Width="114.217"/>
+                <TextBlock x:Name="TextBox_DetailInfo" HorizontalAlignment="Right" TextWrapping="Wrap" Text="Detail Info" VerticalAlignment="Center" 
+					Foreground="{DynamicResource TextBox_Foreground_2}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" Margin="0,22.109,0,0" FontSize="14.667" Grid.Row="7" Grid.Column="3" RenderTransformOrigin="0.521,1.126" Height="22.891" Width="68.043"/>
+
+                <Button x:Name="Btn_ShowLogWindow" Content="Show Log Window" HorizontalAlignment="Right" Margin="0,13.559,0,-13.559" Width="140"
+					Foreground="{DynamicResource TextBox_Foreground_10}" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="15" Grid.Row="7" Grid.Column="3"
+					Click="Btn_ShowLogWindow_Click" />
+            </Grid>
+            <!--
+            <Grid x:Name="Grid_GPSCom" Height="40" Margin="0,60,248,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="120">
+				<TextBlock x:Name="Static_GPS" TextWrapping="Wrap" Margin="0,4,0,0" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Ultra" FontSize="18.667" Text="GPS :" HorizontalAlignment="Left" Width="53"/>
+				<TextBox x:Name="TextBox_GPSComPort" TextWrapping="Wrap" Text="1" Margin="57,0,0,0" FontSize="26.667" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" PreviewMouseLeftButtonDown="TextBox_MachineID_PreviewMouseLeftButtonDown" GotFocus="TextBox_MachineID_GotFocus" TextChanged="TextBox_MachineID_TextChanged" Width="52" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+			</Grid>
+			<Grid x:Name="Grid_SensorCom" Height="40" Margin="0,60,94,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="120">
+				<TextBlock x:Name="Static_Sensor" TextWrapping="Wrap" Margin="0,4.31,0,0" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Ultra" FontSize="18.667" Text="Sensor :" HorizontalAlignment="Left"/>
+				<TextBox x:Name="TextBox_SensorComPort" TextWrapping="Wrap" Text="2" Margin="0,0,-14.333,0.51" FontSize="26.667" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" PreviewMouseLeftButtonDown="TextBox_MachineID_PreviewMouseLeftButtonDown" GotFocus="TextBox_MachineID_GotFocus" TextChanged="TextBox_MachineID_TextChanged" HorizontalAlignment="Right" Width="52"/>
+			</Grid>
+            -->
+
+        </Grid>
+
+    </Grid>
+</UserControl>

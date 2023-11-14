@@ -1,0 +1,99 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:VMT_ITV"
+	mc:Ignorable="d"
+	x:Class="VMT_ITV.LogInView"
+	x:Name="UserControl"
+	d:DesignWidth="640" d:DesignHeight="600" Width="800" Height="600">
+
+    <Grid x:Name="LayoutRoot" Width="800" Height="600">
+        <!--<Grid x:Name="Grid_loginStepBar" Height="58" VerticalAlignment="Top" Margin="0,60,0,0" HorizontalAlignment="Left">
+            <Image x:Name="Image_LogInStepBar" Source="/VMT_ITV;component/Images/LogInView/day/login_stepbqr_img_01.png" Stretch="Fill" Margin="0,-1.017,0,1.017"/>
+        </Grid>-->
+        <Grid x:Name="Grid_LogIn" Margin="0,61,0,0">
+            <Border x:Name="Border_LogInView" BorderBrush="Black" BorderThickness="0" Background="#FFEFF2F3" Height="539" VerticalAlignment="Bottom" Margin="0,0,0,-0.17"/>
+            <TextBlock x:Name="Label_IDNumber" HorizontalAlignment="Left" TextWrapping="Wrap" Text="ID Number" VerticalAlignment="Top" Height="37.293" Width="127.43" Margin="30,28.748,0,0" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="24" Foreground="Blue"/>
+            <TextBox x:Name="TextBox_IDNumber" HorizontalAlignment="Left" Height="53.707" Margin="30,66.041,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="332" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="32" TextChanged="TextBox_IDNumber_TextChanged" GotFocus="TextBox_IDNumber_GotFocus" LostFocus="TextBox_IDNumber_LostFocus" PreviewMouseLeftButtonDown="TextBox_IDNumber_PreviewMouseLeftButtonDown"/>
+            <TextBlock x:Name="Label_Password" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Height="37.293" Width="127.43" Margin="30,135.344,0,0" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="24" Foreground="Blue"/>
+            <PasswordBox x:Name="PasswordBox_Password" HorizontalAlignment="Left" VerticalAlignment="Top" Width="332" Height="55.221" Margin="30,172.637,0,0" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontSize="48"  PasswordChar="*" PasswordChanged="PasswordBox_Password_PasswordChanged" GotFocus="PasswordBox_Password_GotFocus" PreviewMouseLeftButtonDown="PasswordBox_Password_PreviewMouseLeftButtonDown" IsEnabled="True"/>
+            <TextBlock x:Name="Label_Name" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Name" VerticalAlignment="Bottom" Height="37.293" Width="71.43" Margin="30,0,0,178" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="24" Foreground="#FF464848"/>
+            <TextBlock x:Name="TextBlock_Name" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="50.123" Width="208.94" Margin="152.393,0,0,168" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="24" Foreground="Black"/>
+            <TextBlock x:Name="Label_Shift" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Shift" VerticalAlignment="Bottom" Height="37.293" Width="127.43" Margin="30,0,0,113.774" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="24" Foreground="#FF464848"/>
+            <TextBox x:Name="TextBox_Shift" HorizontalAlignment="Left" Margin="173.333,375,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="34.667" Width="188" FontWeight="Bold" Padding="10,7,1,1" IsEnabled="False" />
+            <Grid Margin="-3.814,152.542,3.814,-152.542" Visibility="Hidden">
+                <TextBlock x:Name="Btn_A" HorizontalAlignment="Left" Height="50.187" Margin="242.193,159.123,0,329.69" Width="61" Background="DimGray" MouseLeftButtonUp="Btn_A_Click"/>
+                <TextBlock HorizontalAlignment="Left" Height="35.829" Margin="261.337,163.911,0,339.26" VerticalAlignment="Center" Width="41.856" MouseLeftButtonUp="Btn_A_Click"
+                     Text="A" FontSize="30" Foreground="White" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium"/>
+
+                <TextBlock x:Name="Btn_B" HorizontalAlignment="Left" Height="50.187" Margin="303.193,159.123,0,329.69" Width="61" MouseLeftButtonUp="Btn_B_Click" Background="DarkGray"/>
+                <TextBlock HorizontalAlignment="Left" Height="43.804" Margin="322.337,163.911,0,331.285" VerticalAlignment="Center" Width="41.856" MouseLeftButtonUp="Btn_B_Click"
+                     Text="B" FontSize="30" Foreground="White" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" RenderTransformOrigin="0.135,0.519" />
+            </Grid>
+            <ComboBox x:Name="Combobox_Team" Visibility="Hidden" HorizontalAlignment="Left" Height="50.531" Margin="131.333,0,0,113.635" VerticalAlignment="Bottom" Width="230" FontSize="24" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontWeight="Bold" IsEnabled="False" VerticalContentAlignment="Center"/>
+            <TextBlock x:Name="Label_Team" Visibility="Hidden" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Team" VerticalAlignment="Bottom" Height="37.293" Width="71.43" Margin="30,0,0,113.635" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="24" Foreground="#FF464848"/>
+            <TextBlock x:Name="Label_ScreenMode" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Screen Mode" VerticalAlignment="Bottom" Height="37.293" Width="150.097" Margin="30,0,0,37.99" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="24" Foreground="#FF464848" Visibility="Hidden"/>
+
+            <TextBlock x:Name="Label_LastLoc" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Last Loc" VerticalAlignment="Bottom" Height="37.293" Width="127.43" Margin="30,0,0,51" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="24" Foreground="#FF464848"/>
+            <TextBox x:Name="TextBox_LastLoc" HorizontalAlignment="Left" Margin="173.333,0,0,46" TextWrapping="Wrap" VerticalAlignment="Bottom" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="34.667" Width="188" Height="50.392" FontWeight="Bold" Padding="10,7,1,1" IsEnabled="False"/>
+
+            <Image x:Name="Image_Day" HorizontalAlignment="Left" Height="40" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_day_default.png" Stretch="Fill" VerticalAlignment="Bottom" Width="83" Margin="195.333,0,0,37.99" MouseLeave="Image_Day_MouseLeave" MouseLeftButtonDown="Image_Day_MouseLeftButtonDown" MouseLeftButtonUp="Image_Day_MouseLeftButtonUp" Visibility="Hidden"/>
+            <Image x:Name="Image_Night" HorizontalAlignment="Left" Height="40" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_night_default.png" Stretch="Fill" VerticalAlignment="Bottom" Width="83" Margin="278.333,0,0,37.99" MouseLeave="Image_Night_MouseLeave" MouseLeftButtonDown="Image_Night_MouseLeftButtonDown" MouseLeftButtonUp="Image_Night_MouseLeftButtonUp" Visibility="Hidden"/>
+
+            <Grid Margin="0,118.392,30,37.99" Width="350" HorizontalAlignment="Right">
+                <Image Source="/VMT_ITV;component/Images/LogInView/day/login_img_text01.png" Stretch="Fill" Height="322.569" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="350" Margin="0,0,0,59.667"/>
+                <TextBlock x:Name="TextBlock_Log" TextWrapping="Wrap" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Input Your ID No." Margin="10,10,10,125.397" Width="330" Height="247.221"/>
+            </Grid>
+            <Grid x:Name="Grid_Connect" Height="60" Width="350" Margin="0,0,30,39" VerticalAlignment="Bottom" HorizontalAlignment="Right" MouseLeftButtonDown="Image_Connect_MouseLeftButtonDown" MouseLeftButtonUp="Image_Connect_MouseLeftButtonUp" MouseLeave="Image_Connect_MouseLeave">
+                <Image x:Name="Image_Connect" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_02_disable.png" Stretch="Fill"/>
+                <TextBlock x:Name="Label_Btn_Connect" TextWrapping="Wrap" Text="Connect" TextAlignment="Center" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+            </Grid>
+            <Grid x:Name="Grid_ResetBtn" Height="64" VerticalAlignment="Top" Margin="0,37,210,0" HorizontalAlignment="Right" Width="170" MouseLeftButtonDown="Grid_ResetBtn_MouseLeftButtonDown" MouseLeftButtonUp="Grid_ResetBtn_MouseLeftButtonUp" MouseLeave="Grid_ResetBtn_MouseLeave">
+                <Image x:Name="Image_Reset" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_01_default.png" Stretch="Fill"/>
+                <TextBlock x:Name="Label_Btn_Reset" TextWrapping="Wrap" Text="Reset" TextAlignment="Center" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
+            </Grid>
+            <Grid x:Name="Grid_LogInBtn" Height="64" VerticalAlignment="Top" Margin="0,37,30,0" HorizontalAlignment="Right" Width="170" MouseLeave="Grid_LogInBtn_MouseLeave" MouseLeftButtonDown="Grid_LogInBtn_MouseLeftButtonDown" MouseLeftButtonUp="Grid_LogInBtn_MouseLeftButtonUp">
+                <Image x:Name="Image_LogIn" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_01_disable.png" Stretch="Fill"/>
+                <TextBlock x:Name="Label_Btn_LogIn" TextWrapping="Wrap" Text="Log-In" TextAlignment="Center" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="26.667" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
+            </Grid>
+        </Grid>
+        <Grid x:Name="Grid_AfterChassisAttach" Margin="0,118,0,0" Width="800" Height="362" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+            <Border x:Name="Boarder_AfterChassisAttach" BorderBrush="Black" BorderThickness="0" Margin="0" Height="362" Background="#FFEFF2F3" Width="800" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBlock TextWrapping="Wrap" Text="After Attach the Chassis, Press the Continue" Margin="39.333,41.333,0,0" Width="720" Height="152" VerticalAlignment="Top" HorizontalAlignment="Left" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="53.333" TextAlignment="Center" Foreground="#FFE92020"/>
+            <Grid x:Name="Grid_Continue" Height="120" VerticalAlignment="Bottom" MouseLeave="Grid_Continue_MouseLeave" MouseLeftButtonDown="Grid_Continue_MouseLeftButtonDown" MouseLeftButtonUp="Grid_Continue_MouseLeftButtonUp">
+                <Image x:Name="Image_Continue" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_03_default.png" Stretch="Fill"/>
+                <TextBlock x:Name="Label_Btn_Continue" TextWrapping="Wrap" Text="Continue" TextAlignment="Center" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" FontSize="53.333" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+        </Grid>
+        <Grid x:Name="Grid_ChassisAttached" Margin="0,118,0,0" Width="800" Height="362" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Hidden">
+            <Border x:Name="Border_ChassisAttached" BorderBrush="Black" BorderThickness="0" Margin="0" Height="362" Background="#FFEFF2F3" Width="800" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBlock TextWrapping="Wrap" Text="Is Chassis Attached?" Margin="38,74,0,0" Width="720" Height="152" VerticalAlignment="Top" HorizontalAlignment="Left" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="66.667" TextAlignment="Center" Foreground="#FFE92020"/>
+            <Grid x:Name="Grid_no" HorizontalAlignment="Left" Height="120" VerticalAlignment="Bottom" Width="400" MouseLeftButtonDown="Grid_no_MouseLeftButtonDown" MouseLeftButtonUp="Grid_no_MouseLeftButtonUp" MouseLeave="Grid_no_MouseLeave">
+                <Image x:Name="Image_no" Margin="0" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_03-1_default.png" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Left" Width="400" Height="120"/>
+                <TextBlock x:Name="Label_Btn_No" TextWrapping="Wrap" Margin="0,21.333,0,26.667" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="53.333" HorizontalAlignment="Center" Width="400" TextAlignment="Center" VerticalAlignment="Center" Text="No"/>
+            </Grid>
+            <Grid x:Name="Grid_yes" HorizontalAlignment="Left" Height="120" VerticalAlignment="Bottom" Width="400" Margin="400,0,0,0" MouseLeave="Grid_yes_MouseLeave" MouseLeftButtonDown="Grid_yes_MouseLeftButtonDown" MouseLeftButtonUp="Grid_yes_MouseLeftButtonUp">
+                <Image x:Name="Image_yes" Margin="0" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_03-1_default.png" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Left" Width="400" Height="120"/>
+                <TextBlock x:Name="Label_Btn_Yes" TextWrapping="Wrap" Margin="0,21.333,0,26.667" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="53.333" HorizontalAlignment="Center" Width="400" TextAlignment="Center" VerticalAlignment="Center" Text="Yes"/>
+            </Grid>
+        </Grid>
+        <Grid x:Name="Grid_ChassisSelection" Margin="0,118,0,0" Width="800" Height="362" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+            <Border x:Name="Border_ChassisSelection" BorderBrush="Black" BorderThickness="0" Margin="0" Height="362" Background="#FFEFF2F3" Width="800" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBlock x:Name="Lebel_SelectYourChassis" TextWrapping="Wrap" Text="Select your chassis" Margin="30,24,0,0" Height="34" Width="255.333" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="26.667"/>
+            <Image x:Name="Image_chassis1" HorizontalAlignment="Left" Height="107" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_chassis02_default.png" Stretch="Fill" VerticalAlignment="Top" Width="365" Margin="30,58,0,0" MouseLeave="Image_chassis1_MouseLeave" MouseLeftButtonDown="Image_chassis1_MouseLeftButtonDown" MouseLeftButtonUp="Image_chassis1_MouseLeftButtonUp"/>
+            <Image x:Name="Image_chassis2" HorizontalAlignment="Left" Height="107" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_chassis01_default.png" Stretch="Fill" VerticalAlignment="Top" Width="365" Margin="405,58,0,0" d:LayoutOverrides="VerticalAlignment" MouseLeave="Image_chassis2_MouseLeave" MouseLeftButtonDown="Image_chassis2_MouseLeftButtonDown" MouseLeftButtonUp="Image_chassis2_MouseLeftButtonUp"/>
+            <Image x:Name="Image_chassis3" HorizontalAlignment="Left" Height="107" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_chassis03_default.png" Stretch="Fill" VerticalAlignment="Top" Width="365" Margin="30,175,0,0" MouseLeave="Image_chassis3_MouseLeave" MouseLeftButtonDown="Image_chassis3_MouseLeftButtonDown" MouseLeftButtonUp="Image_chassis3_MouseLeftButtonUp"/>
+            <Image x:Name="Image_chassis4" HorizontalAlignment="Right" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_chassis04_default.png" Stretch="Fill" Width="365" Margin="0,175,30,80" MouseLeave="Image_chassis4_MouseLeave" MouseLeftButtonDown="Image_chassis4_MouseLeftButtonDown" MouseLeftButtonUp="Image_chassis4_MouseLeftButtonUp"/>
+            <Grid x:Name="Grid_Cancel" HorizontalAlignment="Left" Height="70" VerticalAlignment="Bottom" Width="400" MouseLeave="Grid_Cancel_MouseLeave" MouseLeftButtonDown="Grid_Cancel_MouseLeftButtonDown" MouseLeftButtonUp="Grid_Cancel_MouseLeftButtonUp">
+                <Image x:Name="Image_cancel" Margin="0" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_04-1_default.png" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Left" Width="400" Height="70"/>
+                <TextBlock x:Name="Label_Btn_Cancel" TextWrapping="Wrap" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="34.667" HorizontalAlignment="Center" Width="400" TextAlignment="Center" VerticalAlignment="Center" Text="Cancel" Height="46" Margin="0,8,0,0"/>
+            </Grid>
+            <Grid x:Name="Grid_OK" HorizontalAlignment="Right" Height="70" VerticalAlignment="Bottom" Width="400" MouseLeave="Grid_OK_MouseLeave" MouseLeftButtonDown="Grid_OK_MouseLeftButtonDown" MouseLeftButtonUp="Grid_OK_MouseLeftButtonUp">
+                <Image x:Name="Image_OK" Margin="0" Source="/VMT_ITV;component/Images/LogInView/day/login_btn_04-1_default.png" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Left" Width="400" Height="70"/>
+                <TextBlock x:Name="Label_Btn_OK" TextWrapping="Wrap" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontSize="34.667" HorizontalAlignment="Center" Width="400" TextAlignment="Center" VerticalAlignment="Center" Text="OK" Height="46" Margin="0,8,0,0"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

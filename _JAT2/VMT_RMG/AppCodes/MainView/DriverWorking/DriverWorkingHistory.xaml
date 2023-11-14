@@ -1,0 +1,209 @@
+﻿<UserControl x:Class="VMT_RMG.DriverWorkingHistory"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VMT_RMG"
+             mc:Ignorable="d" 
+            d:DesignWidth="1024" d:DesignHeight="704" Loaded="UserControl_Loaded">
+    <Grid x:Name="LayoutRoot" Background="{DynamicResource Gird_Background_4}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="34*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="Grid_Title" Background="#FF232323">
+            <TextBlock x:Name="Tbl_DriverWorking" Text="DRIVER WORKING HISTORY" FontSize="40" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFFFFFF"/>
+        </Grid>
+        <Rectangle Grid.Row="1" Margin="7,2,7,2" Stroke="Black" StrokeThickness="3"/>
+        <Grid x:Name="Grid_History" Grid.Row="1" Margin="10,5,10,5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="Grid_Field" Background="#FF7E7E7E" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="0*"/>
+                </Grid.ColumnDefinitions>
+                <Rectangle Margin="-3,-3,0,0" Stroke="Black" StrokeThickness="3"/>
+                <Rectangle Grid.Column="1" Margin="-3,-3,0,0" Stroke="Black" StrokeThickness="3"/>
+                <Rectangle Grid.Column="2" Margin="-3,-3,0,0" Stroke="Black" StrokeThickness="3"/>
+                <Rectangle Grid.Column="3" Margin="-3,-3,0,0" Stroke="Black" StrokeThickness="3"/>
+                <Rectangle Grid.Column="4" Margin="-3,-3,0,0" Stroke="Black" StrokeThickness="3"/>
+                <Rectangle Grid.Column="5" Margin="-3,-3,-3,0" Stroke="Black" StrokeThickness="3"/>
+                <Rectangle Grid.Column="6" Margin="-3,-3,-3,0" Stroke="Black" StrokeThickness="0"/>
+
+                <TextBlock x:Name="Tbl_No" Text="No" FontSize="30" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="Tbl_Job" Grid.Column="1" Text="Job" FontSize="30" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="Tbl_Container" Grid.Column="2" Text="Container" FontSize="30" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="Tbl_Location" Grid.Column="3" Text="Location" FontSize="30" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="Tbl_Truck" Grid.Column="4" Text="Truck" FontSize="30" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="Tbl_SZTP" Grid.Column="5" Text="SZTP" FontSize="30" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="Tbl_POD" Grid.Column="6" Text="POD" FontSize="30" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+            </Grid>
+            <Grid x:Name="Grid_Detail" Grid.Row="1" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid x:Name="Grid_Detail1" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="0*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="Tbl_DetailNo1" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailJob1" Grid.Column="1" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailContainer1" Grid.Column="2" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailLocation1" Grid.Column="3" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailTruck1" Grid.Column="4" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailSZTP1" Grid.Column="5" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailPOD1" Grid.Column="6" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid x:Name="Grid_Detail2" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="0*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="Tbl_DetailNo2" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailJob2" Grid.Column="1" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailContainer2" Grid.Column="2" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailLocation2" Grid.Column="3" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailTruck2" Grid.Column="4" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailSZTP2" Grid.Column="5" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailPOD2" Grid.Column="6" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid x:Name="Grid_Detail3" Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="0*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="Tbl_DetailNo3" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailJob3" Grid.Column="1" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailContainer3" Grid.Column="2" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailLocation3" Grid.Column="3" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailTruck3" Grid.Column="4" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailSZTP3" Grid.Column="5" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailPOD3" Grid.Column="6" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid x:Name="Grid_Detail4" Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="0*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="Tbl_DetailNo4" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailJob4" Grid.Column="1" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailContainer4" Grid.Column="2" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailLocation4" Grid.Column="3" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailTruck4" Grid.Column="4" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailSZTP4" Grid.Column="5" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailPOD4" Grid.Column="6" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid x:Name="Grid_Detail5" Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="0*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="Tbl_DetailNo5" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailJob5" Grid.Column="1" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailContainer5" Grid.Column="2" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailLocation5" Grid.Column="3" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailTruck5" Grid.Column="4" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailSZTP5" Grid.Column="5" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailPOD5" Grid.Column="6" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid x:Name="Grid_Detail6" Grid.Row="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="0*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="Tbl_DetailNo6" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailJob6" Grid.Column="1" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailContainer6" Grid.Column="2" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailLocation6" Grid.Column="3" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailTruck6" Grid.Column="4" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailSZTP6" Grid.Column="5" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailPOD6" Grid.Column="6" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid x:Name="Grid_Detail7" Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="0*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="Tbl_DetailNo7" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailJob7" Grid.Column="1" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailContainer7" Grid.Column="2" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailLocation7" Grid.Column="3" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailTruck7" Grid.Column="4" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailSZTP7" Grid.Column="5" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_DetailPOD7" Grid.Column="6" Text="" FontSize="30" HorizontalAlignment="Center"/>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid x:Name="Grid_Page" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="Btn_Prev" Grid.Column="1" Content="Prev" FontSize="30" IsEnabled="True" />
+            <TextBlock x:Name="Tbl_Page" Grid.Column="2" Text="1/3" FontSize="30" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource TextBox_Foreground_2}"/>
+            <Button x:Name="Btn_Next" Grid.Column="3" Content="Next" FontSize="30" IsEnabled="True" />
+        </Grid>
+        <Grid x:Name="Grid_Close" Grid.Row="3" Margin="5,0,5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="123*"/>
+                <ColumnDefinition Width="215*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="Btn_Close" Content="CLOSE" FontSize="40" FontWeight="Bold" Foreground="#FFFFFFFF" Background="#FF232323" Grid.ColumnSpan="2"/>
+        </Grid>
+    </Grid>
+</UserControl>

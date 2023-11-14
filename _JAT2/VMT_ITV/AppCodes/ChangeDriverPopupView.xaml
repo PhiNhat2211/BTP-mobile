@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="VMT_ITV.ChangeDriverPopupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VMT_ITV"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded">
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Grid.RowSpan="2" Grid.ColumnSpan="2" Fill="#80000000"/>
+        <Grid x:Name="Grid_Change" Grid.Row="1" Background="#FFEFF2F3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="Grid_break_Start_Time" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="TextBlock_Title" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Change Driver" FontWeight="Bold" FontSize="40" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" Margin="0,0,50,0"/>
+                <TextBlock x:Name="TextBlock_Start_Time" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Start time" FontSize="26.667" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium"/>
+                <Grid Grid.Row="1" Grid.Column="1" Margin="0,0,50,0">
+                    <Image Source="/VMT_ITV;component/Images/MainView/day/main_available_input01_default.png" Stretch="Fill"/>
+                    <TextBlock x:Name="TextBlock_Break_Start_Date" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="26.667" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontWeight="Normal" d:LayoutOverrides="Height"><Run Text="2013/02/22"/></TextBlock>
+                </Grid>
+            </Grid>
+
+            <Grid x:Name="Grid_break_End_Time" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="TextBlock_End_Time" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Text="End time" FontSize="26.667" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium"/>
+                <Grid Grid.Row="0" Grid.Column="1" Margin="0,0,50,0">
+                    <Image Source="/VMT_ITV;component/Images/MainView/day/main_available_input01_default.png" Stretch="Fill"/>
+                    <TextBlock x:Name="TextBlock_Break_End_Date" TextWrapping="Wrap" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontWeight="Normal" d:LayoutOverrides="Height"><Run Text="2013/02/22"/></TextBlock>
+                </Grid>
+            </Grid>
+
+            <Grid x:Name="Grid_Idpw" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="Tbl_Id" Text="ID:" FontSize="30" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBox x:Name="Tb_Id" Margin="50,0,5,0" Text="" FontSize="30" FontWeight="Bold" VerticalContentAlignment="Center"/>
+                    <TextBlock x:Name="Tbl_Password" Grid.Column="1" Margin="5,0,0,0" Text="PW:" FontSize="30" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <PasswordBox x:Name="Pwb_Password" Grid.Column="1" Margin="70,0,0,0" Password="" FontSize="30" FontWeight="Bold" VerticalContentAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btn_Cancel" Margin="0,2,5,0" Content="Cancel" Background="#FF4F4E4E" 
+                    FontSize="26" Foreground="{DynamicResource TextBox_Foreground_6}" FontFamily="/VMT_SC;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold"/>
+                    <Button x:Name="btn_Change" Grid.Column="1" Margin="5,2,0,0" Content="Change Complete" Background="#FF4F4E4E" 
+                    FontSize="26" Foreground="{DynamicResource TextBox_Foreground_6}" FontFamily="/VMT_SC;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

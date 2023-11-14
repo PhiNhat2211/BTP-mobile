@@ -1,0 +1,47 @@
+﻿<UserControl
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:local="clr-namespace:VMT_ITV"
+            mc:Ignorable="d"
+            x:Class="VMT_ITV.ChassisChangeView"
+            x:Name="UserControl"
+            d:DesignWidth="800" d:DesignHeight="600" Loaded="UserControl_Loaded">
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" Fill="#CC000000" HorizontalAlignment="Stretch" Stroke="Black" VerticalAlignment="Stretch"/>
+        <Grid x:Name="Grid_ChassisChange" Grid.Column="1" Grid.Row="1" Background="{DynamicResource Gird_Background_4}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="Tbl_ChassisChange" Text="Chassis Change" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Black" FontSize="40" Grid.ColumnSpan="2"/>
+            <Label x:Name="Lb_Before" Content="Before" Margin="30,0,0,0" VerticalAlignment="Center" FontWeight="Black" FontSize="35" Grid.Row="1"/>
+            <Label x:Name="Lb_After" Content="After" Margin="30,0,0,0" VerticalAlignment="Center" FontWeight="Black" FontSize="35" Grid.Row="2"/>
+            <TextBox x:Name="Tb_Before" Margin="-30,10,20,10" FontSize="35" FontWeight="Black" TextAlignment="Center" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
+            <TextBox x:Name="Tb_After" Background="#FF00B400" Margin="-30,10,20,10" FontSize="35" FontWeight="Black" TextAlignment="Center" Grid.Row="2" Grid.Column="1" 
+                     GotFocus="Tb_After_GotFocus" PreviewMouseLeftButtonDown="Tb_After_PreviewMouseLeftButtonDown" MaxLength="3" PreviewTextInput="Tb_After_PreviewTextInput" TextChanged="Tb_After_TextChanged"/>
+            <local:Keypadmini x:Name="KeypadminiView" Margin="5,0,5,0" Grid.Row="3" Grid.ColumnSpan="2" Visibility="Hidden"/>
+            <Button x:Name="Btn_Change" Margin="20,10,10,10" Content="Change" FontSize="35" FontWeight="Bold" Foreground="White" Background="#FF4F4E4E" Grid.Row="4" Click="Btn_Change_Click"/>
+            <Button x:Name="Btn_Cancel" Margin="10,10,20,10" Content="Cancel" FontSize="35" FontWeight="Bold" Foreground="White" Background="#FF4F4E4E" Grid.Row="4" Grid.Column="1" Click="Btn_Cancel_Click"/>
+        </Grid>
+        <local:Keypadmini x:Name="KeypadView" Height="182" VerticalAlignment="Bottom" Visibility="Hidden"/>
+    </Grid>
+</UserControl>

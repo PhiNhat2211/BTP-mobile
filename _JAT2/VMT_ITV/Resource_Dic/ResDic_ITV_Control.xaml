@@ -1,0 +1,92 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="CheckBoxFillNormal" Color="#F4F4F4"/>
+    <SolidColorBrush x:Key="CheckBoxStroke" Color="#8E8F8F"/>
+    <Style x:Key="EmptyCheckBoxFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="1" SnapsToDevicePixels="true" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SkinCheckBox_With_Content" TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background" Value="{StaticResource CheckBoxFillNormal}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CheckBoxStroke}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyCheckBoxFocusVisual}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid x:Name="GridRoot" Margin="0">
+                        <Image x:Name="Image_Check" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_checkbox_check.png"/>
+                        <Image x:Name="Image_Uncheck" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_checkbox_uncheck.png" Visibility="Hidden"/>
+                        <Image x:Name="Image_Disable" Margin="0" Stretch="Fill" Source="/VMT_Res;component/Images/Common/common_checkbox_disable.png" Visibility="Hidden"/>
+                        <TextBlock x:Name="TextBlock_Title" HorizontalAlignment="Center" Margin="0,8" TextWrapping="Wrap" Text="{TemplateBinding Content}" VerticalAlignment="Center" FontFamily="/VMT_Res;component/Fonts/#Neo Sans Pro" FontSize="{TemplateBinding FontSize}" FontWeight="Bold" TextAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                            <Setter Property="Foreground" TargetName="TextBlock_Title" Value="{DynamicResource TextBox_Foreground_10_Check}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                            <Setter Property="Foreground" TargetName="TextBlock_Title" Value="{DynamicResource TextBox_Foreground_10_Uncheck}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Check" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Uncheck" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Visible"/>
+                            <Setter Property="Foreground" TargetName="TextBlock_Title" Value="{DynamicResource TextBox_Foreground_10_Check}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--SkinButtonStyle_Without_FontSize-->
+    <Style x:Key="SkinButtonStyle_With_Content" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid x:Name="Layout_Root">
+                        <Image x:Name="Image_Default" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Source="/VMT_Res;component/Images/Common/common_btn_default.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Press" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_pressed.png" Stretch="Fill"/>
+                        <Image x:Name="Image_Disable" HorizontalAlignment="Left" Margin="0" Width="Auto" VerticalAlignment="Top" Visibility="Hidden" Source="/VMT_Res;component/Images/Common/common_btn_disable.png" Stretch="Fill"/>
+                        <TextBlock x:Name="TextBlock_Title" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="{TemplateBinding Content}" VerticalAlignment="Center" FontFamily="/VMT_Res;component/Fonts/#Neo Sans Pro" FontWeight="Bold" TextAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                            <!--<Setter Property="Foreground" TargetName="TextBlock_Title" Value="{DynamicResource TextBox_Foreground_10}"/>-->
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Hidden"/>
+                            <Setter Property="Foreground" TargetName="TextBlock_Title" Value="{DynamicResource TextBox_Foreground_10_Press}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="Image_Default" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Press" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="Image_Disable" Value="Visible"/>
+                            <Setter Property="Foreground" TargetName="TextBlock_Title" Value="{DynamicResource TextBox_Foreground_10}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

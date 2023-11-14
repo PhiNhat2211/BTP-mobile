@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="VMT_RMG_800by600.CorrectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VMT_RMG_800by600"
+             mc:Ignorable="d" 
+             d:DesignWidth="1024" d:DesignHeight="704" Loaded="UserControl_Loaded">
+    
+    <Grid x:Name="LayoutRoot" Background="{DynamicResource Gird_Background_4}">
+    	<Grid.ColumnDefinitions>
+    		<ColumnDefinition/>
+    		<ColumnDefinition/>
+    	</Grid.ColumnDefinitions>
+		
+		<!--
+		<Grid x:Name="Grid_Left" Grid.Column="0" Margin="8,8,4,8">
+			<local:BlockBayInfo_Left VerticalAlignment="Top" Height="45"/>
+			<local:BayView_Left Margin="0,49,0,48" d:LayoutOverrides="Width, HorizontalMargin"/>
+			<Grid x:Name="Grid_Left_Bottom_Button" Margin="0" Height="44" VerticalAlignment="Bottom">
+				<Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+				<CheckBox x:Name="Btn_Navigator_Left" Style="{DynamicResource SkinCheckBox}" Grid.Column="0" Margin="0" Content="Navigator" IsChecked="False"/>
+	            <Button x:Name="Btn_Test_1" Style="{DynamicResource SkinButtonStyle_With_Content}" VerticalAlignment="Top" Grid.Column="1" Content="Test_1" IsEnabled="True" Margin="8,0,0,0" FontSize="18" Foreground="{DynamicResource TextBox_Foreground_10}"/>
+	            <Button x:Name="Btn_Test_2" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" VerticalAlignment="Top" Grid.Column="2" Content="Test_2" IsEnabled="True" Margin="8,0,0,0" FontSize="18" Foreground="{DynamicResource TextBox_Foreground_6}"/>
+			</Grid>
+		</Grid>
+		
+		<Grid x:Name="Grid_Right" Grid.Column="1" Margin="4,8,8,8">
+			<local:BlockBayInfo_Right VerticalAlignment="Top" Height="45"/>
+			<local:BayView_Right Margin="0,49,0,48" d:LayoutOverrides="Width"/>
+			<Grid x:Name="Grid_Right_Bottom_Button" Margin="0" Height="44" VerticalAlignment="Bottom">
+				<Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+				<CheckBox x:Name="Btn_Navigator_Right" Style="{DynamicResource SkinCheckBox}" Grid.Column="0" Margin="0" Content="Navigator" IsChecked="False"/>
+	            <Button x:Name="Btn_Test_3" Style="{DynamicResource SkinButtonStyle_With_Content}" VerticalAlignment="Top" Grid.Column="1" Content="Test_3" IsEnabled="True" Margin="8,0,0,0" FontSize="18" Foreground="{DynamicResource TextBox_Foreground_10}"/>
+	            <Button x:Name="Btn_Test_4" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" VerticalAlignment="Top" Grid.Column="2" Content="Test_4" IsEnabled="True" Margin="8,0,0,0" FontSize="18" Foreground="{DynamicResource TextBox_Foreground_6}"/>
+			</Grid>
+		</Grid>
+		-->           
+    </Grid>
+</UserControl>

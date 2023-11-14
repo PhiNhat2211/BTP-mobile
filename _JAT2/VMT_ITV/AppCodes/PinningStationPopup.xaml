@@ -1,0 +1,52 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="VMT_ITV.PinningStationPopup"
+	x:Name="UserControl"
+	d:DesignWidth="800" d:DesignHeight="600">
+
+	<Grid x:Name="LayoutRoot">
+		<Rectangle Fill="#CC000000" HorizontalAlignment="Left" Height="600" Stroke="Black" VerticalAlignment="Top" Width="800"/>
+		<Grid Height="290" Margin="94,95,0,0" VerticalAlignment="Top" Width="612" HorizontalAlignment="Left">
+			<Image Source="/VMT_ITV;component/Images/Popup/popup_img_bg01.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top" Height="290"/>
+			<Grid Margin="0,70,0,76.667">
+				<TextBlock x:Name="TextBlock_popup_message" TextWrapping="Wrap" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="48" TextAlignment="Center" Foreground="#FFE92020" Margin="30,8,19.8,17.724" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Go to Pinning Station"/></TextBlock>
+			</Grid>
+			<Grid Height="70" VerticalAlignment="Top">
+				<Image Source="/VMT_ITV;component/Images/Popup/popup_img_title.png" Stretch="Fill"/>
+				<TextBlock x:Name="TextBlock_popup_title" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Warning" VerticalAlignment="Center" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="40" TextAlignment="Center" Foreground="White"/>
+			</Grid>
+			<Grid x:Name="Grid_OneButton" Height="90" VerticalAlignment="Bottom" HorizontalAlignment="Left" MouseLeave="Grid_OneButton_MouseLeave" MouseLeftButtonDown="Grid_OneButton_MouseLeftButtonDown" MouseLeftButtonUp="Grid_OneButton_MouseLeftButtonUp">
+				<Image x:Name="Image_OK_OneButton" Source="/VMT_ITV;component/Images/Popup/popup_btn_02-1_default.png" Stretch="Fill" Margin="0" Width="612" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+				<TextBlock x:Name="TextBlock_popup_Onebutton" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" FontSize="40" TextAlignment="Center" Foreground="Black" Text="OK"/>
+			</Grid>
+			<Grid x:Name="Grid_TwoButton" Height="90" VerticalAlignment="Bottom" Visibility="Hidden">
+				<Grid x:Name="Grid_TwoButton_Left" HorizontalAlignment="Left" Width="305" MouseLeave="Grid_TwoButton_Left_MouseLeave" MouseLeftButtonDown="Grid_TwoButton_Left_MouseLeftButtonDown" MouseLeftButtonUp="Grid_TwoButton_Left_MouseLeftButtonUp">
+					<Image x:Name="Image_TwoButton_left" Source="/VMT_ITV;component/Images/Popup/popup_btn_02-1_default.png" Stretch="Fill"/>
+					<TextBlock x:Name="TextBlock_TwoButton_Left" TextWrapping="Wrap" Text="Cancel" Margin="0,0,3,8" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" FontSize="40" TextAlignment="Center" VerticalAlignment="Center"/>
+				</Grid>
+				<Grid x:Name="Grid_TwoButton_Right" HorizontalAlignment="Right" Width="305" MouseLeave="Grid_TwoButton_Right_MouseLeave" MouseLeftButtonDown="Grid_TwoButton_Right_MouseLeftButtonDown" MouseLeftButtonUp="Grid_TwoButton_Right_MouseLeftButtonUp" Margin="0,0,2,0">
+					<Image x:Name="Image_TwoButton_Right" HorizontalAlignment="Left" Source="/VMT_ITV;component/Images/Popup/popup_btn_02-2_default.png" Stretch="Fill" Width="305" Margin="0" d:LayoutOverrides="HorizontalAlignment"/>
+					<TextBlock x:Name="TextBlock_TwoButton_Right" TextWrapping="Wrap" Text="OK" Margin="0,18.013,0,23.346" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" FontSize="40" TextAlignment="Center" HorizontalAlignment="Center" d:LayoutOverrides="Height" Width="302"/>
+				</Grid>
+			</Grid>
+			<Grid x:Name="Grid_ThreeButton" Height="90" Margin="0,0,2,0" VerticalAlignment="Bottom" Visibility="Hidden">
+				<Grid x:Name="Grid_ThreeButton_Left" HorizontalAlignment="Left" Width="205" MouseLeave="Grid_ThreeButton_Left_MouseLeave" MouseLeftButtonDown="Grid_ThreeButton_Left_MouseLeftButtonDown" MouseLeftButtonUp="Grid_ThreeButton_Left_MouseLeftButtonUp">
+					<Image x:Name="Image_ThreeButton_Left" Source="/VMT_ITV;component/Images/Popup/popup_btn_03-1_default.png" Stretch="Fill"/>
+					<TextBlock x:Name="TextBlock_ThreeButton_Left" TextWrapping="Wrap" Text="Cancel" Margin="8,0,4,8" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" FontSize="26.667" TextAlignment="Center" VerticalAlignment="Center"/>
+				</Grid>
+				<Grid x:Name="Grid_ThreeButton_Center" Margin="205,0" MouseLeave="Grid_ThreeButton_Center_MouseLeave" MouseLeftButtonDown="Grid_ThreeButton_Center_MouseLeftButtonDown" MouseLeftButtonUp="Grid_ThreeButton_Center_MouseLeftButtonUp">
+					<Image x:Name="Image_ThreeButton_Center" Source="/VMT_ITV;component/Images/Popup/popup_btn_03-2_default.png" Stretch="Fill"/>
+					<TextBlock x:Name="TextBlock_ThreeButton_Center" TextWrapping="Wrap" Text="System Off" Margin="4,0,4,8" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" FontSize="26.667" TextAlignment="Center" VerticalAlignment="Center"/>
+				</Grid>
+				<Grid x:Name="Grid_ThreeButton_Right" HorizontalAlignment="Right" Width="205" MouseLeave="Grid_ThreeButton_Right_MouseLeave" MouseLeftButtonDown="Grid_ThreeButton_Right_MouseLeftButtonDown" MouseLeftButtonUp="Grid_ThreeButton_Right_MouseLeftButtonUp">
+					<Image x:Name="Image_ThreeButton_Right" Source="/VMT_ITV;component/Images/Popup/popup_btn_03-3_default.png" Stretch="Fill"/>
+					<TextBlock x:Name="TextBlock_ThreeButton_Right" TextWrapping="Wrap" Text="Terminate application" Margin="4,0,9,8" FontFamily="/VMT_ITV;component/Fonts/#Neo Sans Pro Medium" FontWeight="Bold" FontSize="26.667" TextAlignment="Center" VerticalAlignment="Center"/>
+				</Grid>
+			</Grid>
+		</Grid>
+	</Grid>
+</UserControl>

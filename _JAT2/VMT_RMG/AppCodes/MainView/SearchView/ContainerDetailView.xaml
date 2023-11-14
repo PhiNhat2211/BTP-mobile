@@ -1,0 +1,350 @@
+﻿<UserControl x:Class="VMT_RMG.ContainerDetailView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VMT_RMG"
+        mc:Ignorable="d"
+        d:DesignWidth="1024" d:DesignHeight="704" Loaded="UserControl_Loaded">
+
+    <Grid x:Name="LayoutRoot" Background="{DynamicResource Gird_Background_4}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="Grid_ContainerNumber">
+            <Button x:Name="Btn_Container" Margin="10,5,10,0" Style="{DynamicResource SkinButtonStyle_With_Content}" Content="MSKU3645190" FontSize="35" Foreground="#FFFFFFFF"/>
+        </Grid>
+        <Grid x:Name="Grid_ContainerNumber_Twin" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="Btn_Container_Target" Margin="10,5,10,0" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" Content="MSKU3645190" FontSize="35" Foreground="#FFFFFFFF" Grid.Column="0"/>
+            <Button x:Name="Btn_Container_Twin" Margin="10,5,10,0" Style="{DynamicResource SkinButtonStyle_Without_FontSize}" Content="CLDU5578775" FontSize="35" Foreground="#FFFFFFFF" Grid.Column="1"/>
+        </Grid>
+        <Grid x:Name="Grid_First_Container" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="12*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="Grid_First_ContainerInfo" Margin="10,5,10,5" Background="{DynamicResource Gird_Background_8}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.8*"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <TextBlock x:Name="TextBlock_First_Class" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="Class" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_Class" Margin="100,5,100,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <TextBlock x:Name="TextBlock_First_Operator" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="Operator" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_Operator" Margin="100,5,100,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <TextBlock x:Name="TextBlock_First_Damage" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="Damage" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_Damage" Margin="100,5,100,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <TextBlock x:Name="TextBlock_First_RFTemp" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="RF Temp" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_RFTemp" Margin="100,5,100,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="4">
+                    <TextBlock x:Name="TextBlock_First_DGClass" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="DG Class" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_DGClass" Margin="100,5,100,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="5">
+                    <TextBlock x:Name="TextBlock_First_Booking" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="Booking" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_Booking" Margin="100,5,5,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="6">
+                    <TextBlock x:Name="TextBlock_First_CurLoc" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="Cur Loc" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_CurLoc" Margin="100,5,120,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="7" Grid.ColumnSpan="2">
+                    <TextBlock x:Name="TextBlock_First_rmk" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="Remark" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_rmk" Margin="100,5,10,5" TextWrapping="Wrap" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_First_ISO" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="30,0,0,0" Text="ISO" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_ISO" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_First_FM" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="30,0,0,0" Text="FM" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_FM" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_First_GroupCode" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="-20,0,0,0" Text="Group Code" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_GroupCode" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_First_RFPlug" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="-10,0,0,0" Text="RF Plug" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_RFPlug" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="4" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_First_WGT" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="30,0,0,0" Text="WGT" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_WGT" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="5" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_First_SDay" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="20,0,0,0" Text="S/Day" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_SDay" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="6" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_First_PlanLoc" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="-40,0,0,0" Text="Plan Loc" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_PlanLoc" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+            </Grid>
+            <Grid x:Name="Grid_First_VesselInfo"  Margin="10,5,10,5" Background="{DynamicResource Gird_Background_8}" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.ColumnSpan="2">
+                    <TextBlock x:Name="TextBlock_First_DSVSL" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="DS VSL" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_DSVSL" Margin="90,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Column="2" Grid.ColumnSpan="2">
+                    <TextBlock x:Name="TextBlock_First_LDVSL" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="LD VSL" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_LDVSL" Margin="90,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Column="4" Grid.ColumnSpan="2" Visibility="Hidden">
+                    <TextBlock x:Name="TextBlock_First_POD" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="30,0,0,0" Text="POD" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_POD" Margin="90,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <TextBlock x:Name="TextBlock_First_OVD" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="OVD" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_First_H" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="H" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_H" Margin="30,5,20,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="2">
+                    <TextBlock x:Name="TextBlock_First_L" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="L" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_L" Margin="30,5,20,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="3">
+                    <TextBlock x:Name="TextBlock_First_R" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="R" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_R" Margin="30,5,20,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="4">
+                    <TextBlock x:Name="TextBlock_First_F" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="F" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_F" Margin="30,5,20,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="5">
+                    <TextBlock x:Name="TextBlock_First_A" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="A" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_A" Margin="30,5,20,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+            </Grid>
+            <Grid x:Name="Grid_First_RepairInfo"  Margin="10,5,10,5" Background="{DynamicResource Gird_Background_8}" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <TextBlock x:Name="TextBlock_First_Repair" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="30,0,0,0" Text="Repair Stacking Time" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_First_Period" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="10,0,0,0" Text="Period" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_Period" Margin="90,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <TextBlock x:Name="TextBlock_First_In" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="50,0,0,0" Text="IN" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_In" Margin="90,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_First_Out" Foreground="{DynamicResource TextBox_Foreground_3}" Margin="30,0,0,0" Text="OUT" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_First_Out" Margin="90,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="Grid_Second_Container" Grid.Row="1" Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="9*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="Grid_Second_ContainerInfo" Margin="10,5,10,5" Background="{DynamicResource Gird_Background_8}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <TextBlock x:Name="TextBlock_Second_Class" Margin="10,0,0,0" Text="Class" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_Class" Margin="100,5,100,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <TextBlock x:Name="TextBlock_Second_Operator" Margin="10,0,0,0" Text="Operator" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_Operator" Margin="100,5,100,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <TextBlock x:Name="TextBlock_Second_Damage" Margin="10,0,0,0" Text="Damage" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_Damage" Margin="100,5,100,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <TextBlock x:Name="TextBlock_Second_RFTemp" Margin="10,0,0,0" Text="RF Temp" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_RFTemp" Margin="100,5,100,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="4">
+                    <TextBlock x:Name="TextBlock_Second_DGClass" Margin="10,0,0,0" Text="DG Class" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_DGClass" Margin="100,5,100,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="5">
+                    <TextBlock x:Name="TextBlock_Second_Booking" Margin="10,0,0,0" Text="Booking" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_Booking" Margin="100,5,5,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="6">
+                    <TextBlock x:Name="TextBlock_Second_CurLoc" Margin="10,0,0,0" Text="Cur Loc" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_CurLoc" Margin="100,5,120,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_Second_ISO" Margin="30,0,0,0" Text="ISO" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_ISO" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_Second_FM" Margin="30,0,0,0" Text="FM" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_FM" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_Second_GroupCode" Margin="-20,0,0,0" Text="Group Code" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_GroupCode" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_Second_RFPlug" Margin="-10,0,0,0" Text="RF Plug" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_RFPlug" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="4" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_Second_WGT" Margin="30,0,0,0" Text="WGT" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_WGT" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="5" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_Second_SDay" Margin="20,0,0,0" Text="S/Day" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_SDay" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="6" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_Second_PlanLoc" Margin="00,0,0,0" Text="Plan Loc" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_PlanLoc" Margin="100,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+            </Grid>
+            <Grid x:Name="Grid_Second_VesselInfo"  Margin="10,5,10,5" Background="{DynamicResource Gird_Background_8}" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.ColumnSpan="2">
+                    <TextBlock x:Name="TextBlock_Second_DSVSL" Margin="10,0,0,0" Text="DS VSL" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_DSVSL" Margin="90,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Column="2" Grid.ColumnSpan="2">
+                    <TextBlock x:Name="TextBlock_Second_LDVSL" Margin="10,0,0,0" Text="LD VSL" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_LDVSL" Margin="90,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Column="4" Grid.ColumnSpan="2">
+                    <TextBlock x:Name="TextBlock_Second_POD" Margin="30,0,0,0" Text="POD" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_POD" Margin="90,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <TextBlock x:Name="TextBlock_Second_OVD" Margin="10,0,0,0" Text="OVD" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_Second_H" Margin="10,0,0,0" Text="H" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_H" Margin="30,5,20,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="2">
+                    <TextBlock x:Name="TextBlock_Second_L" Margin="10,0,0,0" Text="L" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_L" Margin="30,5,20,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="3">
+                    <TextBlock x:Name="TextBlock_Second_R" Margin="10,0,0,0" Text="R" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_R" Margin="30,5,20,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="4">
+                    <TextBlock x:Name="TextBlock_Second_F" Margin="10,0,0,0" Text="F" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_F" Margin="30,5,20,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="5">
+                    <TextBlock x:Name="TextBlock_Second_A" Margin="10,0,0,0" Text="A" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_A" Margin="30,5,20,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+            </Grid>
+            <Grid x:Name="Grid_Second_RepairInfo"  Margin="10,5,10,5" Background="{DynamicResource Gird_Background_8}" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <TextBlock x:Name="TextBlock_Second_Repair" Margin="30,0,0,0" Text="Repair Stacking Time" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_Second_Period" Margin="10,0,0,0" Text="Period" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_Period" Margin="90,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <TextBlock x:Name="TextBlock_Second_In" Margin="50,0,0,0" Text="IN" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_In" Margin="90,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_Second_Out" Margin="30,0,0,0" Text="OUT" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TextBox_Second_Out" Margin="90,5,10,5" FontFamily="/VMT_RTG;component/Fonts/#Neo Sans Pro" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+                </Grid>
+            </Grid>
+        </Grid>
+        
+        <Grid x:Name="Grid_Bottom" Margin="10,0,10,5" Grid.Row="2">
+            <Button x:Name="Btn_Save" Content="DONE" FontSize="35" Style="{DynamicResource SkinButtonStyle_With_Content}" Foreground="#FFFFFFFF"/>
+        </Grid>
+        <Grid x:Name="Grid_Bottom_Twin" Grid.Row="2" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="Btn_Detwin" Content="DETWIN" Style="{DynamicResource SkinButtonStyle_With_Content}" FontSize="35" Foreground="#FFFFFFFF" Grid.Column="0"/>
+            <Button x:Name="Btn_Save_Twin" Content="DONE" Style="{DynamicResource SkinButtonStyle_With_Content}" FontSize="35" Foreground="#FFFFFFFF" Grid.Column="1"/>
+        </Grid>
+    </Grid>
+</UserControl>

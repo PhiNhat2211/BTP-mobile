@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -37,15 +37,17 @@ using System;
 using System.IO;
 #endregion
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Parent of the HessianOutput class.
     /// Declares write operations (access methods) to an OutputStream
     /// </summary>
-    public abstract class AbstractHessianOutput : CHessianProtocolConstants
+    public abstract class AbstractHessianOutput
     {
         #region CLASS_FIELDS
+        // serializer factory
+        private CSerializerFactory _defaultSerializerFactory;
         // serializer factory
         protected CSerializerFactory m_serializerFactory = null;
         #endregion
@@ -53,7 +55,6 @@ namespace hessiancsharp.io
         #region PROPERTIES
         /// <summary>
         /// Sets the serializer factory
-        /// <value>CSerializerFactory</value>
         /// </summary>
         public CSerializerFactory CSerializerFactory
         {
@@ -69,14 +70,92 @@ namespace hessiancsharp.io
         public abstract void Init(Stream stream);
 
         /// <summary>
+        /// Gets the serializer factory.
+        /// </summary>
+        protected CSerializerFactory findSerializerFactory()
+        {
+            CSerializerFactory factory = m_serializerFactory;
+
+            if (factory == null)
+            {
+                factory = CSerializerFactory.CreateDefault();
+                _defaultSerializerFactory = factory;
+                m_serializerFactory = factory;
+            }
+
+            return factory;
+        }
+
+        /// <summary>
+        /// Writes a complete method call.
+        /// </summary>
+        public virtual void Call(String method, Object[] args)
+        {
+            int length = args != null ? args.Length : 0;
+
+            StartCall(method, length);
+
+            for (int i = 0; i < length; i++)
+                WriteObject(args[i]);
+
+            CompleteCall();
+        }
+
+        /// <summary>
+        /// * Starts the method call:
+        /// *
+        /// * &lt;code&gt;&lt;pre&gt;
+        /// * C
+        /// * &lt;/pre&gt;&lt;/code&gt;
+        /// *
+        /// * @param method the method name to call.
+        /// </summary>
+        public abstract void StartCall();
+
+        /// <summary>
         /// Writes the method call:
         /// </summary>
+        /// 
         /// <code>
         /// c major minor
         /// m b16 b8 method-namek
         /// </code>
         /// <param name="strMethod">the method name to call</param>
         public abstract void StartCall(string strMethod);
+
+        /// <summary>
+        /// * Starts the method call:
+        /// *
+        /// * &lt;code&gt;&lt;pre&gt;
+        /// * C string int
+        /// * &lt;/pre&gt;&lt;/code&gt;
+        /// *
+        /// * @param method the method name to call.
+        /// </summary>
+        public abstract void StartCall(String method, int length);
+
+        /// <summary>
+        /// For Hessian 2.0, use the Header envelope instead
+        /// *
+        /// * @deprecated
+        /// </summary>
+        /// <param name="name"></param>
+        public virtual void WriteHeader(String name)
+        {
+            throw new InvalidOperationException(GetType().Name);
+        }
+
+        /// <summary>
+        /// Writes the method tag.
+        /// *
+        /// * &lt;code&gt;&lt;pre&gt;
+        /// * string
+        /// * &lt;/pre&gt;&lt;/code&gt;
+        /// *
+        /// * @param method the method name to call.
+        /// </summary>
+        /// <param name="method"></param>
+        public abstract void WriteMethod(String method);
 
         /// <summary>
         /// Writes the method call
@@ -153,7 +232,7 @@ namespace hessiancsharp.io
         /// </code>
         /// </summary>
         /// <param name="strValue">the string value to write</param>
-        public abstract void WriteString(string strValue);
+        public abstract void WriteString(String strValue);
 
         /// <summary>
         /// Writes a string value to the stream using UTF-8 encoding.
@@ -227,7 +306,7 @@ namespace hessiancsharp.io
         /// <summary>
         /// Removes a reference
         /// </summary>
-        /// <param name="objReference">object reference to remove</param>
+        /// <param name="objReference">Object reference to remove</param>
         /// <returns>True, if the refernece was successfully removed, otherwiese False</returns>
         public abstract bool RemoveRef(object objReference);
 
@@ -238,6 +317,7 @@ namespace hessiancsharp.io
         /// <param name="objNewReference">New object reference</param>
         /// <returns>True, if the refernece was successfully replaced, otherwiese False</returns>
         public abstract bool ReplaceRef(object objOldReference, object objNewReference);
+
 
         /// <summary>
         /// Adds an object to the reference list.  If the object already exists,
@@ -252,9 +332,22 @@ namespace hessiancsharp.io
         public abstract bool AddRef(object objReference);
 
         /// <summary>
+        /// obj
+        /// </summary>
+        /// <param name="obj"></param>
+        public abstract int GetRef(Object obj);
+
+        /// <summary>
+        /// Resets the references for streaming.
+        /// </summary>
+        public virtual void ResetReferences()
+        {
+        }
+
+        /// <summary>
         /// Writes a generic object to the output stream
         /// </summary>
-        /// <param name="obj">object to write</param>
+        /// <param name="obj">Object to write</param>
         public abstract void WriteObject(object obj);
 
         /// <summary>
@@ -265,23 +358,22 @@ namespace hessiancsharp.io
         /// V
         /// t b16 b8 type
         /// l b32 b24 b16 b8
-        /// </code>
+        ///</code>
         /// </summary>
         /// <param name="intLength">Length of array</param>
         /// <param name="strType">Type name of the array</param>
-        public abstract void WriteListBegin(int intLength, string strType);
+        public abstract bool WriteListBegin(int intLength, string strType);
 
         /// <summary>
         /// Writes the tail of the list to the stream
         /// </summary>
         public abstract void WriteListEnd();
-
         /// <summary>
         /// Writes the map header to the stream.  Map writers will call
         /// <code>writeMapBegin</code> followed by the map contents and then
         /// call <code>writeMapEnd</code>
         /// <code>
-        /// Mt b16 b8 type (key value)z
+        /// Mt b16 b8 type (<key> <value>)z
         /// </code>
         /// </summary>
         /// <param name="strType">Type of map</param>
@@ -291,6 +383,49 @@ namespace hessiancsharp.io
         /// Writes the tail of the map to the stream
         /// </summary>
         public abstract void WriteMapEnd();
+
+        /// <summary>
+        ///   * Writes the object header to the stream (for Hessian 2.0), or a
+        /// * Map for Hessian 1.0.  Object writers will call
+        /// * &lt;code&gt;writeObjectBegin&lt;/code&gt; followed by the map contents and then
+        /// * call &lt;code&gt;writeObjectEnd&lt;/code&gt;.
+        /// *
+        /// * &lt;code&gt;&lt;pre&gt;
+        /// * C type int &lt;key&gt;*
+        /// * C int &lt;value&gt;*
+        /// * &lt;/pre&gt;&lt;/code&gt;
+        /// *
+        /// * @return true if the object has already been defined.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public virtual int WriteObjectBegin(String type)
+        {
+            WriteMapBegin(type);
+            return -2;
+        }
+
+        /// <summary>
+        /// Writes the end of the class.
+        /// </summary>
+        /// <param name="len"></param>
+        public virtual void WriteClassFieldLength(int len)
+        {
+        }
+
+        /// <summary>
+        /// Writes the tail of the object to the stream.
+        /// </summary>
+        public virtual void WriteObjectEnd()
+        {
+        }
+
+        public virtual void WriteReply(Object o)
+        {
+            StartReply();
+            WriteObject(o);
+            CompleteReply();
+        }
 
         /// <summary>
         /// Writes a remote object reference to the stream.  The type is the
@@ -304,7 +439,6 @@ namespace hessiancsharp.io
         public abstract void WriteRemote(string strType, string strUrl);
 
         public abstract void StartReply();
-
         /// <summary>
         /// Writes a fault.  The fault will be written
         /// as a descriptive string followed by an object:
@@ -325,7 +459,6 @@ namespace hessiancsharp.io
         /// <param name="strMessage">fault message</param>
         /// <param name="objDetail">fault detail</param>
         public abstract void WriteFault(string strCode, string strMessage, object objDetail);
-
         /// <summary>
         /// Completes reading the reply.
         /// A successful completion will have a single value:
@@ -335,6 +468,9 @@ namespace hessiancsharp.io
         /// </summary>
         public abstract void CompleteReply();
 
+        public abstract void Flush();
+
         #endregion
+
     }
 }

@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -41,10 +41,11 @@ using System.Text.RegularExpressions;
 using System.Threading;
 #endregion
 
-namespace hessiancsharp.webserver
+namespace HessianCSharp.webserver
 {
     /// <summary>
-    /// An embeded tiny webserver.    
+    /// An embeded tiny webserver.
+    /// 
     /// CWebServer web = new CWebServer(5667,"/hallo/test/math.hessian",typeof(CMath));
     /// web.Paranoid = true;
     ///	web.AcceptClient("[\\d\\s]");	
@@ -59,89 +60,46 @@ namespace hessiancsharp.webserver
     public class CWebServer
     {
         #region CLASS_FIELDS
+
         private int m_port;
-        private Type m_apiType = null;
-        private object m_Service;
         private Socket m_serverSock;
-        private string m_serviceUrl;
         private IList m_AcceptIPAddressList = new ArrayList();
         private IList m_DenyIPAddressList = new ArrayList();
         private bool m_paranoid_IP = true;
         private bool m_ready = false;
         private Thread runningThread = null;
+
         #endregion
 
         #region CONSTRUCTORS
-        /// <summary>
-        /// Initializes a new instance of the CWebServer class. 
-        /// Creates a web server at the specified port number for the specified Service.
-        /// </summary>
-        /// <param name="port_">Portnumber to them the server listening</param>
-        /// <param name="serviceUrl_">The serviceUrl "/test/myservice.hessian"</param>
-        /// <param name="apiType_">The Type of Serviceobject, may not be an interface</param>	        
-        public CWebServer(int port_, string serviceUrl_, Type apiType_)
-        {
-            m_serviceUrl = serviceUrl_;
-            m_port = port_;
-            m_apiType = apiType_;
-            if (apiType_.IsInterface || apiType_.IsAbstract)
-            {
-                throw new ArgumentException("apiType_ should be a class!");
-            }
-            else
-            {
-                m_Service = Activator.CreateInstance(apiType_);
-            }
-        }
 
         /// <summary>
-        /// Initializes a new instance of the CWebServer class. 
-        /// Creates a web server at the specified port number for the specified Service.
+        /// Constructor. Creates a web server at the specified port number for the specified Service.
         /// </summary>
         /// <param name="port_">Portnumber to them the server listening</param>
         /// <param name="serviceUrl_">The serviceUrl "/test/myservice.hessian"</param>
-        /// <param name="apiType_">The Type of Serviceobject</param>
-        /// <param name="service_">Servicobject</param>		
-        public CWebServer(int port_, string serviceUrl_, Type apiType_, object service_)
+        /// <param name="apiType_">The Type of Serviceobject, may not be an interface</param>	
+        /// <exception cref="ArgumentException"/>	
+        public CWebServer(int port_)
         {
-            m_serviceUrl = serviceUrl_;
             m_port = port_;
-            m_apiType = apiType_;
-            m_Service = service_;
         }
+
         #endregion
 
         #region PROPORTIES
         /// <summary>
         /// The portnumber
-        /// <value>int</value>
         /// </summary>
         public int Port
         {
             get { return m_port; }
         }
 
-        /// <summary>
-        /// The Service Object
-        /// <value>Object</value>
-        /// </summary>
-        public object Service
-        {
-            get { return m_Service; }
-        }
 
-        /// <summary>
-        /// The Api Type 
-        /// <value>Type</value>
-        /// </summary>
-        public Type TypeApi
-        {
-            get { return m_apiType; }
-        }
 
         /// <summary>
         /// informational, is the web server running
-        /// <value>bool</value>
         /// </summary>
         public bool Running
         {
@@ -149,19 +107,9 @@ namespace hessiancsharp.webserver
         }
 
         /// <summary>
-        /// The Service Url "/test/myservice.hessian"
-        /// <value>string</value>
-        /// </summary>
-        public string ServiceUrl
-        {
-            get { return m_serviceUrl; }
-        }
-
-        /// <summary>
         /// Switch client filtering on/off.
         /// see AcceptClient(string)
         /// see DenyClient(string)
-        /// <value>bool</value>
         /// </summary>
         public bool Paranoid
         {
@@ -171,6 +119,7 @@ namespace hessiancsharp.webserver
         #endregion
 
         #region PUBLIC_METHODS
+
         /// <summary>
         /// listen to port and get HTTP calls
         /// </summary>
@@ -196,7 +145,12 @@ namespace hessiancsharp.webserver
             {
                 try
                 {
+                    m_serverSock.Close();
                     runningThread.Abort();
+                }
+                catch(Exception ex)
+                {
+                    Console.Write(ex);
                 }
                 finally
                 {
@@ -209,9 +163,9 @@ namespace hessiancsharp.webserver
         }
 
         /// <summary>
-        /// Add an IP address to the list of accepted clients. The parameter can
-        /// contain '*' as wildcard character, e.g. "192.168.*.*", just a regular expression. 
-        /// You must call Paranoid = true in order for this to have any effect.
+        ///Add an IP address to the list of accepted clients. The parameter can
+        ///contain '*' as wildcard character, e.g. "192.168.*.*", just a regular expression. 
+        ///You must call Paranoid = true in order for this to have any effect.
         /// </summary>
         public void AcceptClient(string regexpr_)
         {
@@ -222,9 +176,9 @@ namespace hessiancsharp.webserver
         }
 
         /// <summary>
-        /// Add an IP address to the list of denied clients. The parameter can
-        /// contain '*' as wildcard character, e.g. "192.168.*.*", just a regular expression. 
-        /// You must call Paranoid = true in order for this to have any effect.
+        ///Add an IP address to the list of denied clients. The parameter can
+        ///contain '*' as wildcard character, e.g. "192.168.*.*", just a regular expression. 
+        ///You must call Paranoid = true in order for this to have any effect.
         /// </summary>
         public void DenyClient(string regexpr_)
         {
@@ -255,16 +209,24 @@ namespace hessiancsharp.webserver
                 try
                 {
                     sock = AcceptConnection();
+                    IPEndPoint ep = (IPEndPoint)sock.RemoteEndPoint;
+                    IPAddress remoteIp = ep.Address;
+                    if (!AllowConnection(sock))
+                    {
+                        throw new NotSupportedException("The client with this ip is not supported: "
+                            + remoteIp.ToString());
+                    }
                 }
                 catch (NotSupportedException)
                 {
                     //TODO: Log deny ip
-                    sock.Close();
+                    if (sock != null)
+                        sock.Close();
                     sock = null;
                 }
                 if (sock != null)
                 {
-                    CConnection conn = new CConnection(sock, m_serviceUrl, m_apiType, m_Service);
+                    CConnection conn = new CConnection(sock);
                     conn.ProcessRequest();
                 }
             }
@@ -294,7 +256,6 @@ namespace hessiancsharp.webserver
                     return false;
                 }
             }
-
             l = m_AcceptIPAddressList.Count;
             for (int i = 0; i < l; i++)
             {
@@ -305,7 +266,6 @@ namespace hessiancsharp.webserver
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -317,13 +277,6 @@ namespace hessiancsharp.webserver
         {
             m_serverSock.Listen(1);
             Socket s = m_serverSock.Accept();
-            IPEndPoint ep = (IPEndPoint)s.RemoteEndPoint;
-            IPAddress remoteIp = ep.Address;
-            if (!AllowConnection(s))
-            {
-                throw new NotSupportedException("The client with this ip is not supported: "
-                    + remoteIp.ToString());
-            }
             return s;
         }
     }

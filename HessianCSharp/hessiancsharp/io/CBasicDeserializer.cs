@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.org
+* http://www.HessianCSharp.org
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.org
+* You can find all contact information on http://www.HessianCSharp.org
 ******************************************************************************************************
 *
 *
@@ -39,7 +39,7 @@ using System;
 using System.Collections;
 
 #endregion
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Deserializing an object for known object types.
@@ -50,17 +50,77 @@ namespace hessiancsharp.io
         private int m_intCode;
         #endregion
 
+        public override Type GetOwnType()
+        {
+            switch (m_intCode)
+            {
+                case BOOLEAN:
+                    return typeof(bool);
+                case BYTE:
+                    return typeof(byte);
+                case SBYTE:
+                    return typeof(sbyte);
+                case FLOAT:
+                    return typeof(float);
+                case SHORT:
+                    return typeof(short);
+                case INTEGER:
+                    return typeof(int);
+                case LONG:
+                    return typeof(long);
+                case DOUBLE:
+                    return typeof(double);
+                case STRING:
+                    return typeof(string);
+                case CHARACTER:
+                    return typeof(char);
+                case BOOLEAN_ARRAY:
+                    return typeof(bool[]);
+                case SHORT_ARRAY:
+                    return typeof(short[]);
+                case INTEGER_ARRAY:
+                    return typeof(int[]);
+                case LONG_ARRAY:
+                    return typeof(long[]);
+                case FLOAT_ARRAY:
+                    return typeof(float[]);
+                case DOUBLE_ARRAY:
+                    return typeof(double[]);
+                case CHARACTER_ARRAY:
+                    return typeof(char[]);
+                case STRING_ARRAY:
+                    return typeof(string[]);
+                case BYTE_ARRAY:
+                    return typeof(byte[]);
+                case SBYTE_ARRAY:
+                    return typeof(sbyte[]);
+                case OBJECT_ARRAY:
+                    return typeof(object[]);
+                case DATE:
+                    return typeof(DateTime);
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+
         #region PUBLIC_METHODS
         /// <summary>
         /// Reads the basic (primitive & Date ) data types
         /// and arrays of them
         /// </summary>
-        /// <param name="abstractHessianInput">Hessian Input instance</param>        
+        /// <param name="abstractHessianInput">Hessian Input instance</param>
+        /// <exception cref="CHessianException"/>
         /// <returns>Read object</returns>
         public override object ReadObject(AbstractHessianInput abstractHessianInput)
         {
             switch (m_intCode)
             {
+                case CSerializationConstants.NULL:
+                    {
+                        // hessian/3490
+                        abstractHessianInput.ReadObject();
+                        return null;
+                    }
                 case BOOLEAN:
                     return abstractHessianInput.ReadBoolean();
                 case BYTE:
@@ -90,7 +150,9 @@ namespace hessiancsharp.io
                             return null;
                         else
                             return strResult[0];
+
                     }
+
                 case BOOLEAN_ARRAY:
                 case SHORT_ARRAY:
                 case INTEGER_ARRAY:
@@ -100,16 +162,43 @@ namespace hessiancsharp.io
                 case DOUBLE_ARRAY:
                 case STRING_ARRAY:
                     {
-                        if (abstractHessianInput.ReadListStart() == 'N')
-                            return null;
+                        int code = abstractHessianInput.ReadListStart();
 
-                        abstractHessianInput.ReadType();
-                        int intLength = abstractHessianInput.ReadLength();
+                        switch (code)
+                        {
+                            case 'N':
+                                return null;
 
-                        return ReadList(abstractHessianInput, intLength);
+                            case 0x10:
+                            case 0x11:
+                            case 0x12:
+                            case 0x13:
+                            case 0x14:
+                            case 0x15:
+                            case 0x16:
+                            case 0x17:
+                            case 0x18:
+                            case 0x19:
+                            case 0x1a:
+                            case 0x1b:
+                            case 0x1c:
+                            case 0x1d:
+                            case 0x1e:
+                            case 0x1f:
+                                int length = code - 0x10;
+                                abstractHessianInput.ReadInt();
+
+                                return ReadLengthList(abstractHessianInput, length);
+
+                            default:
+                                string type = abstractHessianInput.ReadType();
+                                length = abstractHessianInput.ReadLength();
+                                return ReadList(abstractHessianInput, length);
+                        }
                     }
                 case BYTE_ARRAY:
                     return abstractHessianInput.ReadBytes();
+
                 case CHARACTER_ARRAY:
                     {
                         string strResult = abstractHessianInput.ReadString();
@@ -128,21 +217,28 @@ namespace hessiancsharp.io
                     long javaTime = abstractHessianInput.ReadUTCDate();
                     const long timeShift = 62135596800000;
                     DateTime dt = new DateTime((javaTime + timeShift) * 10000, DateTimeKind.Utc);
-                    dt = dt.ToLocalTime(); // der Einfachheit halber
+                    if (dt != DateTime.MinValue)
+                    {
+                        dt = dt.ToLocalTime(); // der Einfachheit halber
+                    }
                     return dt;
+
                 default:
                     throw new CHessianException("not supperted type for deserialization");
             }
         }
 
+
         /// <summary>
         /// Reads arrays
         /// </summary>
         /// <param name="abstractHessianInput">Hessian Input instance</param>
-        /// <param name="intLength">Array length</param>        
+        /// <param name="intLength">Array length</param>
+        /// <exception cref="CHessianException"/>
         /// <returns>Read object</returns>
         public override object ReadList(AbstractHessianInput abstractHessianInput, int intLength)
         {
+
             switch (m_intCode)
             {
                 case INTEGER_ARRAY:
@@ -165,9 +261,7 @@ namespace hessiancsharp.io
                             ArrayList arrayList = new ArrayList();
 
                             while (!abstractHessianInput.IsEnd())
-                            {
                                 arrayList.Add(abstractHessianInput.ReadInt());
-                            }
 
                             abstractHessianInput.ReadEnd();
 
@@ -175,11 +269,13 @@ namespace hessiancsharp.io
                             for (int i = 0; i < arrData.Length; i++)
                                 arrData[i] = (int)arrayList[i];
 
+
                             abstractHessianInput.AddRef(arrData);
 
                             return arrData;
                         }
                     }
+
                 case SBYTE_ARRAY:
                     {
                         if (intLength >= 0)
@@ -200,15 +296,14 @@ namespace hessiancsharp.io
                             ArrayList arrayList = new ArrayList();
 
                             while (!abstractHessianInput.IsEnd())
-                            {
                                 arrayList.Add(abstractHessianInput.ReadInt());
-                            }
 
                             abstractHessianInput.ReadEnd();
 
                             sbyte[] arrData = new sbyte[arrayList.Count];
                             for (int i = 0; i < arrData.Length; i++)
                                 arrData[i] = (sbyte)arrayList[i];
+
 
                             abstractHessianInput.AddRef(arrData);
 
@@ -235,9 +330,7 @@ namespace hessiancsharp.io
                             ArrayList arrayList = new ArrayList();
 
                             while (!abstractHessianInput.IsEnd())
-                            {
                                 arrayList.Add(abstractHessianInput.ReadString());
-                            }
 
                             abstractHessianInput.ReadEnd();
 
@@ -246,11 +339,15 @@ namespace hessiancsharp.io
                             for (int i = 0; i < arrData.Length; i++)
                                 arrData[i] = (string)arrayList[i];
 
+
                             return arrData;
                         }
                     }
+
+
                 case BOOLEAN_ARRAY:
                     {
+
                         if (intLength >= 0)
                         {
                             bool[] arrData = new bool[intLength];
@@ -269,9 +366,7 @@ namespace hessiancsharp.io
                             ArrayList arrayList = new ArrayList();
 
                             while (!abstractHessianInput.IsEnd())
-                            {
                                 arrayList.Add(abstractHessianInput.ReadBoolean());
-                            }
 
                             abstractHessianInput.ReadEnd();
 
@@ -284,6 +379,7 @@ namespace hessiancsharp.io
                             return arrData;
                         }
                     }
+
                 case SHORT_ARRAY:
                     {
                         if (intLength >= 0)
@@ -304,9 +400,7 @@ namespace hessiancsharp.io
                             ArrayList arrayList = new ArrayList();
 
                             while (!abstractHessianInput.IsEnd())
-                            {
                                 arrayList.Add((short)abstractHessianInput.ReadInt());
-                            }
 
                             abstractHessianInput.ReadEnd();
 
@@ -319,6 +413,9 @@ namespace hessiancsharp.io
                             return arrData;
                         }
                     }
+
+
+
                 case LONG_ARRAY:
                     {
                         if (intLength >= 0)
@@ -339,9 +436,7 @@ namespace hessiancsharp.io
                             ArrayList arrayList = new ArrayList();
 
                             while (!abstractHessianInput.IsEnd())
-                            {
                                 arrayList.Add(abstractHessianInput.ReadLong());
-                            }
 
                             abstractHessianInput.ReadEnd();
 
@@ -354,6 +449,7 @@ namespace hessiancsharp.io
                             return arrData;
                         }
                     }
+
                 case FLOAT_ARRAY:
                     {
                         if (intLength >= 0)
@@ -373,9 +469,7 @@ namespace hessiancsharp.io
                             ArrayList arrayList = new ArrayList();
 
                             while (!abstractHessianInput.IsEnd())
-                            {
                                 arrayList.Add(abstractHessianInput.ReadDouble());
-                            }
 
                             abstractHessianInput.ReadEnd();
 
@@ -388,6 +482,7 @@ namespace hessiancsharp.io
                             return arrData;
                         }
                     }
+
                 case DOUBLE_ARRAY:
                     {
                         if (intLength >= 0)
@@ -407,9 +502,7 @@ namespace hessiancsharp.io
                             ArrayList arrayList = new ArrayList();
 
                             while (!abstractHessianInput.IsEnd())
-                            {
                                 arrayList.Add(abstractHessianInput.ReadDouble());
-                            }
 
                             abstractHessianInput.ReadEnd();
 
@@ -418,9 +511,13 @@ namespace hessiancsharp.io
                             for (int i = 0; i < data.Length; i++)
                                 data[i] = (double)arrayList[i];
 
+
                             return data;
                         }
                     }
+
+
+
                 case OBJECT_ARRAY:
                     {
                         if (intLength >= 0)
@@ -442,9 +539,7 @@ namespace hessiancsharp.io
                             abstractHessianInput.AddRef(arrayList); // XXX: potential issues here
 
                             while (!abstractHessianInput.IsEnd())
-                            {
                                 arrayList.Add(abstractHessianInput.ReadObject());
-                            }
 
                             abstractHessianInput.ReadEnd();
 
@@ -455,8 +550,110 @@ namespace hessiancsharp.io
                             return arrData;
                         }
                     }
+
                 default:
                     throw new CHessianException("not supperted type for deserialization");
+            }
+        }
+
+        public override object ReadLengthList(AbstractHessianInput abstractHessianInput, int length)
+        {
+            switch (m_intCode)
+            {
+                case BOOLEAN_ARRAY:
+                    {
+                        bool[] data = new bool[length];
+
+                        abstractHessianInput.AddRef(data);
+
+                        for (int i = 0; i < data.Length; i++)
+                            data[i] = abstractHessianInput.ReadBoolean();
+
+                        return data;
+                    }
+
+                case SHORT_ARRAY:
+                    {
+                        short[] data = new short[length];
+
+                        abstractHessianInput.AddRef(data);
+
+                        for (int i = 0; i < data.Length; i++)
+                            data[i] = (short)abstractHessianInput.ReadInt();
+
+                        return data;
+                    }
+
+                case INTEGER_ARRAY:
+                    {
+                        int[] data = new int[length];
+
+                        abstractHessianInput.AddRef(data);
+
+                        for (int i = 0; i < data.Length; i++)
+                            data[i] = abstractHessianInput.ReadInt();
+
+                        return data;
+                    }
+
+                case LONG_ARRAY:
+                    {
+                        long[] data = new long[length];
+
+                        abstractHessianInput.AddRef(data);
+
+                        for (int i = 0; i < data.Length; i++)
+                            data[i] = abstractHessianInput.ReadLong();
+
+                        return data;
+                    }
+
+                case FLOAT_ARRAY:
+                    {
+                        float[] data = new float[length];
+                        abstractHessianInput.AddRef(data);
+
+                        for (int i = 0; i < data.Length; i++)
+                            data[i] = (float)abstractHessianInput.ReadDouble();
+
+                        return data;
+                    }
+
+                case DOUBLE_ARRAY:
+                    {
+                        double[] data = new double[length];
+                        abstractHessianInput.AddRef(data);
+
+                        for (int i = 0; i < data.Length; i++)
+                            data[i] = abstractHessianInput.ReadDouble();
+
+                        return data;
+                    }
+
+                case STRING_ARRAY:
+                    {
+                        string[] data = new string[length];
+                        abstractHessianInput.AddRef(data);
+
+                        for (int i = 0; i < data.Length; i++)
+                            data[i] = abstractHessianInput.ReadString();
+
+                        return data;
+                    }
+
+                case OBJECT_ARRAY:
+                    {
+                        object[] data = new object[length];
+                        abstractHessianInput.AddRef(data);
+
+                        for (int i = 0; i < data.Length; i++)
+                            data[i] = abstractHessianInput.ReadObject();
+
+                        return data;
+                    }
+
+                default:
+                    throw new InvalidOperationException(this.ToString());
             }
         }
 
@@ -464,7 +661,7 @@ namespace hessiancsharp.io
 
         #region CONSTRUCTORS
         /// <summary>
-        /// Initializes a new instance of the CBasicDeserializer class
+        /// Constructor
         /// </summary>
         /// <param name="code">Code that identifies this
         /// instance as Deserializer</param>
@@ -474,5 +671,10 @@ namespace hessiancsharp.io
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return GetType().Name + "[" + m_intCode + "]";
+        }
     }
 }

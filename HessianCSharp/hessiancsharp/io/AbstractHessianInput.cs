@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -38,13 +38,13 @@ using System;
 using System.IO;
 
 #endregion
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Parent of the HessianInput class.
     /// Declares read operations (access methods) from an InputStream.
     /// </summary>
-    public abstract class AbstractHessianInput : CHessianProtocolConstants
+    public abstract class AbstractHessianInput
     {
         #region CLASS_FIELDS
         // serializer factory
@@ -53,7 +53,7 @@ namespace hessiancsharp.io
         /// <summary>
         /// the method for a call
         /// </summary>
-        protected string m_strMethod;
+        protected String m_strMethod;
 
         #endregion
 
@@ -61,17 +61,15 @@ namespace hessiancsharp.io
 
         /// <summary> 
         /// The methodname
-        /// <value>string</value>
         /// </summary>
         public string Method
         {
+            set { m_strMethod = value; }
             get { return m_strMethod; }
-            set { m_strMethod = value; }            
         }
-        
+
         /// <summary>
         /// Sets the serializer factory
-        /// <value>CSerializerFactory</value>
         /// </summary>
         public CSerializerFactory CSerializerFactory
         {
@@ -80,6 +78,51 @@ namespace hessiancsharp.io
         #endregion
 
         #region PUBLIC_METHODS
+
+        /// <summary>
+        ///Reads the call
+        ///c major minor
+        /// </summary>
+        /// <returns></returns>
+        public abstract int ReadCall();
+
+        /// <summary>
+        /// For backward compatibility with HessianSkeleton
+        /// </summary>
+        public void SkipOptionalCall()
+        {
+        }
+
+        /// <summary>
+        /// * Reads a header, returning null if there are no headers.
+        /// *
+        /// * &lt;pre&gt;
+        /// * H b16 b8 value
+        /// * &lt;/pre&gt;
+        /// </summary>
+        public abstract string ReadHeader();
+
+        /// <summary>
+        /// * Starts reading the call
+        /// *
+        /// * &lt;p&gt;A successful completion will have a single value:
+        /// *
+        /// * &lt;pre&gt;
+        /// * m b16 b8 method
+        /// * &lt;/pre&gt;
+        /// </summary>
+        public abstract String ReadMethod();
+
+        /// <summary>
+        /// * Reads the number of method arguments
+        /// *
+        /// * @return -1 for a variable length (hessian 1.0)
+        /// </summary>
+        public virtual int ReadMethodArgLength()
+        {
+            return -1;
+        }
+
         /// <summary>
         /// Reads an arbitrary object from the input stream.
         /// </summary>
@@ -90,19 +133,18 @@ namespace hessiancsharp.io
         /// <summary>
         /// Reads an arbitrary object from the input stream.
         /// </summary>
-        /// <returns>object value</returns>
+        /// <returns>Object value</returns>
         public abstract object ReadObject();
-
         /// <summary>
         /// Reads a reply as an object.
         /// If the reply has a fault, throws the exception.
         /// </summary>
         /// <param name="expectedType"> Expected class of the value</param>
         /// <returns>Reply value</returns>
-        public abstract object ReadReply(Type expectedType);
-
+        public abstract Object ReadReply(Type expectedType);
         /// <summary>
         /// Reads an integer
+        /// 
         /// <code>
         /// I b32 b24 b16 b8
         /// </code>
@@ -112,6 +154,7 @@ namespace hessiancsharp.io
 
         /// <summary>
         /// Reads a boolean
+        /// 
         /// <code>
         /// T
         /// F
@@ -121,7 +164,16 @@ namespace hessiancsharp.io
         public abstract bool ReadBoolean();
 
         /// <summary>
+        /// * Reads a null
+        /// * &lt;pre&gt;
+        /// * N
+        /// * &lt;/pre&gt;
+        /// </summary>
+        public abstract void ReadNull();
+
+        /// <summary>
         /// Reads a string encoded in UTF-8
+        /// 
         /// <code>
         /// s b16 b8 non-final string chunk
         /// S b16 b8 final string chunk
@@ -148,6 +200,7 @@ namespace hessiancsharp.io
         /// <returns>double value</returns>
         public abstract double ReadDouble();
 
+
         /// <summary>
         /// Reads the start of a list
         /// </summary>
@@ -167,6 +220,21 @@ namespace hessiancsharp.io
         public abstract int AddRef(object objReference);
 
         /// <summary>
+        /// Sets an object reference.
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="obj"></param>
+        public abstract void SetRef(int i, Object obj);
+
+        /// <summary>
+        /// * Resets the references for streaming.
+        /// </summary>
+        public void ResetReferences()
+        {
+         
+        }
+
+        /// <summary>
         ///   Read the end byte
         /// </summary>
         public abstract void ReadEnd();
@@ -181,7 +249,7 @@ namespace hessiancsharp.io
         ///   Reads an object type.
         /// </summary>
         /// <returns>Type name</returns>
-        public abstract string ReadType();
+        public abstract String ReadType();
 
         /// <summary>
         ///  Reads the length of a list.
@@ -196,50 +264,53 @@ namespace hessiancsharp.io
         /// B b16 b8 final binary chunk
         /// <returns>Byte array</returns>
         public abstract byte[] ReadBytes();
-
-        /// <summary>
+        ///<summary>
         /// Reads the start of a list.
-        /// </summary>
-        /// <returns>Code for the map start</returns>
+        ///</summary>
+        ///<returns>Code for the map start</returns>
         public abstract int ReadMapStart();
-
-        /// <summary>
+        ///<summary>
         /// Reads the end of a list.
-        /// </summary>
+        ///</summary>
         public abstract void ReadMapEnd();
-
         /// <summary>
         /// Reads utc date
         /// </summary>
         /// <returns>Read date as miliseconds since the epoche</returns>
         public abstract long ReadUTCDate();
-
         /// <summary>
         /// Reads a reference.
         /// </summary>
         /// <returns>reference object</returns>
         public abstract object ReadRef();
-
         /// <summary>
         /// Reads a InputStream.
         /// </summary>
         /// <returns>stream</returns>
         public abstract Stream ReadInputStream();
-
         /// <summary>
         /// Starts reading the reply
         /// A successful completion will have a single value:
         /// r
-        /// </summary>        
+        /// </summary>
+        /// <exception cref="CHessianException"/>
         public abstract void StartReply();
+
+        /// <summary>
+        /// * Starts reading the body of the reply, i.e. after the 'r' has been
+        /// * parsed.
+        /// </summary>
+        public virtual void StartReplyBody()
+        {
+        }
 
         /// <summary>
         /// Completes reading the call
         /// A successful completion will have a single value:
         /// z
-        /// </summary>        
+        /// </summary>
+        /// <exception cref="CHessianException"/>
         public abstract void CompleteReply();
-
         /// <summary>
         /// Starts reading the call
         /// A successful completion will have a single value:
@@ -252,7 +323,8 @@ namespace hessiancsharp.io
         /// Completes reading the call
         /// A successful completion will have a single value:
         /// z
-        /// </summary>        
+        /// </summary>
+        /// <exception cref="CHessianException"/>
         public abstract void CompleteCall();
 
         #endregion

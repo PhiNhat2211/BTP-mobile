@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -37,21 +37,23 @@
 #region NAMESPACES
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
-
-using hessiancsharp.Class;
+using System.Text;
 #endregion
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Output stream for Hessian requests
-    /// <p>HessianOutput is unbuffered, so any client needs to provide
+    ///<p>HessianOutput is unbuffered, so any client needs to provide
     /// its own buffering.
-    /// </p> 
+    ///</p> 
     /// </summary>
     public class CHessianOutput : AbstractHessianOutput
     {
+
         #region CLASS_FIELDS
         /// <summary>
         /// the output stream
@@ -62,11 +64,12 @@ namespace hessiancsharp.io
         /// map of references
         /// </summary>
         private Hashtable m_htRefs;
+        private int _version = 1;
         #endregion
 
         #region CONSTRUCTORS
         /// <summary>
-        /// Initializes a new instance of the CHessianOutput class
+        /// Constructor
         /// </summary>
         /// <param name="srOutput">Output stream</param>
         public CHessianOutput(Stream srOutput)
@@ -83,6 +86,7 @@ namespace hessiancsharp.io
         public override void Init(Stream srOutput)
         {
             this.m_srOutput = srOutput;
+
             this.m_htRefs = null;
 
             if (base.m_serializerFactory == null)
@@ -92,33 +96,41 @@ namespace hessiancsharp.io
         }
 
         /// <summary>
+        /// Sets the client's version.
+        /// </summary>
+        /// <param name="version"></param>
+        public void SetVersion(int version)
+        {
+            _version = version;
+        }
+
+        /// <summary>
         /// Writes a complete method call.
         /// </summary>
         /// <param name="strMethod">Method name</param>
         /// <param name="args">Method args</param>
-        public void Call(string strMethod, Object[] args)
+        public override void Call(string strMethod, object[] args)
         {
-            StartCall(strMethod);
+            int length = args != null ? args.Length : 0;
+        
+            StartCall(strMethod, length);
 
-            if (args != null && args.Length > 0)
+            if (args != null)
             {
-                if (args[0].GetType().Equals(typeof(HessianList)))
+                for (int i = 0; i < args.Length; i++)
                 {
-                    for (int i = 0; i < (args[0] as HessianList).Count; i++)
-                    {
-                        WriteObject((args[0] as HessianList)[i]);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < args.Length; i++)
-                    {
-                        WriteObject(args[i]);
-                    }
+                    WriteObject(args[i]);
                 }
             }
-
             CompleteCall();
+
+        }
+
+        public override void StartCall()
+        {
+            m_srOutput.WriteByte((byte)'c');
+            m_srOutput.WriteByte((byte)0);
+            m_srOutput.WriteByte((byte)1);
         }
 
         /// <summary>
@@ -128,19 +140,41 @@ namespace hessiancsharp.io
         /// <code>
         /// c major minor
         /// m b16 b8 method-name
-        /// </code>
+        ///</code>
         /// </summary>
         /// <param name="strMethod">method the method name to call.</param>
         public override void StartCall(string strMethod)
         {
-            m_srOutput.WriteByte((byte)(PROT_CALL_START));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_CALL_START));
             m_srOutput.WriteByte(0);
             m_srOutput.WriteByte(1);
-            m_srOutput.WriteByte((byte)(PROT_METHOD));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_METHOD));
             int intLength = strMethod.Length;
             m_srOutput.WriteByte((byte)(intLength >> 8));
             m_srOutput.WriteByte((byte)intLength);
             PrintString(strMethod, 0, intLength);
+        }
+
+        public override void StartCall(string method, int length)
+        {
+            m_srOutput.WriteByte((byte)'c');
+            m_srOutput.WriteByte((byte)_version);
+            m_srOutput.WriteByte((byte)0);
+
+            m_srOutput.WriteByte((byte)'m');
+            int len = method.Length;
+            m_srOutput.WriteByte((byte)(len >> 8));
+            m_srOutput.WriteByte((byte)len);
+            PrintString(method, 0, len);
+        }
+
+        public override void WriteMethod(string method)
+        {
+            m_srOutput.WriteByte((byte)'m');
+            int len = method.Length;
+            m_srOutput.WriteByte((byte)(len >> 8));
+            m_srOutput.WriteByte((byte)len);
+            PrintString(method, 0, len);
         }
 
         /// <summary>
@@ -151,9 +185,11 @@ namespace hessiancsharp.io
         /// </summary>
         public override void CompleteCall()
         {
-            m_srOutput.WriteByte((byte)(PROT_REPLY_END));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_REPLY_END));
             m_srOutput.Flush();
+
         }
+
 
         /// <summary>
         /// Starts the reply.
@@ -164,7 +200,7 @@ namespace hessiancsharp.io
         /// </summary>
         public override void StartReply()
         {
-            m_srOutput.WriteByte((byte)(PROT_REPLY_START));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_REPLY_START));
             m_srOutput.WriteByte(1);
             m_srOutput.WriteByte(0);
         }
@@ -178,8 +214,9 @@ namespace hessiancsharp.io
         /// </summary>
         public override void CompleteReply()
         {
-            m_srOutput.WriteByte((byte)(PROT_REPLY_END));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_REPLY_END));
             m_srOutput.Flush();
+
         }
 
         /// <summary>
@@ -189,16 +226,18 @@ namespace hessiancsharp.io
         /// </code>
         /// </summary>
         /// <param name="strHeaderName">Header name</param>
-        public void WriteHeader(string strHeaderName)
+        public override void WriteHeader(string strHeaderName)
         {
             int intLength = strHeaderName.Length;
 
-            m_srOutput.WriteByte((byte)(PROT_HEADER));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_HEADER));
             m_srOutput.WriteByte((byte)(intLength >> 8));
             m_srOutput.WriteByte((byte)intLength);
 
             PrintString(strHeaderName);
         }
+
+
 
         /// <summary>
         /// Writes a fault.  The fault will be written
@@ -220,7 +259,12 @@ namespace hessiancsharp.io
         /// <param name="strMessage">fault message</param>
         /// <param name="objDetail">fault detail</param>
         public override void WriteFault(string strCode, string strMessage, object objDetail)
-        {
+        {  
+            // hessian/3525
+            m_srOutput.WriteByte((byte)CHessianProtocolConstants.PROT_REPLY_START);
+            m_srOutput.WriteByte(1);
+            m_srOutput.WriteByte(0);
+    
             m_srOutput.WriteByte((byte)CHessianProtocolConstants.PROT_REPLY_FAULT);
 
             WriteString("code");
@@ -234,7 +278,7 @@ namespace hessiancsharp.io
                 WriteString("detail");
                 WriteObject(objDetail);
             }
-            m_srOutput.WriteByte((byte)(PROT_REPLY_END));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_REPLY_END));
         }
 
         /// <summary>
@@ -250,6 +294,7 @@ namespace hessiancsharp.io
             }
 
             AbstractSerializer abstractSerializer = m_serializerFactory.GetSerializer(obj.GetType());
+
             abstractSerializer.WriteObject(obj, this);
         }
 
@@ -257,6 +302,7 @@ namespace hessiancsharp.io
         /// Writes the list header to the stream.  List writers will call
         /// <code>writeListBegin</code> followed by the list contents and then
         /// call <code>writeListEnd</code>.
+        /// 
         /// <code>
         /// V
         /// t b16 b8 type
@@ -265,17 +311,18 @@ namespace hessiancsharp.io
         /// </summary>
         /// <param name="intLength"></param>
         /// <param name="strType"></param>
-        public override void WriteListBegin(int intLength, string strType)
+        public override bool WriteListBegin(int intLength, string strType)
         {
-            m_srOutput.WriteByte((byte)(PROT_LIST_TYPE));
-            m_srOutput.WriteByte((byte)(PROT_TYPE));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_LIST_TYPE));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_TYPE));
             PrintLenString(strType);
 
-            m_srOutput.WriteByte((byte)(PROT_LENGTH));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_LENGTH));
             m_srOutput.WriteByte((byte)(intLength >> 24));
             m_srOutput.WriteByte((byte)(intLength >> 16));
             m_srOutput.WriteByte((byte)(intLength >> 8));
             m_srOutput.WriteByte((byte)(intLength));
+            return true;
         }
 
         /// <summary>
@@ -283,7 +330,7 @@ namespace hessiancsharp.io
         /// </summary>
         public override void WriteListEnd()
         {
-            m_srOutput.WriteByte((byte)(PROT_REPLY_END));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_REPLY_END));
         }
 
         /// <summary>
@@ -297,17 +344,18 @@ namespace hessiancsharp.io
         /// <param name="strType">Map - Type</param>
         public override void WriteMapBegin(string strType)
         {
-            m_srOutput.WriteByte((byte)(PROT_MAP_TYPE));
-            m_srOutput.WriteByte((byte)(PROT_TYPE));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_MAP_TYPE));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_TYPE));
             PrintLenString(strType);
         }
+
 
         /// <summary>
         /// Writes the tail of the map to the stream.
         /// </summary>
         public override void WriteMapEnd()
         {
-            m_srOutput.WriteByte((byte)(PROT_REPLY_END));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_REPLY_END));
         }
 
         /// <summary>
@@ -341,11 +389,11 @@ namespace hessiancsharp.io
         {
             if (blnValue)
             {
-                m_srOutput.WriteByte((byte)(PROT_BOOLEAN_TRUE));
+                m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_BOOLEAN_TRUE));
             }
             else
             {
-                m_srOutput.WriteByte((byte)(PROT_BOOLEAN_FALSE));
+                m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_BOOLEAN_FALSE));
             }
         }
 
@@ -359,7 +407,7 @@ namespace hessiancsharp.io
         /// <param name="intValue">the integer value to write.</param>
         public override void WriteInt(int intValue)
         {
-            m_srOutput.WriteByte((byte)(PROT_INTEGER_TYPE));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_INTEGER_TYPE));
             m_srOutput.WriteByte((byte)(intValue >> 24));
             m_srOutput.WriteByte((byte)(intValue >> 16));
             m_srOutput.WriteByte((byte)(intValue >> 8));
@@ -376,7 +424,7 @@ namespace hessiancsharp.io
         /// <param name="lngValue">the long value to write.</param>
         public override void WriteLong(long lngValue)
         {
-            m_srOutput.WriteByte((byte)(PROT_LONG_TYPE));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_LONG_TYPE));
             m_srOutput.WriteByte((byte)(lngValue >> 56));
             m_srOutput.WriteByte((byte)(lngValue >> 48));
             m_srOutput.WriteByte((byte)(lngValue >> 40));
@@ -399,7 +447,7 @@ namespace hessiancsharp.io
         {
             byte[] lngBytes = BitConverter.GetBytes(dblValue);
             long lngBits = BitConverter.ToInt64(lngBytes, 0);
-            m_srOutput.WriteByte((byte)(PROT_DOUBLE_TYPE));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_DOUBLE_TYPE));
             m_srOutput.WriteByte((byte)(lngBits >> 56));
             m_srOutput.WriteByte((byte)(lngBits >> 48));
             m_srOutput.WriteByte((byte)(lngBits >> 40));
@@ -419,7 +467,7 @@ namespace hessiancsharp.io
         /// <param name="lngTime">the date in milliseconds from the epoch in UTC</param>
         public override void WriteUTCDate(long lngTime)
         {
-            m_srOutput.WriteByte((byte)(PROT_DATE_TYPE));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_DATE_TYPE));
             m_srOutput.WriteByte((byte)(lngTime >> 56));
             m_srOutput.WriteByte((byte)(lngTime >> 48));
             m_srOutput.WriteByte((byte)(lngTime >> 40));
@@ -439,7 +487,7 @@ namespace hessiancsharp.io
         /// </summary>
         public override void WriteNull()
         {
-            m_srOutput.WriteByte((byte)(PROT_NULL));
+            m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_NULL));
         }
 
         /// <summary>
@@ -454,7 +502,7 @@ namespace hessiancsharp.io
         {
             if (strValue == null)
             {
-                m_srOutput.WriteByte((byte)(PROT_NULL));
+                m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_NULL));
             }
             else
             {
@@ -465,7 +513,7 @@ namespace hessiancsharp.io
                 {
                     int intSublen = 0x8000;
 
-                    m_srOutput.WriteByte((byte)(PROT_STRING_INITIAL));
+                    m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_STRING_INITIAL));
                     m_srOutput.WriteByte((byte)(intSublen >> 8));
                     m_srOutput.WriteByte((byte)(intSublen));
 
@@ -475,14 +523,15 @@ namespace hessiancsharp.io
                     intOffset += intSublen;
                 }
 
-                m_srOutput.WriteByte((byte)(PROT_STRING_FINAL));
+                m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_STRING_FINAL));
                 m_srOutput.WriteByte((byte)(intLength >> 8));
                 m_srOutput.WriteByte((byte)(intLength));
 
                 PrintString(strValue, intOffset, intLength);
             }
         }
-        
+
+
         /// <summary>
         /// Writes a string value to the stream using UTF-8 encoding.
         /// The string will be written with the following syntax:
@@ -497,7 +546,7 @@ namespace hessiancsharp.io
         {
             if (arrBuffer == null)
             {
-                m_srOutput.WriteByte((byte)(PROT_NULL));
+                m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_NULL));
             }
             else
             {
@@ -505,7 +554,7 @@ namespace hessiancsharp.io
                 {
                     int intSublen = 0x8000;
 
-                    m_srOutput.WriteByte((byte)(PROT_STRING_INITIAL));
+                    m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_STRING_INITIAL));
                     m_srOutput.WriteByte((byte)(intSublen >> 8));
                     m_srOutput.WriteByte((byte)(intSublen));
 
@@ -514,7 +563,7 @@ namespace hessiancsharp.io
                     intLength -= intSublen;
                     intOffset += intSublen;
                 }
-                m_srOutput.WriteByte((byte)(PROT_STRING_FINAL));
+                m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_STRING_FINAL));
                 m_srOutput.WriteByte((byte)(intLength >> 8));
                 m_srOutput.WriteByte((byte)intLength);
 
@@ -534,7 +583,7 @@ namespace hessiancsharp.io
         {
             if (arrBuffer == null)
             {
-                m_srOutput.WriteByte((byte)(PROT_NULL));
+                m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_NULL));
             }
             else
             {
@@ -556,7 +605,7 @@ namespace hessiancsharp.io
         {
             if (arrBuffer == null)
             {
-                m_srOutput.WriteByte((byte)(PROT_NULL));
+                m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_NULL));
             }
             else
             {
@@ -564,7 +613,7 @@ namespace hessiancsharp.io
                 {
                     int intSublen = 0x8000;
 
-                    m_srOutput.WriteByte((byte)(PROT_BINARY_START));
+                    m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_BINARY_START));
                     m_srOutput.WriteByte((byte)(intSublen >> 8));
                     m_srOutput.WriteByte((byte)(intSublen));
 
@@ -574,7 +623,7 @@ namespace hessiancsharp.io
                     intOffset += intSublen;
                 }
 
-                m_srOutput.WriteByte((byte)(PROT_BINARY_END));
+                m_srOutput.WriteByte((byte)(CHessianProtocolConstants.PROT_BINARY_END));
                 m_srOutput.WriteByte((byte)(intLength >> 8));
                 m_srOutput.WriteByte((byte)intLength);
                 m_srOutput.Write(arrBuffer, intOffset, intLength);
@@ -612,6 +661,7 @@ namespace hessiancsharp.io
             }
         }
 
+
         /// <summary>
         /// Writes the last chunk of a byte buffer to the stream
         /// <code>
@@ -635,7 +685,7 @@ namespace hessiancsharp.io
         /// <param name="intValue">he integer value to write</param>
         public override void WriteRef(int intValue)
         {
-            m_srOutput.WriteByte((byte)PROT_REF_TYPE);
+            m_srOutput.WriteByte((byte)CHessianProtocolConstants.PROT_REF_TYPE);
             m_srOutput.WriteByte((byte)(intValue << 24));
             m_srOutput.WriteByte((byte)(intValue << 16));
             m_srOutput.WriteByte((byte)(intValue << 8));
@@ -671,12 +721,19 @@ namespace hessiancsharp.io
                 m_htRefs.Add(objReference, m_htRefs.Count);
                 return false;
             }
+
         }
-        
+
+        public override int GetRef(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+
         /// <summary>
         /// Removes a reference
         /// </summary>
-        /// <param name="objReference">object reference to remove</param>
+        /// <param name="objReference">Object reference to remove</param>
         /// <returns>True, if the refernece was successfully removed, otherwiese False</returns>
         public override bool RemoveRef(object objReference)
         {
@@ -706,6 +763,7 @@ namespace hessiancsharp.io
                 m_htRefs.Remove(objOldReference);
                 m_htRefs.Add(objNewReference, value);
                 return true;
+
             }
             else
             {
@@ -737,7 +795,7 @@ namespace hessiancsharp.io
         /// Prints a string to the stream, encoded as UTF-8
         /// </summary>
         /// <param name="strValue">the string to print</param>
-        public void PrintString(string strValue)
+        public void PrintString(String strValue)
         {
             PrintString(strValue, 0, strValue.Length);
         }
@@ -751,6 +809,7 @@ namespace hessiancsharp.io
         public void PrintString(string strValue, int intOffset, int intLength)
         {
             PrintString(strValue.ToCharArray(), intOffset, intLength);
+
         }
 
         /// <summary>
@@ -765,6 +824,14 @@ namespace hessiancsharp.io
             // m_srOutput.Write(utfData, intOffset, intLength);
             m_srOutput.Write(utfData, 0, utfData.Length);
         }
+
+        public override void Flush()
+        {
+            if (this.m_srOutput != null)
+                this.m_srOutput.Flush();
+        }
+
         #endregion
     }
+
 }

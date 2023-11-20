@@ -25,7 +25,7 @@ namespace VMT_Data_JAT2.Objects
         }
 
         public static String gMchnID = "";
-        public static String gMchnTp = "";
+        public static String gMchnTp = "YT";
         public static String gUserID = "";
         public static String gUserPW = "";
         public static String gUserNm = "";

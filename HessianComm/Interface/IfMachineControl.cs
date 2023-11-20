@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using hessiancsharp.Class;
+using HessianCSharp.Class;
 
 namespace HessianComm.Interface
 {

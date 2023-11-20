@@ -347,7 +347,7 @@ namespace VMT_RMG
                 var mchnLst =  DataMgr.Singleton.List_MachineofPool.Machine.ToList();
                 string mchnTp = (mchnLst.Find(x => x.mchnId.Equals(mchnId)) != null ) ? mchnLst.Find(x => x.mchnId.Equals(mchnId)).mchnTp : "TC";
 
-                var list = new hessiancsharp.Class.HessianList();
+                var list = new HessianCSharp.Class.HessianList();
                 list.Add(mchnTp);
                 list.Add(mchnId);
 

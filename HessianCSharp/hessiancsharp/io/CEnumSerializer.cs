@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -32,28 +32,53 @@
 * Licence added.
 ******************************************************************************************************
 */
-
 #region NAMESPACES
 using System;
-using System.Reflection;
 #endregion
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
-    /// Date - Deserialization.
+    /// Serializing of DateTime - Instances.
     /// </summary>
-    public class CDateDeserializer : AbstractDeserializer
+    public class CEnumSerializer : AbstractSerializer
     {
+
         #region PUBLIC_METHODS
+
         /// <summary>
-        /// Reads date
+        /// Writes Instance of the Enum class
         /// </summary>
-        /// <param name="abstractHessianInput">HessianInput - Instance</param>
-        /// <returns>DateTime - Instance</returns>
-        public override object ReadObject(AbstractHessianInput abstractHessianInput)
+        /// <param name="objData">Instance of the enum class</param>
+        /// <param name="abstractHessianOutput">HessianOutput - Stream</param>
+        public override void WriteObject(object objData, AbstractHessianOutput abstractHessianOutput)
         {
-            return DateTime.FromFileTimeUtc(abstractHessianInput.ReadUTCDate());
+            if (abstractHessianOutput.AddRef(objData))
+                return;
+            if (objData == null)
+                abstractHessianOutput.WriteNull();
+            else
+            {
+                int iref = abstractHessianOutput.WriteObjectBegin(objData.GetType().FullName);
+
+                if (iref < -1)
+                {
+                    abstractHessianOutput.WriteString("name");
+                    abstractHessianOutput.WriteString(objData.ToString());
+                    abstractHessianOutput.WriteMapEnd();
+                }
+                else
+                {
+                    if (iref == -1)
+                    {
+                        abstractHessianOutput.WriteClassFieldLength(1);
+                        abstractHessianOutput.WriteString("name");
+                        abstractHessianOutput.WriteObjectBegin(objData.GetType().FullName);
+                    }
+
+                    abstractHessianOutput.WriteString(objData.ToString());
+                }
+            }
         }
         #endregion
     }

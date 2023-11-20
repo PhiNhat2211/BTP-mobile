@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -38,45 +38,46 @@ using System;
 using System.IO;
 using System.Net;
 using System.Reflection;
-using hessiancsharp.io;
+
+using HessianCSharp.io;
 #endregion
 
-namespace hessiancsharp.client
+namespace HessianCSharp.client 
 {
-    /// <summary>
-    /// Proxy implementation for Hessian clients, that wrapps all public instance calls to the hessian 
-    /// requests sends them and translates the replies of this calls to the C# - data types
-    /// </summary>
-    public class CHessianProxy
-    {
-        #region CLASS_FIELDS
-        /// <summary>
-        /// Instance to communicate with the Hessian - server
-        /// </summary>
-        private CHessianMethodCaller m_methodCaller = null;
-        #endregion
+	/// <summary>
+	/// Proxy implementation for Hessian clients, that wrapps all public instance calls to the hessian 
+	/// requests sends them and translates the replies of this calls to the C# - data types
+	/// </summary>
+	public class CHessianProxy 
+	{
+		#region CLASS_FIELDS
+		/// <summary>
+		/// Instance to communicate with the Hessian - server
+		/// </summary>
+		private CHessianMethodCaller m_methodCaller = null;
+		#endregion
 
-        #region PROPERTIES
-        /// <summary> 
-        /// Returns the connection uri to the hessian service.
-        /// <value>Uri</value>
-        /// </summary>
-        public virtual Uri URI
-        {
-            get { return m_methodCaller != null ? m_methodCaller.URI : null; }
-        }
-        #endregion
+		#region PROPERTIES
+		/// <summary> 
+		/// Returns the connection uri to the hessian service.
+		/// </summary>
+		public virtual Uri URI 
+		{
+			get { return m_methodCaller!=null?m_methodCaller.URI:null; }
 
-        #region CONSTRUCTORS
-        /// <summary>
-        /// Initializes a new instance of the CHessianProxy class
-        /// </summary>
-        /// <param name="hessianProxyFactory">HessianProxyFactory - Instance</param>
-        /// <param name="uri">Server-Proxy uri</param>
-        internal CHessianProxy(CHessianProxyFactory hessianProxyFactory, Uri uri)
-        {
-            this.m_methodCaller = new CHessianMethodCaller(hessianProxyFactory, uri);
-        }
+		}
+		#endregion
+
+		#region CONSTRUCTORS
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="hessianProxyFactory">HessianProxyFactory - Instance</param>
+		/// <param name="uri">Server-Proxy uri</param>
+		internal CHessianProxy(CHessianProxyFactory hessianProxyFactory, Uri uri) 
+		{
+			this.m_methodCaller = new CHessianMethodCaller(hessianProxyFactory,uri);
+		}
 
         internal CHessianProxy(CHessianProxyFactory hessianProxyFactory, Uri uri, string username, string password)
         {
@@ -84,17 +85,21 @@ namespace hessiancsharp.client
         }
         #endregion
 
-        /// <summary>
-        /// Handles the object invocation. This method wrapps an instance call to the hessian 
-        /// requests, sends it to the hessian service and translates the reply of this call to the C# - data type
-        /// </summary>
-        /// <param name="objProxy">The proxy object to invoke</param>
-        /// <param name="methodInfo">The method to call</param>
-        /// <param name="arrMethodArgs">The arguments to the method call</param>
-        /// <returns>Invocation result</returns>
-        public object Invoke(object objProxy, MethodInfo methodInfo, object[] arrMethodArgs)
-        {
-            return this.m_methodCaller.DoHessianMethodCall(arrMethodArgs, methodInfo);
-        }
-    }
+        
+
+		/// <summary>
+		/// Handles the object invocation. This method wrapps an instance call to the hessian 
+		/// requests, sends it to the hessian service and translates the reply of this call to the C# - data type
+		/// </summary>
+		/// <param name="objProxy">The proxy object to invoke</param>
+		/// <param name="methodInfo">The method to call</param>
+		/// <param name="arrMethodArgs">The arguments to the method call</param>
+		/// <returns>Invocation result</returns>
+		public object Invoke(object objProxy, MethodInfo methodInfo, object[] arrMethodArgs) 
+		{
+			return this.m_methodCaller.DoHessianMethodCall(arrMethodArgs, methodInfo );
+		}
+
+		
+	}
 }

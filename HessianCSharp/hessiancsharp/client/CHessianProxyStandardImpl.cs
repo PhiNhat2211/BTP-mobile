@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -38,7 +38,7 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Proxies;
 
-namespace hessiancsharp.client
+namespace HessianCSharp.client
 {
     /// <summary>
     /// Proxy that works with .NET - Remote proxy framework
@@ -50,8 +50,7 @@ namespace hessiancsharp.client
         /// Interface type, that has to be proxied 
         /// </summary>
         private Type m_proxyType = null;
-
-        /// <summary>
+        // <summary>
         /// Instance to communicate with the Hessian - server
         /// </summary>
         private CHessianMethodCaller m_methodCaller = null;
@@ -59,7 +58,7 @@ namespace hessiancsharp.client
 
         #region CONSTRUCTORS
         /// <summary>
-        /// Initializes a new instance of the CHessianProxyStandardImpl class
+        /// Constructor
         /// </summary>
         /// <param name="proxyType">Interface type that has to be proxied</param>
         /// <param name="hessianProxyFactory">HessianProxyFactory - Instance</param>
@@ -77,6 +76,7 @@ namespace hessiancsharp.client
             this.m_proxyType = proxyType;
             this.m_methodCaller = new CHessianMethodCaller(hessianProxyFactory, uri, username, password);
         }
+
         #endregion
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace hessiancsharp.client
                 if (methodInfo.Name.Equals("Equals") && argumentTypes != null &&
                     argumentTypes.Length == 1 && argumentTypes[0].IsAssignableFrom((typeof(Object))))
                 {
-                    object value = methodMessage.Args[0];
+                    Object value = methodMessage.Args[0];
                     if (value == null)
                     {
                         objReturnValue = false;
@@ -144,8 +144,9 @@ namespace hessiancsharp.client
             }
             // Create the return message (ReturnMessage)
             return new ReturnMessage(objReturnValue, methodMessage.Args, methodMessage.ArgCount, methodMessage.LogicalCallContext, methodMessage);
-        }
 
+
+        }
         /// <summary>
         /// Checks whether the proxy representing the specified object 
         /// type can be cast to the type represented by the IRemotingTypeInfo interface
@@ -163,14 +164,12 @@ namespace hessiancsharp.client
         /// <summary>
         /// Gets the name of the interface type, 
         /// that has to be proxied 
-        /// <value>string</value>
         /// </summary>
         public string TypeName
         {
             get { return m_proxyType.Name; }
             set { }
         }
-
         /// <summary>
         /// Gets method info instance, according to the given method base
         /// </summary>
@@ -178,7 +177,8 @@ namespace hessiancsharp.client
         /// <returns>MethodInfo - Instance</returns>
         private MethodInfo GetMethodInfoForMethodBase(IMethodCallMessage methodMessage)
         {
-            return this.m_proxyType.GetMethod(methodMessage.MethodName, CHessianMethodCaller.GetArgTypes(methodMessage.Args));
+            var types = (Type[])methodMessage.MethodSignature;//CHessianMethodCaller.GetArgTypes(methodMessage.Args);
+            return this.m_proxyType.GetMethod(methodMessage.MethodName, types);
         }
     }
 }

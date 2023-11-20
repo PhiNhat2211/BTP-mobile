@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -36,18 +36,16 @@
 #region NAMESPACES
 using System;
 using System.Collections;
-using System.Collections.Specialized;
-using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using hessiancsharp.io;
 #endregion
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Deserializing of the Lists
     /// </summary>
-    public class CCollectionDeserializer : AbstractDeserializer
+    public class CEnumerableDeserializer : AbstractDeserializer
     {
         #region CLASS_FIELDS
         /// <summary>
@@ -59,7 +57,6 @@ namespace hessiancsharp.io
         #region PROPERTIES
         /// <summary>
         /// Returns type of the list instances
-        /// <value>Type</value>
         /// </summary>
         public System.Type Type
         {
@@ -67,21 +64,28 @@ namespace hessiancsharp.io
             {
                 return m_type;
             }
+
         }
         #endregion
 
         #region CONSTRUCTORS
         /// <summary>
-        /// Initializes a new instance of the CCollectionDeserializer class
+        /// Constructor
         /// </summary>
         /// <param name="type">Type of the list instances</param>
-        public CCollectionDeserializer(System.Type type)
+        public CEnumerableDeserializer(System.Type type)
         {
             m_type = type;
         }
         #endregion
 
         #region PUBLIC_METHODS
+
+        public override Type GetOwnType()
+        {
+            return m_type;
+        }
+
         /// <summary>
         /// Reads list. 
         /// </summary>
@@ -89,28 +93,33 @@ namespace hessiancsharp.io
         /// <param name="intListLength">Length of the list</param>
         /// <returns>Return value is always an ArrayList - Instance, 
         /// apart from StringCollection - Instances</returns>
-        public override object  ReadList(AbstractHessianInput abstractHessianInput, int intListLength)
+        public override System.Object ReadList(AbstractHessianInput abstractHessianInput, int intListLength)
         {
             if (m_type != null && IsGenericList(m_type))
                 return ReadGenericList(abstractHessianInput);
             else
                 return ReadUntypedList(abstractHessianInput);
         }
-        
+
         public static bool IsGenericList(Type type)
         {
             if (!type.IsGenericType)
                 return false;
-            Type listType = typeof(System.Collections.Generic.List<>);
-            Type genTD = type.GetGenericTypeDefinition();
-            return (listType.IsAssignableFrom(genTD));
+            Type listType = typeof(System.Collections.Generic.IEnumerable<>);
+            return type.GetGenericTypeDefinition() == listType || type.GetInterfaces().Any(c => c.IsGenericType &&
+                           c.GetGenericTypeDefinition() == listType);
         }
 
-        private object ReadGenericList(AbstractHessianInput abstractHessianInput)
+        private Object ReadGenericList(AbstractHessianInput abstractHessianInput)
         {
             Type[] args = m_type.GetGenericArguments();
             Type itemType = args[0];
-            Type listType = typeof(System.Collections.Generic.List<>).MakeGenericType(itemType);
+            Type listType = null;
+
+            if (m_type.Namespace.StartsWith("System") || m_type.IsInterface)
+                listType = typeof(System.Collections.Generic.List<>).MakeGenericType(itemType);
+            else
+                listType = m_type;
 
             object list = Activator.CreateInstance(listType);
             abstractHessianInput.AddRef(list);
@@ -124,14 +133,13 @@ namespace hessiancsharp.io
             return list;
         }
 
-        private object ReadUntypedList(AbstractHessianInput abstractHessianInput)
+        private Object ReadUntypedList(AbstractHessianInput abstractHessianInput)
         {
             IList listResult = new ArrayList();
             abstractHessianInput.AddRef(listResult);
             while (!abstractHessianInput.IsEnd())
-            {
                 listResult.Add(abstractHessianInput.ReadObject());
-            }
+
             abstractHessianInput.ReadEnd();
             return listResult;
         }
@@ -147,16 +155,64 @@ namespace hessiancsharp.io
             int intCode = abstractHessianInput.ReadListStart();
             switch (intCode)
             {
-                case CHessianInput.PROT_NULL:
+                case CHessianProtocolConstants.PROT_NULL:
                     return null;
-                case CHessianInput.PROT_REF_TYPE:
+                case CHessianProtocolConstants.PROT_REF_TYPE:
                     return abstractHessianInput.ReadRef();
             }
-            string strType = abstractHessianInput.ReadType();
+            String strType = abstractHessianInput.ReadType();
             int intLength = abstractHessianInput.ReadLength();
             return ReadList(abstractHessianInput, intLength);
         }
 
+        /// <summary>
+        /// Reads list. 
+        /// </summary>
+        /// <param name="abstractHessianInput"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public override Object ReadLengthList(AbstractHessianInput abstractHessianInput, int intListLength)
+        {
+            if (m_type != null && IsGenericList(m_type))
+                return ReadGenericLengthList(abstractHessianInput, intListLength);
+            else
+                return ReadUntypedLengthList(abstractHessianInput, intListLength);
+        }
+
+        private Object ReadGenericLengthList(AbstractHessianInput abstractHessianInput, int intListLength)
+        {
+            Type[] args = m_type.GetGenericArguments();
+            Type itemType = args[0];
+            Type listType = null;
+
+            if (m_type.Namespace.StartsWith("System") || m_type.IsInterface)
+                listType = typeof(System.Collections.Generic.List<>).MakeGenericType(itemType);
+            else
+                listType = m_type;
+
+            object list = Activator.CreateInstance(listType);
+            abstractHessianInput.AddRef(list);
+
+            while (intListLength > 0)
+            {
+                object item = abstractHessianInput.ReadObject(itemType);
+                listType.InvokeMember("Add", BindingFlags.InvokeMethod, null, list, new object[] { item });
+                intListLength--;
+            }
+            return list;
+        }
+
+        private Object ReadUntypedLengthList(AbstractHessianInput abstractHessianInput, int intListLength)
+        {
+            IList listResult = new ArrayList();
+            abstractHessianInput.AddRef(listResult);
+            while (intListLength > 0)
+            {
+                listResult.Add(abstractHessianInput.ReadObject());
+                intListLength--;
+            }
+            return listResult;
+        }
         #endregion
     }
 }

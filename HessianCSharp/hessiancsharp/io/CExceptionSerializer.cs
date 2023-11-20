@@ -1,44 +1,35 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
+using HessianCSharp.Utilities;
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     public class CExceptionSerializer : CObjectSerializer
     {
-        private ArrayList m_serFields = new ArrayList();
-
-        public CExceptionSerializer()
-            : base(typeof(Exception))
+        private readonly List<MemberInfo> m_serFields;
+        public CExceptionSerializer() : base(typeof(Exception))
         {
             m_serFields = GetSerializableFields();
         }
 
-        public static ArrayList GetSerializableFields()
+        public static List<MemberInfo> GetSerializableFields()
         {
             Type type = typeof(Exception);
-            ArrayList serFields = new ArrayList();
-            FieldInfo[] fields = type.GetFields(BindingFlags.Public |
-                                                BindingFlags.Instance |
-                                                BindingFlags.NonPublic |
-                                                BindingFlags.GetField |
-                                                BindingFlags.DeclaredOnly);
-            if (fields != null)
-            {
-                for (int i = 0; i < fields.Length; i++)
-                {
-                    if ((!serFields.Contains(fields[i])) && (fields[i].FieldType != typeof(System.IntPtr)))
-                    {
-                        serFields.Add(fields[i]);
-                    }
-                }
-            }
+            BindingFlags bindingAttr = BindingFlags.Public |
+                                       BindingFlags.Instance |
+                                       BindingFlags.GetField |
+                                       BindingFlags.DeclaredOnly;
+
+            var serFields = ReflectionUtils.GetFieldsAndProperties(type, bindingAttr);
             return serFields;
         }
 
-        public override ArrayList GetSerializableFieldList()
+        public override List<MemberInfo> GetSerializableFieldList()
         {
             return m_serFields;
         }
+
     }
 }

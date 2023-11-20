@@ -22,8 +22,8 @@ namespace VMT_Data_JAT2
 {
     public class VMT_DataMgr
     {
-        static public String gHessianServerIP = "";
-        static public String gHessianServerPort = "";
+        static public String gHessianServerIP = "172.20.130.156";
+        static public String gHessianServerPort = "7110";
         static public String gHessianServerMgtIP = "";
         static public String gHessianServerMgtPort = "";
         //static public String gTCPLocalIP = "127.0.0.1"; // Local Loopback Address

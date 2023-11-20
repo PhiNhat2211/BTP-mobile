@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -33,33 +33,54 @@
 ******************************************************************************************************
 */
 
-namespace hessiancsharp.io
+using System;
+
+namespace HessianCSharp.io
 {
-	/// <summary>
-	/// Serializing of the string valued objects.
-	/// </summary>
-	public class CStringValueSerializer: AbstractSerializer
-	{		
-		#region PUBLIC_METHODS
-		/// <summary>
-		/// Serialiaztion of string valued objects
-		/// </summary>
-		/// <param name="obj">object to serialize</param>
-		/// <param name="abstractHessianOutput">HessianOutput - Instance</param>
-		public override void WriteObject(object obj, AbstractHessianOutput abstractHessianOutput) 
-		{
+    /// <summary>
+    /// Serializing of the string valued objects.
+    /// </summary>
+    public class CStringValueSerializer : AbstractSerializer
+    {
+        #region PUBLIC_METHODS
+        /// <summary>
+        /// Serialiaztion of string valued objects
+        /// </summary>
+        /// <param name="obj">Object to serialize</param>
+        /// <param name="abstractHessianOutput">HessianOutput - Instance</param>
+        public override void WriteObject(object obj, AbstractHessianOutput abstractHessianOutput)
+        {
             if (obj == null)
-            {
                 abstractHessianOutput.WriteNull();
-            }
             else
             {
-                abstractHessianOutput.WriteMapBegin(obj.GetType().FullName);
-                abstractHessianOutput.WriteString("value");
-                abstractHessianOutput.WriteString(obj.ToString());
-                abstractHessianOutput.WriteMapEnd();
+                if (abstractHessianOutput.AddRef(obj))
+                    return;
+
+                Type type = obj.GetType();
+
+                int iref = abstractHessianOutput.WriteObjectBegin(type.Name);
+
+                if (iref < -1)
+                {
+                    abstractHessianOutput.WriteString("value");
+                    abstractHessianOutput.WriteString(obj.ToString());
+                    abstractHessianOutput.WriteMapEnd();
+                }
+                else
+                {
+                    if (iref == -1)
+                    {
+                        abstractHessianOutput.WriteInt(1);
+                        abstractHessianOutput.WriteString("value");
+                        abstractHessianOutput.WriteObjectBegin(type.Name);
+                    }
+
+                    abstractHessianOutput.WriteString(obj.ToString());
+                }
             }
-		}
-		#endregion
-	}
+        }
+        #endregion
+
+    }
 }

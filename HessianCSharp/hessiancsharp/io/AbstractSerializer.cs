@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -33,18 +33,18 @@
 ******************************************************************************************************
 */
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Serializing an object.
     /// </summary>
-    public abstract class AbstractSerializer : CSerializationConstants
+    public abstract class AbstractSerializer : CSerializationConstants, ISerializer
     {
         #region PUBLIC_METHODS
         /// <summary>
         /// Serialiaztion of objects
         /// </summary>
-        /// <param name="obj">object to serialize</param>
+        /// <param name="obj">Object to serialize</param>
         /// <param name="abstractHessianOutput">HessianOutput - Instance</param>
         public abstract void WriteObject(object obj, AbstractHessianOutput abstractHessianOutput);
         #endregion

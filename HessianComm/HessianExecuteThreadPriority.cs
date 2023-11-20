@@ -1,6 +1,6 @@
 ﻿using Common.Util;
 using HessianComm.Interface;
-using hessiancsharp.client;
+using HessianCSharp.client;
 using System;
 using System.Collections;
 using System.Collections.Generic;

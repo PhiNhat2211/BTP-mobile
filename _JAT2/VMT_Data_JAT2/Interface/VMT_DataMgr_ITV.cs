@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using VMT_Data_JAT2.Objects;
 using System.Reflection;
 using HessianComm.Objects;
+using HessianCSharp.Class;
 
 namespace VMT_Data_JAT2
 {
@@ -143,7 +144,7 @@ namespace VMT_Data_JAT2
                 //if (currentJob.locWorking.blck != null &&
                 //    currentJob.locWorking.blck.Length > 1)
                 {
-                    hessiancsharp.Class.HessianList strList = new hessiancsharp.Class.HessianList();
+                    HessianList strList = new HessianList();
                     strList.Add(currentJob.workingMchn.mchnId);
                     strList.Add(currentJob.ycNo);
                     String locTp = "";
@@ -212,7 +213,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                hessiancsharp.Class.HessianList strList = new hessiancsharp.Class.HessianList();
+                HessianList strList = new HessianList();
                 strList.Add(currentJob.workingMchn.mchnId);
                 strList.Add(currentJob.ycNo);
 
@@ -318,7 +319,7 @@ namespace VMT_Data_JAT2
                     if (unSelectJob != null && unSelectJob.cntr != null && unSelectJob.type != null && unSelectJob.ytJbSts != null &&
                         unSelectJob.type.qcId == selectJob.type.qcId && unSelectJob.ytJbSts == selectJob.ytJbSts)
                     {
-                        hessiancsharp.Class.HessianList strList = new hessiancsharp.Class.HessianList();
+                        HessianList strList = new HessianList();
 
                         strList.Add(selectJob.type.qcId);
                         strList.Add(selectJob.workingMchn.mchnId);
@@ -330,7 +331,7 @@ namespace VMT_Data_JAT2
                     }
                     else
                     {
-                        hessiancsharp.Class.HessianList strList = new hessiancsharp.Class.HessianList();
+                        HessianList strList = new HessianList();
 
                         strList.Add(selectJob.type.qcId);
                         strList.Add(selectJob.workingMchn.mchnId);
@@ -343,7 +344,7 @@ namespace VMT_Data_JAT2
                 }
                 else
                 {
-                    hessiancsharp.Class.HessianList strList = new hessiancsharp.Class.HessianList();
+                    HessianList strList = new HessianList();
                     strList.Add(selectJob.jobKey);
                     strList.Add(ITV.ITV_User.gUserID);
                     strList.Add(ITV.ITV_User.gMchnID);
@@ -370,7 +371,7 @@ namespace VMT_Data_JAT2
         {
             if (UserInfo.IsUseHessian)
             {
-                hessiancsharp.Class.HessianList hessianList = new hessiancsharp.Class.HessianList();
+                HessianList hessianList = new HessianList();
 
                 if (tasks.Count >= 1)
                 {
@@ -395,7 +396,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                hessiancsharp.Class.HessianList strList = new hessiancsharp.Class.HessianList();
+                HessianList strList = new HessianList();
                 strList.Add(ITV.ITV_User.gMchnID);
                 strList.Add(ITV.ITV_User.gMchnTp);
                 strList.Add(chssNo);
@@ -423,7 +424,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                hessiancsharp.Class.HessianList strList = new hessiancsharp.Class.HessianList();
+                HessianList strList = new HessianList();
                 strList.Add(ITV.ITV_User.gUserID);
                 strList.Add(ITV.ITV_User.gUserNm);
                 strList.Add(ITV.ITV_User.gMchnID);
@@ -471,7 +472,7 @@ namespace VMT_Data_JAT2
                 String jobKey = value.jobKey;
                 String userId = ITV.ITV_User.gUserID;
 
-                hessiancsharp.Class.HessianList strList = new hessiancsharp.Class.HessianList();
+                HessianList strList = new HessianList();
                 strList.Add(jobKey);
                 strList.Add(userId);
 
@@ -525,7 +526,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                hessiancsharp.Class.HessianList strList = new hessiancsharp.Class.HessianList();
+                HessianList strList = new HessianList();
                 strList.Add(jobKey);
 
                 HessianComm.HessianAPI.SetReallocation(strList);
@@ -611,7 +612,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                hessiancsharp.Class.HessianList strList = new hessiancsharp.Class.HessianList();
+                HessianList strList = new HessianList();
                 strList.Add(jobKey);
                 strList.Add(UserInfo.gUserID);
                 HessianComm.HessianAPI.SetGateCancelJob(strList);
@@ -657,7 +658,7 @@ namespace VMT_Data_JAT2
 
         public static void SetPLCAutoFlg_Ask(Boolean plcAutoFlag)
         {
-            var hessianList = new hessiancsharp.Class.HessianList();
+            var hessianList = new HessianList();
 
             hessianList.Add(UserInfo.gMchnID);
             hessianList.Add(UserInfo.gMchnTp);

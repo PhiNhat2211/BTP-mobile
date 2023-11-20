@@ -17,6 +17,7 @@ using VMT_Data_JAT2.Objects;
 using System.Reflection;
 using System.ComponentModel;
 using HessianComm.Objects;
+using HessianCSharp.Class;
 using UDPComm;
 using WPSocketComm.Network;
 using System.Diagnostics;
@@ -119,7 +120,7 @@ namespace VMT_Data_JAT2
                 //HessianComm.HessianAPI.GetJobOrderList(machine);
 
                 // data downsizing
-                var list = new hessiancsharp.Class.HessianList();
+                var list = new HessianList();
                 list.Add(UserInfo.gMchnTp);
                 list.Add(UserInfo.gMchnID);                
                 HessianComm.HessianAPI.GetJobOrderList_New(list);
@@ -137,7 +138,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                var list = new hessiancsharp.Class.HessianList();
+                var list = new HessianList();
                 list.Add(useMchnId == true ? UserInfo.gMchnID : "");
                 list.Add("");
                 list.Add(blckBay);
@@ -157,7 +158,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                var list = new hessiancsharp.Class.HessianList();
+                var list = new HessianList();
                 list.Add(useMchnId == true ? UserInfo.gMchnID : "");
                 list.Add(truckNo);
                 list.Add("");
@@ -177,7 +178,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                var list = new hessiancsharp.Class.HessianList();
+                var list = new HessianList();
                 list.Add(useMchnId == true ? UserInfo.gMchnID : "");
                 list.Add(UserInfo.gMchnTp);
                 list.Add("");
@@ -200,7 +201,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                var list = new hessiancsharp.Class.HessianList();
+                var list = new HessianList();
                 var isTruck = (UserInfo.MchnTp.MchnTp_ITV == UserInfo.GetMchnTp());
 
                 if (!String.IsNullOrEmpty(VMT_Data_JAT2.Objects.Common.BlckVal))
@@ -240,7 +241,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                var list = new hessiancsharp.Class.HessianList();
+                var list = new HessianList();
 
                 list.Add("");
                 list.Add(UserInfo.gMchnTp);
@@ -264,7 +265,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                var list = new hessiancsharp.Class.HessianList();
+                var list = new HessianList();
                 list.Add("");
                 list.Add("YT");    // Machine Type
                 list.Add(truckNo);
@@ -404,7 +405,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {     
-                var list = new hessiancsharp.Class.HessianList();
+                var list = new HessianList();
                 list.Add(UserInfo.gMchnID);    // Yard Crane
                 list.Add(UserInfo.gMchnTp);    // Machine Type
                 list.Add(UserInfo.gUserID);
@@ -684,7 +685,7 @@ namespace VMT_Data_JAT2
                 case HessianComm.HessianCommType.GetJobOrderList_New:
                     {                        
                         // data downsizing
-                        var list = new hessiancsharp.Class.HessianList();
+                        var list = new HessianList();
                         list.Add(UserInfo.gMchnTp);
                         list.Add(UserInfo.gMchnID);
                         obj = list;
@@ -694,7 +695,7 @@ namespace VMT_Data_JAT2
                     break;
                 case HessianComm.HessianCommType.GetMachineJobByKeys_New:
                     {
-                        var list = new hessiancsharp.Class.HessianList();
+                        var list = new HessianList();
                         var isTruck = (UserInfo.MchnTp.MchnTp_ITV == UserInfo.GetMchnTp());
 
                         timeSpan = 4; //10; //20200720 change refresh step time
@@ -728,7 +729,7 @@ namespace VMT_Data_JAT2
                     break;
                 case HessianComm.HessianCommType.GetMachineStatusChanged:
                     {
-                        var list = new hessiancsharp.Class.HessianList();
+                        var list = new HessianList();
                         list.Add(UserInfo.gMchnID);    // Yard Crane
                         list.Add(UserInfo.gMchnTp);    // Machine Type
                         list.Add(UserInfo.gUserID);
@@ -793,7 +794,7 @@ namespace VMT_Data_JAT2
                     break;
                 case HessianComm.HessianCommType.CheckPLCData:
                     {
-                        var list = new hessiancsharp.Class.HessianList();
+                        var list = new HessianList();
                         list.Add(UserInfo.gMchnID);
                         
                         obj = list;
@@ -802,7 +803,7 @@ namespace VMT_Data_JAT2
                     break;
                 case HessianComm.HessianCommType.CheckPLCTwistLock:
                     {
-                        var list = new hessiancsharp.Class.HessianList();
+                        var list = new HessianList();
                         list.Add(UserInfo.gMchnID);
                         list.Add("");
 
@@ -812,7 +813,7 @@ namespace VMT_Data_JAT2
                     break;
                 case HessianComm.HessianCommType.GetChangedMachineLocation:
                     {
-                        var list = new hessiancsharp.Class.HessianList();
+                        var list = new HessianList();
                         list.Add(UserInfo.gMchnID);
                         list.Add(UserInfo.gMchnTp);
                         list.Add("");
@@ -825,7 +826,7 @@ namespace VMT_Data_JAT2
                     break;
                 case HessianComm.HessianCommType.SetVMTMachineStatus:
                     {
-                        var list = new hessiancsharp.Class.HessianList();
+                        var list = new HessianList();
                         list.Add(UserInfo.gUserID);
                         list.Add(UserInfo.gMchnID);
 
@@ -889,7 +890,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                var list = new hessiancsharp.Class.HessianList();
+                var list = new HessianList();
                 list.Add(jobKey);
                 list.Add(filterBlck ? blckNm : "");
 
@@ -908,7 +909,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                var list = new hessiancsharp.Class.HessianList();
+                var list = new HessianList();
                 list.Add(jobKey);
                 list.Add(swapCntrNo);
                 list.Add(swapCntrPnt);
@@ -944,7 +945,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                var accessInfo = new hessiancsharp.Class.HessianList();
+                var accessInfo = new HessianList();
                 accessInfo.Add(usrId);
                 accessInfo.Add(mchnId);
                 HessianComm.HessianAPI.GetMachineAccessAction(accessInfo);
@@ -957,7 +958,7 @@ namespace VMT_Data_JAT2
 
             if (UserInfo.IsUseHessian)
             {
-                var blockInfo = new hessiancsharp.Class.HessianList();
+                var blockInfo = new HessianList();
                 blockInfo.Add(mchnId);
                 blockInfo.Add(blockName);
                 HessianComm.HessianAPI.GetBlockListForYardSector(blockInfo);
@@ -1108,7 +1109,7 @@ namespace VMT_Data_JAT2
         {
             if (UserInfo.IsUseHessian)
             {
-                hessiancsharp.Class.HessianList hessianList = new hessiancsharp.Class.HessianList();
+                HessianList hessianList = new HessianList();
                 hessianList.Add(ytNo);
                 hessianList.Add(UserInfo.gUserID);
 
@@ -1123,7 +1124,7 @@ namespace VMT_Data_JAT2
         {
             if (UserInfo.IsUseHessian)
             {
-                hessiancsharp.Class.HessianList hessianList = new hessiancsharp.Class.HessianList();
+                HessianList hessianList = new HessianList();
                 hessianList.Add(ytNo);
                 hessianList.Add(UserInfo.gUserID);
 
@@ -1226,7 +1227,7 @@ namespace VMT_Data_JAT2
 
                 String newYtNo = value.newYTNo;
 
-                hessiancsharp.Class.HessianList hessianList = new hessiancsharp.Class.HessianList();
+                HessianList hessianList = new HessianList();
                 hessianList.Add(value.partnerMachineID);
                 hessianList.Add(value.jobid);
                 hessianList.Add(UserInfo.gMchnID);
@@ -1652,7 +1653,7 @@ namespace VMT_Data_JAT2
             task.loc = new Location(); ;
             task.jobTp = String.Empty;
 
-            hessiancsharp.Class.HessianList hessianList = new hessiancsharp.Class.HessianList();
+            HessianList hessianList = new HessianList();
             hessianList.Add(task.ToHessianHashtable());
             hessianList.Add(newYtNo);
 
@@ -1668,7 +1669,7 @@ namespace VMT_Data_JAT2
         {
             //VMT_Data_JAT2.Objects.Common.VD_Common_JobOrder currentJob = (VMT_Data_JAT2.Objects.Common.VD_Common_JobOrder)VMT_Data_JAT2.Objects.ITV.ITV_User.gJobOrderList[0];
 
-            hessiancsharp.Class.HessianList hessianList = new hessiancsharp.Class.HessianList();
+            HessianList hessianList = new HessianList();
             hessianList.Add("1234");//currentJob.jobKey);  
 
             HessianComm.Objects.JobStatusType jobStatus = new HessianComm.Objects.JobStatusType();
@@ -1683,7 +1684,7 @@ namespace VMT_Data_JAT2
         {
             //VMT_Data_JAT2.Objects.Common.VD_Common_JobOrder currentJob = (VMT_Data_JAT2.Objects.Common.VD_Common_JobOrder)VMT_Data_JAT2.Objects.ITV.ITV_User.gJobOrderList[0];
 
-            hessiancsharp.Class.HessianList hessianList = new hessiancsharp.Class.HessianList();
+            HessianList hessianList = new HessianList();
             hessianList.Add("1234");//currentJob.jobKey);
             hessianList.Add(strUserID);
             HessianComm.HessianAPI.SetDetwinJob_Test(hessianList);

@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.org
+* http://www.HessianCSharp.org
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.org
+* You can find all contact information on http://www.HessianCSharp.org
 ******************************************************************************************************
 *
 *
@@ -35,7 +35,7 @@
 ******************************************************************************************************
 */
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Contains definiton for serialization constants.
@@ -43,6 +43,7 @@ namespace hessiancsharp.io
     public class CSerializationConstants
     {
         #region CONSTANTS
+
         public const int NULL = 0;
         public const int BOOLEAN = NULL + 1;
         public const int BYTE = BOOLEAN + 1;
@@ -55,6 +56,7 @@ namespace hessiancsharp.io
         public const int CHARACTER = DOUBLE + 1;
         public const int STRING = CHARACTER + 1;
         public const int DATE = STRING + 1;
+
         public const int BOOLEAN_ARRAY = DATE + 1;
         public const int BYTE_ARRAY = BOOLEAN_ARRAY + 1;
         public const int SBYTE_ARRAY = BYTE_ARRAY + 1;
@@ -66,6 +68,7 @@ namespace hessiancsharp.io
         public const int CHARACTER_ARRAY = DOUBLE_ARRAY + 1;
         public const int STRING_ARRAY = CHARACTER_ARRAY + 1;
         public const int OBJECT_ARRAY = STRING_ARRAY + 1;
+
         #endregion
     }
 }

@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -35,12 +35,13 @@
 #region NAMESPACES
 using System.IO;
 using System.Web;
+using HessianCSharp.io;
 using System.Web.SessionState;
 using System;
-using hessiancsharp.io;
+
 #endregion
 
-namespace hessiancsharp.server
+namespace HessianCSharp.server
 {
     /// <summary>
     /// HessianHandler for request and response
@@ -48,22 +49,18 @@ namespace hessiancsharp.server
     public class CHessianHandler : IHttpHandler, IRequiresSessionState
     {
         #region CLASS_FIELDS
+
         /// <summary>
         /// Proxy object
         /// </summary>
         protected CHessianSkeleton m_objectSkeleton = null;
         private HttpContext context;
+
+
         #endregion
 
-        protected HttpContext Context 
-        {
-            get { return context; } 
-        }
-
-        public bool IsReusable 
-        {
-            get { return true; } 
-        }
+        protected HttpContext Context { get { return context; } }
+        public bool IsReusable { get { return true; } }
 
         /// <summary>
         /// Execute a request.
@@ -84,7 +81,7 @@ namespace hessiancsharp.server
 
                 if (m_objectSkeleton == null)
                 {
-                    //Vieleicht das Interface als API ?ergeben???
+                    //Vieleicht das Interface als API übergeben???
                     m_objectSkeleton = new CHessianSkeleton(this.GetType(), this);
                 }
 
@@ -100,8 +97,9 @@ namespace hessiancsharp.server
             catch (Exception ex)
             {
                 ctx.Response.StatusCode = 500;  // "Internal server error"
-                ctx.Response.StatusDescription = ex.Message;
+                ctx.Response.StatusDescription = ex.GetBaseException().Message;
             }
         }
     }
+
 }

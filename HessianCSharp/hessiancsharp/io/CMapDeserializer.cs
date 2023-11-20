@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.org
+* http://www.HessianCSharp.org
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.org
+* You can find all contact information on http://www.HessianCSharp.org
 ******************************************************************************************************
 *
 *
@@ -39,7 +39,7 @@ using System.Collections;
 using System.Threading;
 #endregion
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Deserializing of Maps
@@ -55,7 +55,7 @@ namespace hessiancsharp.io
 
         #region CONSTRUCTORS
         /// <summary>
-        /// Initializes a new instance of the CMapDeserializer class
+        /// Constructor
         /// </summary>
         /// <param name="type">Type of map</param>
         public CMapDeserializer(Type type)
@@ -74,27 +74,18 @@ namespace hessiancsharp.io
         {
             IDictionary dictionary = null;
             if ((m_type == null) || (m_type.IsInterface && typeof(IDictionary).IsAssignableFrom(m_type)))
-            {
                 dictionary = new Hashtable();
-            }
             else if (m_type.Equals(typeof(Hashtable)))
                 dictionary = new Hashtable();
             else
             {
-                //dictionary = (IDictionary)Activator.CreateInstance(m_type);
-                dictionary = new Hashtable();
+                dictionary = (IDictionary)Activator.CreateInstance(m_type);
+                //dictionary = new Hashtable();				
             }
             abstractHessianInput.AddRef(dictionary);
             while (!abstractHessianInput.IsEnd())
             {
-                object key = abstractHessianInput.ReadObject();
-                object value = abstractHessianInput.ReadObject();
-
-                if (!dictionary.Contains(key))
-                {
-                    dictionary.Add(key, value);
-                }
-                //dictionary.Add(abstractHessianInput.ReadObject(), abstractHessianInput.ReadObject());
+                dictionary.Add(abstractHessianInput.ReadObject(), abstractHessianInput.ReadObject());
             }
             abstractHessianInput.ReadEnd();
             return dictionary;
@@ -111,15 +102,35 @@ namespace hessiancsharp.io
             int code = abstractHessianInput.ReadMapStart();
             switch (code)
             {
-                case CHessianInput.PROT_NULL:
+                case CHessianProtocolConstants.PROT_NULL:
                     return null;
-                case CHessianInput.PROT_REF_TYPE:
+                case CHessianProtocolConstants.PROT_REF_TYPE:
                     return abstractHessianInput.ReadRef();
                 case 'r':
                     throw new CHessianException("remote type is not implemented!");
             }
             return ReadMap(abstractHessianInput);
         }
+
+        public override Object ReadObject(AbstractHessianInput abstractHessianInput, Object[] fields)
+        {
+            String[] fieldNames = (String[])fields;
+            IDictionary map = (IDictionary)Activator.CreateInstance(m_type);
+
+            int iref = abstractHessianInput.AddRef(map);
+
+            for (int i = 0; i < fieldNames.Length; i++)
+            {
+                String name = fieldNames[i];
+                map.Add(name, abstractHessianInput.ReadObject());
+            }
+
+            return map;
+        }
+
+
+
         #endregion
     }
+
 }

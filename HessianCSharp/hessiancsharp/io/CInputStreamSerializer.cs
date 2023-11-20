@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -37,43 +37,41 @@ using System.IO;
 
 #endregion
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
-    using System;
+	using System;
+	/// <summary> Serializing a stream object.
+	/// </summary>
+	public class CInputStreamSerializer:AbstractSerializer
+	{
+		public CInputStreamSerializer()
+		{
+		}
+		
+		#region PUBLIC_METHODS
 
-    /// <summary> Serializing a stream object.
-    /// </summary>
-    public class CInputStreamSerializer : AbstractSerializer
-    {
-        public CInputStreamSerializer()
-        {
-        }
-
-        #region PUBLIC_METHODS
-        /// <summary>
-        /// Serialization of stream valued objects
-        /// </summary>
-        /// <param name="obj">object to serialize</param>
-        /// <param name="abstractHessianOutput">HessianOutput - Instance</param>
-        public override void WriteObject(object obj, AbstractHessianOutput abstractHessianOutput)
-        {
-            Stream inStream = (Stream)obj;
-
-            if (inStream == null)
-            {
-                abstractHessianOutput.WriteNull();
-            }
-            else
-            {
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = inStream.Read(buf, 0, buf.Length)) > 0)
-                {
-                    abstractHessianOutput.WriteByteBufferPart(buf, 0, len);
-                }
-                abstractHessianOutput.WriteByteBufferEnd(buf, 0, 0);
-            }
-        }
+		/// <summary>
+		/// Serialization of stream valued objects
+		/// </summary>
+		/// <param name="obj">Object to serialize</param>
+		/// <param name="abstractHessianOutput">HessianOutput - Instance</param>
+		public override void WriteObject(object obj, AbstractHessianOutput abstractHessianOutput) 
+		{
+			Stream inStream = (Stream) obj;
+			
+			if (inStream == null)
+				abstractHessianOutput.WriteNull();
+			else
+			{
+				byte[] buf = new byte[1024];
+				int len;
+				while ((len = inStream.Read(buf, 0, buf.Length)) > 0)				
+				{
+					abstractHessianOutput.WriteByteBufferPart(buf, 0, len);
+				}				
+				abstractHessianOutput.WriteByteBufferEnd(buf, 0, 0);
+			}
+		}
         #endregion
-    }
+	}
 }

@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.org
+* http://www.HessianCSharp.org
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.org	
+* You can find all contact information on http://www.HessianCSharp.org	
 ******************************************************************************************************
 *
 *
@@ -38,7 +38,7 @@
 using System;
 #endregion
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Serializing an object for known object types
@@ -55,7 +55,7 @@ namespace hessiancsharp.io
         #endregion
         #region CONSTRUCTORS
         /// <summary>
-        /// Initializes a new instance of the CBasicSerializer class
+        /// Constructor
         /// </summary>
         /// <param name="intCode">Code that identifies this
         /// instance as Serializer</param>
@@ -68,8 +68,9 @@ namespace hessiancsharp.io
         /// <summary>
         /// Writes primitive objects and arrayy of primitive objects
         /// </summary>
-        /// <param name="obj">object to write</param>
-        /// <param name="abstractHessianOutput">HessianOutput - Instance</param>        
+        /// <param name="obj">Object to write</param>
+        /// <param name="abstractHessianOutput">HessianOutput - Instance</param>
+        /// <exception cref="CHessianException"/>
         public override void WriteObject(object obj, AbstractHessianOutput abstractHessianOutput)
         {
             switch (m_intCode)
@@ -101,7 +102,7 @@ namespace hessiancsharp.io
                 case DATE:
                     DateTime dt = (DateTime)obj;
                     const long timeShift = 62135596800000;
-                    long javaTime = (dt.ToUniversalTime().Ticks / 10000) - timeShift;
+                    long javaTime = dt.ToUniversalTime().Ticks / 10000 - timeShift;
                     abstractHessianOutput.WriteUTCDate(javaTime);
                     break;
 
@@ -111,10 +112,15 @@ namespace hessiancsharp.io
                             return;
 
                         int[] arrData = (int[])obj;
-                        abstractHessianOutput.WriteListBegin(arrData.Length, "[int");
+
+                        bool hasEnd = abstractHessianOutput.WriteListBegin(arrData.Length, "[int");
+
                         for (int i = 0; i < arrData.Length; i++)
                             abstractHessianOutput.WriteInt(arrData[i]);
-                        abstractHessianOutput.WriteListEnd();
+
+                        if (hasEnd)
+                            abstractHessianOutput.WriteListEnd();
+
                         break;
                     }
 
@@ -124,12 +130,16 @@ namespace hessiancsharp.io
                             return;
 
                         String[] arrData = (String[])obj;
-                        abstractHessianOutput.WriteListBegin(arrData.Length, "[string");
+
+                        bool hasEnd = abstractHessianOutput.WriteListBegin(arrData.Length, "[string");
+
                         for (int i = 0; i < arrData.Length; i++)
                         {
                             abstractHessianOutput.WriteString(arrData[i]);
                         }
-                        abstractHessianOutput.WriteListEnd();
+
+                        if (hasEnd)
+                            abstractHessianOutput.WriteListEnd();
                         break;
                     }
                 case BOOLEAN_ARRAY:
@@ -138,10 +148,11 @@ namespace hessiancsharp.io
                             return;
 
                         bool[] arrData = (bool[])obj;
-                        abstractHessianOutput.WriteListBegin(arrData.Length, "[boolean");
+                        bool hasEnd = abstractHessianOutput.WriteListBegin(arrData.Length, "[boolean");
                         for (int i = 0; i < arrData.Length; i++)
                             abstractHessianOutput.WriteBoolean(arrData[i]);
-                        abstractHessianOutput.WriteListEnd();
+                        if (hasEnd)
+                            abstractHessianOutput.WriteListEnd();
                         break;
                     }
 
@@ -158,10 +169,11 @@ namespace hessiancsharp.io
                             return;
 
                         sbyte[] arrData = (sbyte[])obj;
-                        abstractHessianOutput.WriteListBegin(arrData.Length, "[sbyte");
+                        bool hasEnd = abstractHessianOutput.WriteListBegin(arrData.Length, "[sbyte");
                         for (int i = 0; i < arrData.Length; i++)
                             abstractHessianOutput.WriteInt(arrData[i]);
-                        abstractHessianOutput.WriteListEnd();
+                        if (hasEnd)
+                            abstractHessianOutput.WriteListEnd();
                         break;
                     }
 
@@ -171,23 +183,26 @@ namespace hessiancsharp.io
                             return;
 
                         short[] arrData = (short[])obj;
-                        abstractHessianOutput.WriteListBegin(arrData.Length, "[short");
+                        bool hasEnd = abstractHessianOutput.WriteListBegin(arrData.Length, "[short");
                         for (int i = 0; i < arrData.Length; i++)
                             abstractHessianOutput.WriteInt(arrData[i]);
-                        abstractHessianOutput.WriteListEnd();
+                        if (hasEnd)
+                            abstractHessianOutput.WriteListEnd();
                         break;
                     }
-                    
+
+
                 case LONG_ARRAY:
                     {
                         if (abstractHessianOutput.AddRef(obj))
                             return;
 
                         long[] arrData = (long[])obj;
-                        abstractHessianOutput.WriteListBegin(arrData.Length, "[long");
+                        bool hasEnd = abstractHessianOutput.WriteListBegin(arrData.Length, "[long");
                         for (int i = 0; i < arrData.Length; i++)
                             abstractHessianOutput.WriteLong(arrData[i]);
-                        abstractHessianOutput.WriteListEnd();
+                        if (hasEnd)
+                            abstractHessianOutput.WriteListEnd();
                         break;
                     }
 
@@ -197,10 +212,11 @@ namespace hessiancsharp.io
                             return;
 
                         float[] arrData = (float[])obj;
-                        abstractHessianOutput.WriteListBegin(arrData.Length, "[float");
+                        bool hasEnd = abstractHessianOutput.WriteListBegin(arrData.Length, "[float");
                         for (int i = 0; i < arrData.Length; i++)
                             abstractHessianOutput.WriteDouble(arrData[i]);
-                        abstractHessianOutput.WriteListEnd();
+                        if (hasEnd)
+                            abstractHessianOutput.WriteListEnd();
                         break;
                     }
 
@@ -210,13 +226,15 @@ namespace hessiancsharp.io
                             return;
 
                         double[] arrData = (double[])obj;
-                        abstractHessianOutput.WriteListBegin(arrData.Length, "[double");
+                        bool hasEnd = abstractHessianOutput.WriteListBegin(arrData.Length, "[double");
                         for (int i = 0; i < arrData.Length; i++)
                             abstractHessianOutput.WriteDouble(arrData[i]);
-                        abstractHessianOutput.WriteListEnd();
+                        if (hasEnd)
+                            abstractHessianOutput.WriteListEnd();
                         break;
                     }
-                    
+
+
                 case CHARACTER_ARRAY:
                     {
                         char[] arrData = (char[])obj;
@@ -230,19 +248,22 @@ namespace hessiancsharp.io
                             return;
 
                         Object[] arrData = (Object[])obj;
-                        abstractHessianOutput.WriteListBegin(arrData.Length, "[object");
+                        bool hasEnd = abstractHessianOutput.WriteListBegin(arrData.Length, "[object");
                         for (int i = 0; i < arrData.Length; i++)
                         {
                             abstractHessianOutput.WriteObject(arrData[i]);
                         }
-                        abstractHessianOutput.WriteListEnd();
+                        if (hasEnd)
+                            abstractHessianOutput.WriteListEnd();
                         break;
                     }
+
 
                 default:
                     throw new CHessianException(m_intCode + " " + obj.GetType().ToString());
             }
-        #endregion
+            #endregion
         }
+
     }
 }

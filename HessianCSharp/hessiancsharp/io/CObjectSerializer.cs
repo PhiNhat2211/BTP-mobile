@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -36,10 +36,14 @@
 #region NAMESPACES
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using HessianCSharp.Utilities;
+
 #endregion
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Serializing an object for known object types.
@@ -52,42 +56,54 @@ namespace hessiancsharp.io
         /// <summary>
         /// Fields of the objectType
         /// </summary>
-        private ArrayList m_alFields = new ArrayList();
+        private readonly List<MemberInfo> m_alFields;
         #endregion
         #region CONSTRUCTORS
         /// <summary>
-        /// Initializes a new instance of the CObjectSerializer class
+        /// Construktor.
         /// </summary>
         /// <param name="type">Type of the objects, that have to be
         /// serialized</param>
         public CObjectSerializer(Type type)
         {
-            for (; type != null; type = type.BaseType)
-            {
-                FieldInfo[] fields = type.GetFields(BindingFlags.Public |
-                    BindingFlags.Instance |
-                    BindingFlags.NonPublic |
-                    BindingFlags.GetField |
-                    BindingFlags.DeclaredOnly);
-                if (fields != null)
-                {
-                    for (int i = 0; i < fields.Length; i++)
-                    {
-                        if (!this.m_alFields.Contains(fields[i]))
-                        {
-                            this.m_alFields.Add(fields[i]);
-                        }
-                    }
-                }
-            }
-        }
-        #endregion
+            BindingFlags bindingAttr = BindingFlags.Public |
+                BindingFlags.Instance |
+                BindingFlags.GetField |
+                BindingFlags.DeclaredOnly;
 
+            m_alFields = ReflectionUtils.GetCanReadFieldsAndProperties(type, bindingAttr);
+        }
+
+        #endregion
         #region PUBLIC_METHODS
+
+        ///// <summary>
+        ///// Serialiaztion of objects
+        ///// </summary>
+        ///// <param name="obj">Object to serialize</param>
+        ///// <param name="abstractHessianOutput">HessianOutput - Instance</param>
+        //public override void WriteObject(object obj, AbstractHessianOutput abstractHessianOutput)
+        //{
+        //    if (abstractHessianOutput.AddRef(obj))
+        //        return;
+        //    Type type = obj.GetType();
+        //    abstractHessianOutput.WriteMapBegin(type.FullName);
+        //    List<MemberInfo> serFields = GetSerializableFieldList();
+        //    for (int i = 0; i < serFields.Count; i++)
+        //    {
+        //        MemberInfo field = serFields[i];
+        //        //if (!field.CanWrite) continue;
+        //        if (field.GetCustomAttributes(typeof(IgnoreAttribute), true).Length > 0) continue;
+        //        abstractHessianOutput.WriteString(field.Name);
+        //        abstractHessianOutput.WriteObject(ReflectionUtils.GetMemberValue(field, obj));
+        //    }
+        //    abstractHessianOutput.WriteMapEnd();
+        //}
+
         /// <summary>
         /// Serialiaztion of objects
         /// </summary>
-        /// <param name="obj">object to serialize</param>
+        /// <param name="obj">Object to serialize</param>
         /// <param name="abstractHessianOutput">HessianOutput - Instance</param>
         public override void WriteObject(object obj, AbstractHessianOutput abstractHessianOutput)
         {
@@ -96,22 +112,79 @@ namespace hessiancsharp.io
                 return;
             }
 
-            Type type = obj.GetType();
-            abstractHessianOutput.WriteMapBegin(type.FullName);
-            ArrayList serFields = GetSerializableFieldList();
+            Type cl = obj.GetType();
+
+            int iref = abstractHessianOutput.WriteObjectBegin(cl.FullName);
+
+            if (iref >= 0)
+            {
+                WriteInstance(obj, abstractHessianOutput);
+            }
+            else if (iref == -1)
+            {
+                writeDefinition20(abstractHessianOutput);
+                abstractHessianOutput.WriteObjectBegin(cl.FullName);
+                WriteInstance(obj, abstractHessianOutput);
+            }
+            else
+            {
+                WriteObject10(obj, abstractHessianOutput);
+            }
+        }
+
+        protected void WriteObject10(Object obj, AbstractHessianOutput abstractHessianOutput)
+        {
+            List<MemberInfo> serFields = GetSerializableFieldList();
             for (int i = 0; i < serFields.Count; i++)
             {
-                FieldInfo field = (FieldInfo)serFields[i];
+                MemberInfo field = serFields[i];
                 abstractHessianOutput.WriteString(field.Name);
-                abstractHessianOutput.WriteObject(field.GetValue(obj));
+                abstractHessianOutput.WriteObject(ReflectionUtils.GetMemberValue(field, obj));
             }
             abstractHessianOutput.WriteMapEnd();
         }
 
-        public virtual ArrayList GetSerializableFieldList()
+        private void writeDefinition20(AbstractHessianOutput abstractHessianOutput)
+        {
+            abstractHessianOutput.WriteClassFieldLength(m_alFields.Count);
+
+            for (int i = 0; i < m_alFields.Count; i++)
+            {
+                MemberInfo field = m_alFields[i];
+
+                abstractHessianOutput.WriteString(field.Name);
+            }
+        }
+
+        public void WriteInstance(Object obj, AbstractHessianOutput abstractHessianOutput)
+        {
+            try
+            {
+                List<MemberInfo> serFields = GetSerializableFieldList();
+                foreach (MemberInfo field in serFields)
+                {
+                    abstractHessianOutput.WriteObject(ReflectionUtils.GetMemberValue(field, obj));
+                }
+            }
+            catch (IOException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw new CHessianException(e.Message + "\n class: "
+                                                      + obj.GetType().FullName
+                                                      + " (object=" + obj + ")",
+                    e);
+            }
+        }
+
+        public virtual List<MemberInfo> GetSerializableFieldList()
         {
             return m_alFields;
         }
+
+
         #endregion
     }
 }

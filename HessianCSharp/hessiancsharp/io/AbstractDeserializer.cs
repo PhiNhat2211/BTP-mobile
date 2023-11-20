@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -37,19 +37,22 @@
 using System;
 #endregion
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Deserializing an object.
     /// </summary>
-    public abstract class AbstractDeserializer : CSerializationConstants
+    public abstract class AbstractDeserializer : CSerializationConstants, IDeserializer
     {
+        public static NullDeserializer NULL = new NullDeserializer();
+
         #region PUBLIC_METHODS
         /// <summary>
         /// Reads object
         /// </summary>
         /// <param name="abstractHessianInput">HessianInput-Instance</param>
-        /// <returns>object that was read</returns>        
+        /// <returns>Object that was read</returns>
+        /// <exception cref="CHessianException"/>
         public virtual object ReadObject(AbstractHessianInput abstractHessianInput)
         {
             throw new CHessianException(this.GetType().ToString());
@@ -68,22 +71,83 @@ namespace hessiancsharp.io
         /// Reads the map
         /// </summary>
         /// <param name="abstractHessianInput">HessianInput-Instance to read from</param>
-        /// <returns>Read map</returns>        
+        /// <returns>Read map</returns>
+        /// <exception cref="CHessianException"/>
         public virtual object ReadMap(AbstractHessianInput abstractHessianInput)
         {
-            throw new CHessianException(this.GetType().ToString());
+            Object obj = abstractHessianInput.ReadObject();
+
+            String className = this.GetType().Name;
+
+            if (obj != null)
+                throw error(className + ": unexpected object " + obj.GetType().Name + " (" + obj + ")");
+            else
+                throw error(className + ": unexpected null value");
         }
 
         /// <summary>
         /// Reads the list
         /// </summary>
         /// <param name="abstractHessianInput">HessianInput-Instance to read from</param>
-        /// <returns>Read list</returns>        
+        /// <returns>Read list</returns>
+        /// <exception cref="CHessianException"/>
         public virtual object ReadList(AbstractHessianInput abstractHessianInput, int intLength)
         {
-            throw new CHessianException(this.GetType().ToString());
+            throw new CHessianException("Can't not Deserialize \"" + this.GetOwnType().ToString() + "\"");
         }
-        
+
+        public bool IsReadResolve()
+        {
+            return false;
+        }
+
+
+        public virtual object ReadLengthList(AbstractHessianInput hessianInput, int length)
+        {
+            throw new InvalidOperationException(this.ToString());
+        }
+
+        public virtual object[] CreateFields(int len)
+        {
+            return new String[len];
+        }
+
+        public virtual object CreateField(string name)
+        {
+            return name;
+        }
+
+        public virtual object ReadObject(AbstractHessianInput hessianInput, object[] fields)
+        {
+            throw new InvalidOperationException(ToString());
+        }
+
+        public virtual object ReadObject(AbstractHessianInput hessianInput, string[] fieldNames)
+        {
+            return ReadObject(hessianInput, (Object[])fieldNames);
+        }
+
+        protected CHessianException error(String msg)
+        {
+            return new CHessianException(msg);
+        }
+
+        protected String codeName(int ch)
+        {
+            if (ch < 0)
+                return "end of file";
+            else
+                return "0x" + string.Format("{0:x2}", (ch & 0xff));
+        }
+
         #endregion
+    }
+
+    /// <summary>
+    /// * The NullDeserializer exists as a marker for the factory classes so
+    /// * they save a null result.
+    /// </summary>
+    public class NullDeserializer : AbstractDeserializer
+    {
     }
 }

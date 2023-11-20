@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading;
 using HessianComm.Interface;
 using HessianComm.Objects;
-using hessiancsharp.client;
-using hessiancsharp.Class;
+using HessianCSharp.client;
+using HessianCSharp.Class;
 
 namespace HessianComm
 {

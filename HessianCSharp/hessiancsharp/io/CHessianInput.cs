@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -40,16 +40,16 @@ using System.Text;
 using System.Collections;
 #endregion
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Input stream for Hessian requests.
-    /// HessianInput is unbuffered, so any client needs to provide
-    /// its own buffering.
+    /// <p>HessianInput is unbuffered, so any client needs to provide
+    /// its own buffering.</p>
     /// <code>
     /// InputStream is = ...; // from http connection
     /// HessianInput in = new HessianInput(is);
-    /// string value;
+    /// String value;
     /// in.startReply();         // read reply header
     /// value = in.readString(); // read string value
     /// in.completeReply();      // read reply footer
@@ -58,6 +58,7 @@ namespace hessiancsharp.io
     public class CHessianInput : AbstractHessianInput
     {
         #region CLASS_FIELDS
+
         /// <summary>
         /// InputStream what is reading from
         /// </summary>
@@ -73,21 +74,25 @@ namespace hessiancsharp.io
         /// </summary>
         private bool m_blnIsLastChunk;
 
+
+
         /// <summary>
         /// the chunk length
         /// </summary>
         private int m_intChunkLength;
-
         /// <summary>
         /// Array with object references
         /// </summary>
         private ArrayList m_arrRefs;
+
         private IDictionary m_deserializers;
+
+
         #endregion
 
         #region CONSTRUCTORS
         /// <summary>
-        /// Initializes a new instance of the CHessianInput class
+        /// Constructor
         /// </summary>
         /// <param name="srInput">InputStream what have to read from</param>
         public CHessianInput(Stream srInput)
@@ -95,10 +100,11 @@ namespace hessiancsharp.io
             Init(srInput);
         }
         #endregion
-
         #region PROPERTIES
-        #endregion
 
+
+
+        #endregion
         #region PRIVATE_METHODS
         /// <summary>
         /// Parses a 32-bit integer value from the stream.
@@ -106,7 +112,8 @@ namespace hessiancsharp.io
         /// b32 b24 b16 b8
         /// </code>
         /// </summary>
-        /// <returns>integer value</returns>        
+        /// <returns>integer value</returns>
+        /// <exception cref="HessianCSharp.io.hessiannet.hessian.io.HessianProtocolException"/>
         private int ParseInt()
         {
             int b32 = Read();
@@ -116,6 +123,7 @@ namespace hessiancsharp.io
 
             return (b32 << 24) + (b24 << 16) + (b16 << 8) + b8;
         }
+
 
         /// <summary>
         /// Prepares the fault.
@@ -134,42 +142,36 @@ namespace hessiancsharp.io
             }
             else
             {
-                exp = new CHessianException(strMessage);
+                exp = new CHessianException(strMessage, (objDetail ?? "").ToString());
             }
             return exp;
         }
+
 
         /// <summary>
         /// Starts reading the reply
         /// A successful completion will have a single value:
         /// r
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         public override void StartReply()
         {
             int tag = Read();
 
             if (tag != 'r')
-            {
                 throw new CHessianException("expected hessian reply");
-            }
+
 
             int major = Read();
             int minor = Read();
 
-            tag = Read();
-            if (tag == 'f')
-            {
-                throw new CHessianException("False Code: 'f'");
-            }
-            else
-                m_intPeek = tag;
+            StartReplyBody();
         }
 
         /// <summary>
         /// Reads a fault.
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         /// <returns>HashMap with fault details</returns>
         private Hashtable ReadFault()
         {
@@ -184,15 +186,11 @@ namespace hessiancsharp.io
                 object objValue = ReadObject();
 
                 if (objKey != null && objValue != null)
-                {
                     htFault.Add(objKey, objValue);
-                }
             }
 
-            if (intCode != PROT_REPLY_END)
-            {
+            if (intCode != CHessianProtocolConstants.PROT_REPLY_END)
                 throw new CHessianException("unknown fault reason");
-            }
 
             return htFault;
         }
@@ -216,11 +214,10 @@ namespace hessiancsharp.io
             }
             return intResult;
         }
-
         /// <summary>
         /// Reads string from stream and builds Xml - Node
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         /// <returns>Root Node of the Xml - Content</returns>
         private System.Xml.XmlNode parseXML()
         {
@@ -231,7 +228,6 @@ namespace hessiancsharp.io
             {
                 sbTemp.Append((char)intData);
             }
-
             System.Xml.XmlDocument xdoc = new System.Xml.XmlDocument();
             try
             {
@@ -247,30 +243,29 @@ namespace hessiancsharp.io
             return xnodResult;
         }
 
-        /// <summary>
+        ///<summary>
         /// Reads a character from the underlying stream.
-        /// </summary>        
-        /// <returns>UTF8-Character</returns>
+        ///</summary>
+        ///<exception cref="CHessianException"/>
+        ///<returns>UTF8-Character</returns>
         private int ParseChar()
         {
             while (m_intChunkLength <= 0)
             {
                 if (m_blnIsLastChunk)
-                {
                     return -1;
-                }
 
                 int intCode = Read();
 
                 switch (intCode)
                 {
-                    case PROT_STRING_INITIAL:
-                    case PROT_XML_INITIAL:
+                    case CHessianProtocolConstants.PROT_STRING_INITIAL:
+                    case CHessianProtocolConstants.PROT_XML_INITIAL:
                         m_blnIsLastChunk = false;
                         m_intChunkLength = (Read() << 8) + Read();
                         break;
-                    case PROT_STRING_FINAL:
-                    case PROT_XML_FINAL:
+                    case CHessianProtocolConstants.PROT_STRING_FINAL:
+                    case CHessianProtocolConstants.PROT_XML_FINAL:
                         m_blnIsLastChunk = true;
                         m_intChunkLength = (Read() << 8) + Read();
                         break;
@@ -286,7 +281,7 @@ namespace hessiancsharp.io
         /// Reads a byte from the underlying stream.
         /// </summary>
         /// <returns>Byte value as int</returns>
-        
+        /// <exception cref="CHessianException"/>
         private int ParseByte()
         {
             while (m_intChunkLength <= 0)
@@ -300,23 +295,27 @@ namespace hessiancsharp.io
 
                 switch (intCode)
                 {
-                    case PROT_BINARY_START:
+                    case CHessianProtocolConstants.PROT_BINARY_START:
                         m_blnIsLastChunk = false;
+
                         m_intChunkLength = (Read() << 8) + Read();
                         break;
-                    case PROT_BINARY_END:
+
+                    case CHessianProtocolConstants.PROT_BINARY_END:
                         m_blnIsLastChunk = true;
+
                         m_intChunkLength = (Read() << 8) + Read();
                         break;
+
                     default:
                         throw new CHessianException("Exception in parseByte");
                 }
             }
 
             m_intChunkLength--;
+
             return Read();
         }
-
         /// <summary>
         /// Parses a 64-bit long value from the stream.
         /// <code>
@@ -351,7 +350,7 @@ namespace hessiancsharp.io
         /// b64 b56 b48 b40 b32 b24 b16 b8
         /// </code>
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         /// <returns>64-bit double value</returns>
         private double ParseDouble()
         {
@@ -374,6 +373,8 @@ namespace hessiancsharp.io
             byte[] lngBytes = BitConverter.GetBytes(lngBits);
             return BitConverter.ToDouble(lngBytes, 0);
         }
+
+
         #endregion
 
         #region PUBLIC_METHODS
@@ -396,77 +397,82 @@ namespace hessiancsharp.io
             {
                 base.m_serializerFactory = new CSerializerFactory();
             }
-        }
 
+        }
         /// <summary>
         /// Completes reading the call
         /// A successful completion will have a single value:
         /// z
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         public override void CompleteCall()
         {
             int intTag = Read();
 
             if (intTag != 'z')
-            {
                 throw new CHessianException("Expected end of call");
-            }
         }
-
         /// <summary>
         /// Completes reading the call
         /// A successful completion will have a single value:
         /// z
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         public override void CompleteReply()
         {
             int tag = Read();
             if (tag != 'z')
-            {
                 throw new CHessianException("Expected iend of reply");
-            }
         }
 
         /// <summary>
         /// Reads an arbitrary object from the input stream.
         /// </summary>
         /// <returns>Read object</returns>
-        
+        /// <exception cref="CHessianException"/>
         public override object ReadObject()
         {
             int intTag = Read();
 
             switch (intTag)
             {
-                case PROT_NULL:
+                case CHessianProtocolConstants.PROT_NULL:
                     return null;
-                case PROT_BOOLEAN_TRUE:
+                case CHessianProtocolConstants.PROT_BOOLEAN_TRUE:
                     return true;
-                case PROT_BOOLEAN_FALSE:
+                case CHessianProtocolConstants.PROT_BOOLEAN_FALSE:
                     return false;
-                case PROT_INTEGER_TYPE:
+                case CHessianProtocolConstants.PROT_INTEGER_TYPE:
                     return ParseInt();
-                case PROT_LONG_TYPE:
+                case CHessianProtocolConstants.PROT_LONG_TYPE:
                     return ParseLong();
-                case PROT_DOUBLE_TYPE:
+                case CHessianProtocolConstants.PROT_DOUBLE_TYPE:
                     return ParseDouble();
-                case PROT_STRING_INITIAL:
-                case PROT_STRING_FINAL:
+                case CHessianProtocolConstants.PROT_STRING_INITIAL:
+                case CHessianProtocolConstants.PROT_STRING_FINAL:
                     {
-                        m_blnIsLastChunk = intTag == PROT_STRING_FINAL;
+                        m_blnIsLastChunk = intTag == CHessianProtocolConstants.PROT_STRING_FINAL;
                         m_intChunkLength = (Read() << 8) + Read();
                         return LoadString();
+
+
                     }
-                case PROT_MAP_TYPE:
+                case CHessianProtocolConstants.PROT_MAP_TYPE:
                     {
-                        string strType = ReadType();
+                        String strType = ReadType();
                         return m_serializerFactory.ReadMap(this, strType);
                     }
-                case PROT_DATE_TYPE:
-                    return DateTime.FromFileTimeUtc(ParseLong());
-                case PROT_REF_TYPE:
+                case CHessianProtocolConstants.PROT_DATE_TYPE:
+                    //return DateTime.FromFileTimeUtc(ParseLong());
+                    long javaTime = ParseLong();
+                    const long timeShift = 62135596800000;
+                    DateTime dt = new DateTime((javaTime + timeShift) * 10000, DateTimeKind.Utc);
+                    if (dt != DateTime.MinValue)
+                    {
+                        dt = dt.ToLocalTime(); // der Einfachheit halber
+                    }
+                    return dt;
+                case CHessianProtocolConstants.PROT_REF_TYPE:
                     {
                         int intRefNumber = ParseInt();
                         return m_arrRefs[intRefNumber];
@@ -475,17 +481,17 @@ namespace hessiancsharp.io
                     {
                         throw new CHessianException("remote type is not implemented");
                     }
-                case PROT_XML_INITIAL:
-                case PROT_XML_FINAL:
+                case CHessianProtocolConstants.PROT_XML_INITIAL:
+                case CHessianProtocolConstants.PROT_XML_FINAL:
                     {
-                        m_blnIsLastChunk = intTag == PROT_XML_FINAL;
+                        m_blnIsLastChunk = intTag == CHessianProtocolConstants.PROT_XML_FINAL;
                         m_intChunkLength = (Read() << 8) + Read();
                         return parseXML();
                     }
-                case PROT_BINARY_START:
-                case PROT_BINARY_END:
+                case CHessianProtocolConstants.PROT_BINARY_START:
+                case CHessianProtocolConstants.PROT_BINARY_END:
                     {
-                        m_blnIsLastChunk = intTag == PROT_BINARY_END;
+                        m_blnIsLastChunk = intTag == CHessianProtocolConstants.PROT_BINARY_END;
                         m_intChunkLength = (Read() << 8) + Read();
 
                         int intData;
@@ -493,46 +499,73 @@ namespace hessiancsharp.io
                         while ((intData = ParseByte()) >= 0)
                         {
                             memoryStream.WriteByte((byte)intData);
+                            byte[] bytes = new byte[0x8000];
+                            while (m_intChunkLength > 0)
+                            {
+                                int count = m_srInput.Read(bytes, 0, m_intChunkLength);
+                                memoryStream.Write(bytes, 0, count);
+                                m_intChunkLength -= count;
+                            }
                         }
                         return memoryStream.ToArray();
                     }
-                case PROT_LIST_TYPE:
+                case CHessianProtocolConstants.PROT_LIST_TYPE:
                     {
                         string strType = this.ReadType();
                         int intLength = this.ReadLength();
                         return m_serializerFactory.ReadList(this, intLength, strType);
                     }
+
                 default:
                     throw new CHessianException("unknown code:" + (char)intTag);
             }
         }
+
 
         /// <summary>
         /// Reads an integer
         /// <code>
         /// b32 b24 b16 b8
         /// </code>
-        /// </summary>        
-        /// <returns>integer value</returns>        
+        /// </summary>
+        /// <exception cref="CHessianException"/>
+        /// <returns>integer value</returns>
+        /// <exception cref="HessianCSharp.io.hessiannet.hessian.io.HessianProtocolException"/>
         public override int ReadInt()
         {
             int intTag = Read();
 
             switch (intTag)
             {
-                case PROT_BOOLEAN_TRUE:
+                case CHessianProtocolConstants.PROT_BOOLEAN_TRUE:
                     return 1;
-                case PROT_BOOLEAN_FALSE:
+                case CHessianProtocolConstants.PROT_BOOLEAN_FALSE:
                     return 0;
-                case PROT_INTEGER_TYPE:
+                case CHessianProtocolConstants.PROT_INTEGER_TYPE:
                     return ParseInt();
-                case PROT_LONG_TYPE:
+                case CHessianProtocolConstants.PROT_LONG_TYPE:
                     return (int)ParseLong();
-                case PROT_DOUBLE_TYPE:
+                case CHessianProtocolConstants.PROT_DOUBLE_TYPE:
                     return (int)ParseDouble();
                 default:
                     throw new CHessianException("Expected integer but found :" + intTag.ToString());
             }
+        }
+
+        /// <summary>
+        /// For backward compatibility with HessianSkeleton
+        /// </summary>
+        public new void SkipOptionalCall()
+        {
+            int tag = Read();
+
+            if (tag == 'c')
+            {
+                Read();
+                Read();
+            }
+            else
+                m_intPeek = tag;
         }
 
         /// <summary>
@@ -552,13 +585,12 @@ namespace hessiancsharp.io
 
             ReadMethod();
         }
-
         /// <summary>
         /// Starts reading the call
         /// c major minor
         /// </summary>
-        	
-        public int ReadCall()
+        /// <exception cref="CHessianException"/>	
+        public override int ReadCall()
         {
             int intTag = Read();
 
@@ -576,7 +608,7 @@ namespace hessiancsharp.io
         /// Reads a header, returning null if there are no headers.
         /// H b16 b8 value
         /// </summary>
-        public string ReadHeader()
+        public override String ReadHeader()
         {
             int tag = Read();
 
@@ -586,9 +618,11 @@ namespace hessiancsharp.io
                 m_intChunkLength = (Read() << 8) + Read();
 
                 return LoadString();
+
             }
 
             m_intPeek = tag;
+
             return null;
         }
 
@@ -597,8 +631,8 @@ namespace hessiancsharp.io
         /// A successful completion will have a single value:
         /// m b16 b8 method
         /// </summary>
-        
-        public string ReadMethod()
+        /// <exception cref="CHessianException"/>
+        public override String ReadMethod()
         {
             int intTag = Read();
 
@@ -611,10 +645,16 @@ namespace hessiancsharp.io
 
             m_blnIsLastChunk = true;
 
-            m_intChunkLength = (d1 * 256) + d2;
+            m_intChunkLength = d1 * 256 + d2;
 
             m_strMethod = LoadString();
             return m_strMethod;
+
+        }
+
+        public override void ReadNull()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -624,7 +664,7 @@ namespace hessiancsharp.io
         /// S b16 b8 final string chunk
         /// </code>
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         /// <returns></returns>
         public override string ReadString()
         {
@@ -632,23 +672,25 @@ namespace hessiancsharp.io
 
             switch (intTag)
             {
-                case PROT_NULL:
+                case CHessianProtocolConstants.PROT_NULL:
                     return null;
-                case PROT_INTEGER_TYPE:
+                case CHessianProtocolConstants.PROT_INTEGER_TYPE:
                     return ParseInt().ToString();
-                case PROT_LONG_TYPE:
+                case CHessianProtocolConstants.PROT_LONG_TYPE:
                     return ParseLong().ToString();
-                case PROT_DOUBLE_TYPE:
+                case CHessianProtocolConstants.PROT_DOUBLE_TYPE:
                     return ParseDouble().ToString();
-                case PROT_STRING_FINAL:
-                case PROT_STRING_INITIAL:
-                case PROT_XML_FINAL:
-                case PROT_XML_INITIAL:
-                    m_blnIsLastChunk = intTag == PROT_STRING_FINAL || intTag == PROT_XML_FINAL;
+                case CHessianProtocolConstants.PROT_STRING_FINAL:
+                case CHessianProtocolConstants.PROT_STRING_INITIAL:
+                case CHessianProtocolConstants.PROT_XML_FINAL:
+                case CHessianProtocolConstants.PROT_XML_INITIAL:
+                    m_blnIsLastChunk = intTag == CHessianProtocolConstants.PROT_STRING_FINAL || intTag == CHessianProtocolConstants.PROT_XML_FINAL;
                     m_intChunkLength = (Read() << 8) + Read();
+
                     return LoadString();
                 default:
                     throw new CHessianException("expected an string but recieved " + intTag);
+
             }
         }
 
@@ -662,33 +704,25 @@ namespace hessiancsharp.io
             {
                 tempChar[i] = (char)intChar;
                 if (i != (tempChar.Length - 1))
-                {
                     i++;
-                }
                 else
                 {
                     i = 0;
                     sbTemp.Append(tempChar);
                 }
             }
-
             if (i != 0)
             {
                 sbTemp.Append(tempChar, 0, i);
             }
-            var ret = sbTemp.ToString();
-            Array.Clear(tempChar, 0, tempChar.Length);
-            tempChar = null;            
-            sbTemp.Remove(0, sbTemp.Length);
-            sbTemp = null;
-            return ret;
-            //return sbTemp.ToString();
+            return sbTemp.ToString();
         }
+
 
         /// <summary>
         /// Reads a single UTF8 character.
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         /// <returns>Single UTF8 character</returns>
         private int ParseUTF8Char()
         {
@@ -724,7 +758,7 @@ namespace hessiancsharp.io
         /// F
         /// </code>
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         /// <returns>Boolean value</returns>
         public override bool ReadBoolean()
         {
@@ -732,29 +766,31 @@ namespace hessiancsharp.io
 
             switch (intTag)
             {
-                case PROT_BOOLEAN_TRUE:
+                case CHessianProtocolConstants.PROT_BOOLEAN_TRUE:
                     return true;
-                case PROT_BOOLEAN_FALSE:
+                case CHessianProtocolConstants.PROT_BOOLEAN_FALSE:
                     return false;
-                case PROT_INTEGER_TYPE:
+                case CHessianProtocolConstants.PROT_INTEGER_TYPE:
                     return ParseInt() == 0;
-                case PROT_LONG_TYPE:
+                case CHessianProtocolConstants.PROT_LONG_TYPE:
                     return ParseLong() == 0;
-                case PROT_DOUBLE_TYPE:
+                case CHessianProtocolConstants.PROT_DOUBLE_TYPE:
                     return ParseDouble() == 0.0;
-                case PROT_NULL:
+                case CHessianProtocolConstants.PROT_NULL:
                     return false;
                 default:
                     throw new CHessianException("expected an boolean but recieved " + intTag);
             }
         }
 
+
         /// <summary>
         /// Reads an arbitrary object from the input stream.
         /// </summary>
         /// <param name="expectedType">the expected class if the protocol doesn't supply it.</param>
         /// <returns>Read object</returns>
-                
+        /// <exception cref="CHessianException"/>
+        /// <exception cref="CHessianException"/>
         public override object ReadObject(Type expectedType)
         {
             object objResult = null;
@@ -765,25 +801,25 @@ namespace hessiancsharp.io
             else
             {
                 int intTag = Read();
-                if (intTag != PROT_NULL)
+                if (intTag != CHessianProtocolConstants.PROT_NULL)
                 {
                     switch (intTag)
                     {
-                        case PROT_MAP_TYPE:
+                        case CHessianProtocolConstants.PROT_MAP_TYPE:
                             {
                                 string strType = ReadType();
 
                                 AbstractDeserializer deserializer = GetObjectDeserializer(strType);
 
-                                if (expectedType != deserializer.GetOwnType() && expectedType.IsAssignableFrom(deserializer.GetOwnType()))
-                                {
+                                if (expectedType == deserializer.GetOwnType() || expectedType.IsAssignableFrom(deserializer.GetOwnType()))
                                     return deserializer.ReadMap(this);
-                                }
 
                                 deserializer = GetDeserializer(expectedType);
+
+
                                 return deserializer.ReadMap(this);
                             }
-                        case PROT_REF_TYPE:
+                        case CHessianProtocolConstants.PROT_REF_TYPE:
                             {
                                 int intRefNumber = ParseInt();
                                 return m_arrRefs[intRefNumber];
@@ -792,14 +828,14 @@ namespace hessiancsharp.io
                             {
                                 throw new CHessianException("remote type is not implemented");
                             }
-                        case PROT_LIST_TYPE:
+                        case CHessianProtocolConstants.PROT_LIST_TYPE:
                             {
                                 string strType = this.ReadType();
                                 int intLength = this.ReadLength();
-                                AbstractDeserializer deserializer = this.m_serializerFactory.GetObjectDeserializer(strType);
-                                if (expectedType != deserializer.GetType() && expectedType.IsAssignableFrom(deserializer.GetType()))
-                                //if (expectedType != deserializer.GetOwnType() && expectedType.IsAssignableFrom(deserializer.GetOwnType()))
+                                IDeserializer deserializer = this.m_serializerFactory.GetObjectDeserializer(strType);
+                                if ((expectedType == deserializer.GetOwnType() || expectedType.IsAssignableFrom(deserializer.GetOwnType())))
                                 {
+                                    //if (expectedType != deserializer.GetOwnType() && expectedType.IsAssignableFrom(deserializer.GetOwnType()))
                                     return deserializer.ReadList(this, intLength);
                                 }
                                 deserializer = m_serializerFactory.GetDeserializer(expectedType);
@@ -808,6 +844,7 @@ namespace hessiancsharp.io
                     }
 
                     m_intPeek = intTag;
+
                     objResult = m_serializerFactory.GetDeserializer(expectedType).ReadObject(this);
                 }
             }
@@ -832,30 +869,28 @@ namespace hessiancsharp.io
             return (AbstractDeserializer)m_deserializers[expType];
         }
 
+
         /// <summary>
         /// Reads a reply as an object.
         /// </summary>
         /// <param name="expectedType">the expected class if the protocol doesn't supply it.</param>
         /// <returns>Reply as an object</returns>
-        
+        /// <exception cref="CHessianException"/>
         public override object ReadReply(Type expectedType)
         {
-            // Parsing Start
-            //var startDatetime = DateTime.Now;
-            //System.Diagnostics.Trace.WriteLine("[VMT RMG Parsing Timestamp]" + startDatetime.ToString("[HH:mm:ss:fff]") + "(+)");
-
             object objResult = null;
             int intTag = this.Read();
 
-            if (intTag != PROT_REPLY_START)
+            if (intTag != CHessianProtocolConstants.PROT_REPLY_START)
             {
-                throw new CHessianException(MESSAGE_WRONG_REPLY_START);
+                throw new CHessianException(CHessianProtocolConstants.MESSAGE_WRONG_REPLY_START);
             }
-
             int intMajor = Read();
             int intMinor = Read();
+
             intTag = Read();
-            if (intTag == PROT_REPLY_FAULT)
+
+            if (intTag == CHessianProtocolConstants.PROT_REPLY_FAULT)
             {
                 //throw PrepareFault();
                 CHessianException wrapper = new CHessianException("received fault", PrepareFault());
@@ -869,32 +904,43 @@ namespace hessiancsharp.io
                 objResult = ReadObject(expectedType);
 
                 CompleteValueReply();
+
             }
-
-            // Parsing End
-            //var endDatetime = DateTime.Now;
-            //System.Diagnostics.Trace.WriteLine("[VMT RMG Parsing Timestamp]" + endDatetime.ToString("[HH:mm:ss:fff]") + "(-)");
-            //TimeSpan tSpan = endDatetime - startDatetime;
-            //System.Diagnostics.Trace.WriteLine("[VMT RMG Parsing Timestamp]" + "TotalMilliseconds : " + tSpan.TotalMilliseconds.ToString()); 
-
             return objResult;
+        }
+
+        public override void StartReplyBody()
+        {
+            int tag = Read();
+
+            if (tag == 'f')
+            {
+                //throw PrepareFault();
+                CHessianException wrapper = new CHessianException("received fault", PrepareFault());
+                wrapper.FaultWrapper = true;
+                throw wrapper;
+            }
+            else
+                m_intPeek = tag;
         }
 
         /// <summary>
         /// Completes reading the call
-        /// A successful completion will have a single value:
+        /// <p>A successful completion will have a single value:
         /// <code>
         /// z
-        /// </code>        
+        /// </code>
+        /// <exception cref="CHessianException"/>
         /// </summary>
         public void CompleteValueReply()
         {
             int intTag = Read();
-            if (intTag != PROT_REPLY_END)
+            if (intTag != CHessianProtocolConstants.PROT_REPLY_END)
             {
-                throw new CHessianException(MESSAGE_WRONG_REPLY_END);
+                throw new CHessianException(CHessianProtocolConstants.MESSAGE_WRONG_REPLY_END);
             }
         }
+
 
         /// <summary>
         /// Reads a double.
@@ -902,7 +948,7 @@ namespace hessiancsharp.io
         /// D b64 b56 b48 b40 b32 b24 b16 b8
         /// </code>
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         /// <returns>Double value</returns>
         public override double ReadDouble()
         {
@@ -910,11 +956,12 @@ namespace hessiancsharp.io
 
             switch (intTag)
             {
-                case PROT_BOOLEAN_TRUE: return 1;
-                case PROT_BOOLEAN_FALSE: return 0;
-                case PROT_INTEGER_TYPE: return ParseInt();
-                case PROT_LONG_TYPE: return (double)ParseLong();
-                case PROT_DOUBLE_TYPE: return ParseDouble();
+                case CHessianProtocolConstants.PROT_BOOLEAN_TRUE: return 1;
+                case CHessianProtocolConstants.PROT_BOOLEAN_FALSE: return 0;
+                case CHessianProtocolConstants.PROT_INTEGER_TYPE: return ParseInt();
+                case CHessianProtocolConstants.PROT_LONG_TYPE: return (double)ParseLong();
+                case CHessianProtocolConstants.PROT_DOUBLE_TYPE: return ParseDouble();
+
                 default:
                     throw new CHessianException("expected an double but recieved " + intTag);
             }
@@ -931,30 +978,31 @@ namespace hessiancsharp.io
         /// <summary>
         ///  Read the end byte
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         public override void ReadListEnd()
         {
             int intCode = Read();
 
-            if (intCode != PROT_REPLY_END)
-            {
+            if (intCode != CHessianProtocolConstants.PROT_REPLY_END)
                 new CHessianException("unknown code " + (char)intCode);
-            }
         }
 
         /// <summary>
         ///   Adds an object reference.
         /// </summary>
-        public override int AddRef(object obj)
+        public override int AddRef(Object obj)
         {
             if (m_arrRefs == null)
-            {
                 m_arrRefs = new ArrayList();
-            }
 
             m_arrRefs.Add(obj);
 
             return m_arrRefs.Count - 1;
+        }
+
+        public override void SetRef(int i, object obj)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -969,15 +1017,13 @@ namespace hessiancsharp.io
         /// <summary>
         ///   Read the end byte
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         public override void ReadEnd()
         {
             int intCode = Read();
 
-            if (intCode != PROT_REPLY_END)
-            {
+            if (intCode != CHessianProtocolConstants.PROT_REPLY_END)
                 new CHessianException("unknown code " + (char)intCode);
-            }
         }
 
         /// <summary>
@@ -986,28 +1032,31 @@ namespace hessiancsharp.io
         public override bool IsEnd()
         {
             int intCode = Read();
+
             m_intPeek = intCode;
 
-            return (intCode < 0 || intCode == PROT_REPLY_END);
+            return (intCode < 0 || intCode == CHessianProtocolConstants.PROT_REPLY_END);
         }
 
         /// <summary>
         ///   Reads an object type.
         /// </summary>
-        public override string ReadType()
+        public override String ReadType()
         {
             int intCode = Read();
 
             if (intCode != 't')
             {
                 m_intPeek = intCode;
-                return string.Empty;
+                return "";
             }
 
             m_blnIsLastChunk = true;
             m_intChunkLength = (Read() << 8) + Read();
 
             return LoadString();
+
+
         }
 
         /// <summary>
@@ -1030,7 +1079,7 @@ namespace hessiancsharp.io
         /// <summary>
         /// Reads the byte array
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         /// <returns>Byte array</returns>
         public override byte[] ReadBytes()
         {
@@ -1038,23 +1087,33 @@ namespace hessiancsharp.io
 
             switch (intTag)
             {
-                case PROT_NULL:
+                case CHessianProtocolConstants.PROT_NULL:
                     return null;
-                case PROT_BINARY_END:
-                case PROT_BINARY_START:
-                    m_blnIsLastChunk = intTag == PROT_BINARY_END;
+                case CHessianProtocolConstants.PROT_BINARY_END:
+                case CHessianProtocolConstants.PROT_BINARY_START:
+                    m_blnIsLastChunk = intTag == CHessianProtocolConstants.PROT_BINARY_END;
                     m_intChunkLength = (Read() << 8) + Read();
                     MemoryStream memoryStream = new MemoryStream();
                     int intData;
                     while ((intData = ParseByte()) >= 0)
                     {
                         memoryStream.WriteByte((System.Byte)intData);
+                        byte[] bytes = new byte[0x8000];
+                        while (m_intChunkLength > 0)
+                        {
+                            int count = m_srInput.Read(bytes, 0, m_intChunkLength);
+                            memoryStream.Write(bytes, 0, count);
+                            m_intChunkLength -= count;
+                        }
                     }
                     return memoryStream.ToArray();
                 default:
                     throw new CHessianException("bytes " + intTag);
             }
+
+
         }
+
 
         /// <summary>
         /// Reads a long
@@ -1062,22 +1121,23 @@ namespace hessiancsharp.io
         /// L b64 b56 b48 b40 b32 b24 b16 b8
         /// </code>
         /// </summary>
-        
+        /// <exception cref="CHessianException"/>
         /// <returns>Long value</returns>
         public override long ReadLong()
         {
             int intTag = Read();
             switch (intTag)
             {
-                case PROT_BOOLEAN_TRUE: return 1;
-                case PROT_BOOLEAN_FALSE: return 0;
-                case PROT_INTEGER_TYPE: return ParseInt();
-                case PROT_LONG_TYPE: return ParseLong();
-                case PROT_DOUBLE_TYPE: return (long)ParseDouble();
+                case CHessianProtocolConstants.PROT_BOOLEAN_TRUE: return 1;
+                case CHessianProtocolConstants.PROT_BOOLEAN_FALSE: return 0;
+                case CHessianProtocolConstants.PROT_INTEGER_TYPE: return ParseInt();
+                case CHessianProtocolConstants.PROT_LONG_TYPE: return ParseLong();
+                case CHessianProtocolConstants.PROT_DOUBLE_TYPE: return (long)ParseDouble();
                 default:
                     throw new CHessianException("expected an long but recieved " + intTag);
             }
         }
+
 
         /// <summary> Reads a float
         /// *
@@ -1090,6 +1150,7 @@ namespace hessiancsharp.io
             return (float)ReadDouble();
         }
 
+
         /// <summary>
         /// Reads a byte from the stream.
         /// </summary>
@@ -1100,39 +1161,43 @@ namespace hessiancsharp.io
             {
                 m_intChunkLength--;
                 if (m_intChunkLength == 0 && m_blnIsLastChunk)
-                {
-                    m_intChunkLength = END_OF_DATA;
-                }
+                    m_intChunkLength = CHessianProtocolConstants.END_OF_DATA;
 
                 return Read();
             }
-            else if (m_intChunkLength == END_OF_DATA)
+            else if (m_intChunkLength == CHessianProtocolConstants.END_OF_DATA)
             {
                 m_intChunkLength = 0;
                 return -1;
             }
 
             int intTag = Read();
+
             switch (intTag)
             {
-                case PROT_NULL:
+
+                case CHessianProtocolConstants.PROT_NULL:
                     return -1;
-                case PROT_BINARY_END:
-                case PROT_BINARY_START:
-                    m_blnIsLastChunk = intTag == PROT_BINARY_END;
+
+
+                case CHessianProtocolConstants.PROT_BINARY_END:
+                case CHessianProtocolConstants.PROT_BINARY_START:
+                    m_blnIsLastChunk = intTag == CHessianProtocolConstants.PROT_BINARY_END;
                     m_intChunkLength = (Read() << 8) + Read();
 
                     int intValue_Renamed = ParseByte();
+
                     // special code so successive read byte won't
                     // be read as a single object.
                     if (m_intChunkLength == 0 && m_blnIsLastChunk)
-                    {
-                        m_intChunkLength = END_OF_DATA;
-                    }
+                        m_intChunkLength = CHessianProtocolConstants.END_OF_DATA;
 
                     return intValue_Renamed;
+
+
                 default:
-                    throw new CHessianException("expected " + PROT_BINARY_END + " at " + (char)intTag);
+                    throw new CHessianException("expected " + CHessianProtocolConstants.PROT_BINARY_END + " at " + (char)intTag);
+
             }
         }
 
@@ -1143,12 +1208,12 @@ namespace hessiancsharp.io
         /// <param name="intOffset">Offset</param>
         /// <param name="intLength">Length</param>
         /// <returns>Length of read bytes</returns>
-        
+        /// <exception cref="CHessianException"/>
         public virtual int ReadBytes(sbyte[] arrBuffer, int intOffset, int intLength)
         {
             int intReadLength = 0;
 
-            if (m_intChunkLength == END_OF_DATA)
+            if (m_intChunkLength == CHessianProtocolConstants.END_OF_DATA)
             {
                 m_intChunkLength = 0;
                 return -1;
@@ -1159,18 +1224,17 @@ namespace hessiancsharp.io
 
                 switch (intTag)
                 {
-                    case PROT_NULL:
+                    case CHessianProtocolConstants.PROT_NULL:
                         return -1;
-                    case PROT_BINARY_END:
-                    case PROT_BINARY_START:
-                        m_blnIsLastChunk = intTag == PROT_BINARY_END;
+                    case CHessianProtocolConstants.PROT_BINARY_END:
+                    case CHessianProtocolConstants.PROT_BINARY_START:
+                        m_blnIsLastChunk = intTag == CHessianProtocolConstants.PROT_BINARY_END;
                         m_intChunkLength = (Read() << 8) + Read();
                         break;
                     default:
                         throw new CHessianException("expected 'B' at " + (char)intTag);
                 }
             }
-
             while (intLength > 0)
             {
                 if (m_intChunkLength > 0)
@@ -1183,12 +1247,10 @@ namespace hessiancsharp.io
                 else if (m_blnIsLastChunk)
                 {
                     if (intReadLength == 0)
-                    {
                         return -1;
-                    }
                     else
                     {
-                        m_intChunkLength = END_OF_DATA;
+                        m_intChunkLength = CHessianProtocolConstants.END_OF_DATA;
                         return intReadLength;
                     }
                 }
@@ -1197,34 +1259,34 @@ namespace hessiancsharp.io
                     int tag = Read();
                     switch (tag)
                     {
-                        case PROT_BINARY_END:
-                        case PROT_BINARY_START:
-                            m_blnIsLastChunk = tag == PROT_BINARY_END;
+                        case CHessianProtocolConstants.PROT_BINARY_END:
+                        case CHessianProtocolConstants.PROT_BINARY_START:
+                            m_blnIsLastChunk = tag == CHessianProtocolConstants.PROT_BINARY_END;
                             m_intChunkLength = (Read() << 8) + Read();
                             break;
                         default:
                             throw new CHessianException("expected 'B' at " + (char)tag);
+
                     }
                 }
             }
 
             if (intReadLength == 0)
-            {
                 return -1;
-            }
             else if (m_intChunkLength > 0 || !m_blnIsLastChunk)
                 return intReadLength;
             else
             {
-                m_intChunkLength = END_OF_DATA;
+                m_intChunkLength = CHessianProtocolConstants.END_OF_DATA;
                 return intReadLength;
             }
         }
 
-        /// <summary>
+
+        ///<summary>
         /// Reads the start of a list.
-        /// </summary>
-        /// <returns>Value of the map start byte</returns>
+        ///</summary>
+        ///<returns>Value of the map start byte</returns>
         public override int ReadMapStart()
         {
             return Read();
@@ -1233,14 +1295,14 @@ namespace hessiancsharp.io
         /// <summary> 
         /// Reads the end byte.
         /// </summary>
+        /// <exception cref="CHessianException"/>
+        ///<returns>Value of the map end byte</returns>
         public override void ReadMapEnd()
         {
             int intCode = Read();
 
-            if (intCode != PROT_REPLY_END)
-            {
-                throw new CHessianException("expected " + PROT_REPLY_END + " at " + (char)intCode);
-            }
+            if (intCode != CHessianProtocolConstants.PROT_REPLY_END)
+                throw new CHessianException("expected " + CHessianProtocolConstants.PROT_REPLY_END + " at " + (char)intCode);
         }
 
         /// <summary> 
@@ -1248,24 +1310,21 @@ namespace hessiancsharp.io
         /// <code>
         /// T b64 b56 b48 b40 b32 b24 b16 b8
         /// </code>
-        
+        /// <exception cref="CHessianException"/>
         /// </summary>
         public override long ReadUTCDate()
         {
             int tag = Read();
 
-            if (tag != PROT_DATE_TYPE)
-            {
-                throw new CHessianException("expected " + PROT_DATE_TYPE + " for Date at " + (char)tag);
-            }
+            if (tag != CHessianProtocolConstants.PROT_DATE_TYPE)
+                throw new CHessianException("expected " + CHessianProtocolConstants.PROT_DATE_TYPE + " for Date at " + (char)tag);
 
             return this.ParseLong();
         }
-
         /// <summary> 
         /// Reads bytes from the underlying stream.
         /// </summary>
-        public int Read(byte[] buffer, int offset, int length)
+        int Read(byte[] buffer, int offset, int length)
         {
             int intReadLength = 0;
 
@@ -1274,9 +1333,7 @@ namespace hessiancsharp.io
                 while (m_intChunkLength <= 0)
                 {
                     if (m_blnIsLastChunk)
-                    {
                         return intReadLength == 0 ? -1 : intReadLength;
-                    }
 
                     int code = Read();
 
@@ -1284,12 +1341,16 @@ namespace hessiancsharp.io
                     {
                         case 'b':
                             m_blnIsLastChunk = false;
+
                             m_intChunkLength = (Read() << 8) + Read();
                             break;
+
                         case 'B':
                             m_blnIsLastChunk = true;
+
                             m_intChunkLength = (Read() << 8) + Read();
                             break;
+
                         default:
                             throw new CHessianException("expected 'byte[]' at " + (char)code);
                     }
@@ -1297,9 +1358,7 @@ namespace hessiancsharp.io
 
                 int sublen = m_intChunkLength;
                 if (length < sublen)
-                {
                     sublen = length;
-                }
 
                 sublen = m_srInput.Read(buffer, offset, sublen);
                 offset += sublen;
@@ -1309,7 +1368,6 @@ namespace hessiancsharp.io
             }
             return intReadLength;
         }
-
         /// <summary> Reads bytes based on an input stream.
         /// </summary>
         public override Stream ReadInputStream()
@@ -1318,19 +1376,43 @@ namespace hessiancsharp.io
 
             switch (tag)
             {
+
                 case 'N':
                     return null;
+
+
                 case 'B':
                 case 'b':
                     m_blnIsLastChunk = tag == 'B';
                     m_intChunkLength = (Read() << 8) + Read();
                     break;
+
+
                 default:
                     throw new CHessianException("expected  inputStream at " + (char)tag);
+
             }
 
             return new HessianInputStream(this);
         }
+
+        private decimal ParseDecimal()
+        {
+            var str = this.ReadString();
+            return decimal.Parse(str);
+            //byte[] bytes = new byte[16];
+            //m_srInput.Read(bytes, 0, bytes.Length);
+            //Int32[] bits = new Int32[4];
+            //for (int i = 0; i <= 15; i += 4)
+            //{
+            //    //convert every 4 bytes into an int32
+            //    bits[i / 4] = BitConverter.ToInt32(bytes, i);
+            //}
+            ////Use the decimal's new constructor to
+            ////create an instance of decimal
+            //return new decimal(bits);
+        }
+
         #endregion
 
         #region ANANYMECLASS
@@ -1343,7 +1425,6 @@ namespace hessiancsharp.io
             {
                 this.hessianInput = hessInput;
             }
-
             private CHessianInput hessianInput;
 
             public CHessianInput HessianInput
@@ -1352,22 +1433,18 @@ namespace hessiancsharp.io
                 {
                     return hessianInput;
                 }
-            }
 
+            }
             internal bool _isClosed = false;
 
             public override int ReadByte()
             {
                 if (_isClosed)
-                {
                     return -1;
-                }
 
                 int ch = HessianInput.ParseByte();
                 if (ch < 0)
-                {
                     _isClosed = true;
-                }
 
                 return ch;
             }
@@ -1375,14 +1452,10 @@ namespace hessiancsharp.io
             public override int Read(byte[] buffer, int offset, int length)
             {
                 if (_isClosed)
-                {
                     return -1;
-                }
                 int len = HessianInput.Read(buffer, offset, length);
                 if (len < 0)
-                {
                     _isClosed = true;
-                }
 
                 return len;
             }
@@ -1439,6 +1512,7 @@ namespace hessiancsharp.io
                 get { throw new CHessianException("not-implemented"); }
                 set { throw new CHessianException("not-implemented"); }
             }
+
         }
         #endregion
     }

@@ -1,21 +1,28 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
+using HessianCSharp.Utilities;
 
-namespace hessiancsharp.io
-{ 
+namespace HessianCSharp.io
+{
+    /// <summary>
+    /// Summary description for CExceptionDeserializer.
+    /// </summary>
     public class CExceptionDeserializer : CObjectDeserializer
     {
-        private IDictionary m_deserFields = new Hashtable();
+        private Hashtable m_deserFields = new Hashtable();
         private Type m_type = null;
-
-        public CExceptionDeserializer(Type type)
-            : base(type)
+        public CExceptionDeserializer(Type type) : base(type)
         {
-            ArrayList fieldList = CExceptionSerializer.GetSerializableFields();
-            foreach (FieldInfo fieldInfo in fieldList)
+            List<MemberInfo> fieldList = CExceptionSerializer.GetSerializableFields();
+            foreach (MemberInfo fieldInfo in fieldList)
             {
-                m_deserFields[fieldInfo.Name] = fieldInfo;
+                if (m_deserFields.ContainsKey(fieldInfo.Name))
+                    m_deserFields[fieldInfo.Name] = fieldInfo;
+                else
+                    m_deserFields.Add(fieldInfo.Name, fieldInfo);
+
             }
             m_type = type;
         }
@@ -35,13 +42,13 @@ namespace hessiancsharp.io
                 object objKey = abstractHessianInput.ReadObject();
                 if (objKey != null)
                 {
-                    IDictionary deserFields = GetDeserializableFields();
-                    FieldInfo field = (FieldInfo)deserFields[objKey];
+                    var deserFields = GetDeserializableFields();
+                    var field = (MemberInfo)deserFields[objKey];
                     // try to convert a Java Exception in a .NET exception
                     if (objKey.ToString() == "_message" || objKey.ToString() == "detailMessage")
                     {
                         if (field != null)
-                            _message = abstractHessianInput.ReadObject(field.FieldType) as string;
+                            _message = abstractHessianInput.ReadObject(ReflectionUtils.GetMemberUnderlyingType(field)) as string;
                         else
                             _message = abstractHessianInput.ReadObject().ToString();
                     }
@@ -50,15 +57,13 @@ namespace hessiancsharp.io
                         try
                         {
                             if (field != null)
-                            {
-                                _innerException = abstractHessianInput.ReadObject(field.FieldType) as Exception;
-                            }
+                                _innerException = abstractHessianInput.ReadObject(ReflectionUtils.GetMemberUnderlyingType(field)) as Exception;
                             else
                                 _innerException = abstractHessianInput.ReadObject(typeof(Exception)) as Exception;
                         }
-                        catch (Exception)
+                        catch (Exception e)
                         {
-                            // als Cause ist bei Java gerne mal eine zirkul?e Referenz auf die Exception selbst
+                            // als Cause ist bei Java gerne mal eine zirkuläre Referenz auf die Exception selbst
                             // angegeben. Das klappt nicht, weil die Referenz noch nicht registriert ist,
                             // weil der Typ noch nicht klar ist (s.u.)
                         }
@@ -67,7 +72,7 @@ namespace hessiancsharp.io
                     {
                         if (field != null)
                         {
-                            object objFieldValue = abstractHessianInput.ReadObject(field.FieldType);
+                            object objFieldValue = abstractHessianInput.ReadObject(ReflectionUtils.GetMemberUnderlyingType(field));
                             fieldValueMap.Add(field, objFieldValue);
                         }
                         else
@@ -76,6 +81,7 @@ namespace hessiancsharp.io
                         //field.SetValue(result, objFieldValue);
                     }
                 }
+
             }
             abstractHessianInput.ReadEnd();
 
@@ -108,6 +114,7 @@ namespace hessiancsharp.io
                     }
                 }
 #endif
+
             }
             catch (Exception)
             {
@@ -115,19 +122,14 @@ namespace hessiancsharp.io
             }
             foreach (DictionaryEntry entry in fieldValueMap)
             {
-                FieldInfo fieldInfo = (FieldInfo)entry.Key;
+                MemberInfo fieldInfo = (MemberInfo)entry.Key;
                 object value = entry.Value;
-                try
-                {
-                    fieldInfo.SetValue(result, value); 
-                }
-                catch (Exception)
-                {
-                }
+                try { ReflectionUtils.SetMemberValue(fieldInfo, result, value); } catch (Exception) { }
             }
 
-            // besser sp? als gar nicht.
+            // besser spät als gar nicht.
             int refer = abstractHessianInput.AddRef(result);
+
 
             return result;
         }

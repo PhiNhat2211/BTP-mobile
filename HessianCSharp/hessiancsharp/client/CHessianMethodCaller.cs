@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.org
+* http://www.HessianCSharp.org
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -39,23 +39,26 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 #if COMPACT_FRAMEWORK
-// do CF stuff		
+			// do CF stuff		
 #else
 using System.Web;
 using System.Web.SessionState;
 #endif
 
-using hessiancsharp.io;
 
-namespace hessiancsharp.client
+using HessianCSharp.io;
+using HessianCSharp.server;
+
+namespace HessianCSharp.client
 {
     /// <summary>
-    /// Zusammenfassung f? CHessianMethodCaller.
+    /// Zusammenfassung für CHessianMethodCaller.
     /// </summary>
     public class CHessianMethodCaller
     {
         #region Constants
         public const string CUSTOM_HEADER_KEY = "__CUSTOM_HEADERS";
+
         #endregion
 
         #region CLASS_FIELDS
@@ -63,28 +66,30 @@ namespace hessiancsharp.client
         /// Instance of the proxy factory
         /// </summary>
         private CHessianProxyFactory m_CHessianProxyFactory;
-
         /// <summary>
         /// Uri for connection to the hessian service
         /// </summary>
         private Uri m_uriHessianServiceUri;
-        private NetworkCredential m_credentials = null;
-        #endregion
 
+        private NetworkCredential m_credentials = null;
+
+        #endregion
         #region PROPERTIES
         /// <summary> 
         /// Returns the connection uri to the hessian service.
-        /// <value>Uri</value>
         /// </summary>
         public virtual Uri URI
         {
             get { return m_uriHessianServiceUri; }
-        }
-        #endregion
 
+        }
+
+
+
+        #endregion
         #region CONSTRUCTORS
         /// <summary>
-        /// Initializes a new instance of the CHessianMethodCaller class
+        /// Constructor
         /// </summary>
         /// <param name="hessianProxyFactory">HessianProxyFactory - Instance</param>
         /// <param name="uri">Server-Proxy uri</param>
@@ -92,7 +97,6 @@ namespace hessiancsharp.client
         {
             this.m_CHessianProxyFactory = hessianProxyFactory;
             this.m_uriHessianServiceUri = uri;
-            this.m_credentials = (System.Net.NetworkCredential)System.Net.CredentialCache.DefaultCredentials;
         }
 
         public CHessianMethodCaller(CHessianProxyFactory hessianProxyFactory, Uri uri, string username, string password)
@@ -101,8 +105,9 @@ namespace hessiancsharp.client
             this.m_uriHessianServiceUri = uri;
             this.m_credentials = new System.Net.NetworkCredential(username, password);
         }
-        #endregion
 
+
+        #endregion
         #region PUBLIC_METHODS
         /// <summary>
         /// This method wrapps an instance call to the hessian 
@@ -111,7 +116,7 @@ namespace hessiancsharp.client
         /// <param name="methodInfo">The method to call</param>
         /// <param name="arrMethodArgs">The arguments to the method call</param>
         /// <returns>Invocation result</returns>
-        //private WebRequest webRequest = null;
+
         public object DoHessianMethodCall(object[] arrMethodArgs, MethodInfo methodInfo)
         {
             Type[] argumentTypes = GetArgTypes(arrMethodArgs);
@@ -120,17 +125,13 @@ namespace hessiancsharp.client
 
             try
             {
-                // Http Request Start
-                //var startDatetime = DateTime.Now;
-                //System.Diagnostics.Trace.WriteLine("[VMT RMG Http Timestamp]" + startDatetime.ToString("[HH:mm:ss:fff]") + methodInfo.ReturnParameter.Member.Name + "(+)");
-
-                WebRequest webRequest = this.OpenConnection(m_uriHessianServiceUri);
-                //if( webRequest == null)
-                //    webRequest = this.OpenConnection(m_uriHessianServiceUri);
+                var methodUri = new Uri(string.Format("{0}?{1}", m_uriHessianServiceUri.ToString(), HttpUtility.UrlEncode(methodInfo.Name)), UriKind.RelativeOrAbsolute);
+                WebRequest webRequest = this.OpenConnection(methodUri);
 #if COMPACT_FRAMEWORK
 #else
                 try
                 {
+                    webRequest.Headers.Add(m_CHessianProxyFactory.Headers);
                     //webRequest.Headers
                     HttpWebRequest req = webRequest as HttpWebRequest;
                     //Preserve cookies to allow for session affinity between remote server and client
@@ -145,15 +146,15 @@ namespace hessiancsharp.client
                 }
                 catch
                 {
+
                     //   throw e;
                     //log4net.LogManager.GetLogger(GetType()).Error("Error in setting cookie on request", e);
                 }
 #endif
-                webRequest.Timeout = 10000; // default 100 sec --> 10 sec
-                if("keepalive".Equals(methodInfo.Name.ToLower()) )
-                    webRequest.Timeout = 5000;
-                webRequest.ContentType = "text/xml";
+
+                webRequest.ContentType = "application/octet-stream";
                 webRequest.Method = "POST";
+
 #if COMPACT_FRAMEWORK
 #else
                 //Add custom headers
@@ -163,7 +164,10 @@ namespace hessiancsharp.client
                 }
 #endif
                 MemoryStream memoryStream = new MemoryStream(2048);
-                CHessianOutput cHessianOutput = this.GetHessianOutput(memoryStream);
+
+                //sOutStream = webRequest.GetRequestStream();
+                //BufferedStream bs = new BufferedStream(sOutStream);
+                AbstractHessianOutput cHessianOutput = m_CHessianProxyFactory.GetHessianOutput(memoryStream);
                 string strMethodName = methodInfo.Name;
                 if (m_CHessianProxyFactory.IsOverloadEnabled)
                 {
@@ -178,29 +182,16 @@ namespace hessiancsharp.client
                 }
 
                 cHessianOutput.Call(strMethodName, arrMethodArgs);
-                
                 try
                 {
                     webRequest.ContentLength = memoryStream.ToArray().Length;
                     sOutStream = webRequest.GetRequestStream();
                     memoryStream.WriteTo(sOutStream);
-
-                    //if (false)
-                    //{
-                    //    var outString = System.Text.Encoding.UTF8.GetString(memoryStream.ToArray());
-                    //    int a = 0;
-                    //}
-                }
-                catch (WebException wE)
-                {
-                    // site : http://msdn.microsoft.com/en-us/library/system.net.webexceptionstatus(v=vs.90).aspx
-                    throw new CHessianException("Exception by sending request to the service with URI:\n" +
-                        this.URI.ToString() + "\n" + "WebException Stauts : " + wE.Status.ToString() + "\n" + wE.Message, wE);
                 }
                 catch (Exception e)
                 {
                     throw new CHessianException("Exception by sending request to the service with URI:\n" +
-                        this.URI.ToString() + "\n" + e.Message);
+                         this.URI.ToString() + "\n" + e.Message, e);
                 }
 
                 sOutStream.Flush();
@@ -215,41 +206,67 @@ namespace hessiancsharp.client
                     if (sInStream != null)
                     {
                         while ((chTemp = sInStream.ReadByte()) >= 0)
-                        {
                             sb.Append((char)chTemp);
-                        }
 
                         sInStream.Close();
                     }
                     throw new CHessianException(sb.ToString());
                 }
-
                 sInStream = webResponse.GetResponseStream();
+                //#if COMPACT_FRAMEWORK                
+                //				AbstractHessianInput hessianInput = this.GetHessianInput(sInStream);
+                //#else
+                //                System.IO.BufferedStream bStream = new BufferedStream(sInStream, 2048);
+                //                AbstractHessianInput hessianInput = this.GetHessianInput(bStream);
+                //#endif
+                //                return hessianInput.ReadReply(methodInfo.ReturnType);
 
-                sInStream.ReadTimeout = 15000;
-                sInStream.WriteTimeout = 15000;
-
-                // Http Response End
-                //var endDatetime = DateTime.Now;
-                //System.Diagnostics.Trace.WriteLine("[VMT RMG Http Timestamp]" + endDatetime.ToString("[HH:mm:ss:fff]") + methodInfo.ReturnParameter.Member.Name + "(-)");
-                //TimeSpan tSpan = endDatetime - startDatetime;
-                //System.Diagnostics.Trace.WriteLine("[VMT RMG Http Timestamp]" + "TotalMilliseconds : " + tSpan.TotalMilliseconds.ToString());
-
-#if COMPACT_FRAMEWORK                
-				AbstractHessianInput hessianInput = this.GetHessianInput(sInStream);
-#else
                 System.IO.BufferedStream bStream = new BufferedStream(sInStream, 2048);
-                AbstractHessianInput hessianInput = this.GetHessianInput(bStream);
-                       
-                //if (false)
-                //{
-                //    using (var reader = new StreamReader(bStream))
-                //    {
-                //        var readString = reader.ReadToEnd();                   
-                //    }
-                //}
-#endif
-                return hessianInput.ReadReply(methodInfo.ReturnType);
+
+                AbstractHessianInput hessianInput;
+
+                int code = bStream.ReadByte();
+
+                if (code == 'H')
+                {
+                    int major = bStream.ReadByte();
+                    int minor = bStream.ReadByte();
+
+                    hessianInput = m_CHessianProxyFactory.GetHessian2Input(bStream);
+
+                    Object value = hessianInput.ReadReply(methodInfo.ReturnType);
+
+                    return value;
+                }
+                else if (code == 'r')
+                {
+                    int major = bStream.ReadByte();
+                    int minor = bStream.ReadByte();
+
+                    hessianInput = m_CHessianProxyFactory.GetHessian1Input(bStream);
+
+                    hessianInput.StartReplyBody();
+
+                    Object value = hessianInput.ReadObject(methodInfo.ReturnType);
+
+                    //if (value instanceof InputStream) {
+                    //    value = new ResultInputStream(conn, bStream, in, (InputStream) value);
+                    //    is = null;
+                    //    conn = null;
+                    //}
+                    //else
+                    hessianInput.CompleteReply();
+
+                    return value;
+                }
+                else
+                    throw new CHessianException("'" + (char)code + "' is an unknown code");
+            }
+            catch (WebException e)
+            {
+                var httpResponse = e.Response as HttpWebResponse;
+                if (httpResponse == null) throw new CHessianException(e.Message, e);
+                throw new CHessianException(string.Format("Code:{0},Message:{1}", (int)httpResponse.StatusCode, System.Web.HttpUtility.UrlDecode(httpResponse.StatusDescription)), e);
             }
             catch (Exception e)
             {
@@ -263,8 +280,9 @@ namespace hessiancsharp.client
                 }
                 else
                 {
-                    throw new CHessianException("Exception by proxy call\n" + e.ToString() + e.Message);
+                    throw new CHessianException("Exception by proxy call\n" + e.Message, e);
                 }
+
             }
             finally
             {
@@ -278,6 +296,8 @@ namespace hessiancsharp.client
                 }
             }
         }
+
+
 
         /// <summary>
         /// Returns array with types of the instance from 
@@ -305,10 +325,10 @@ namespace hessiancsharp.client
                     result[i] = arrArgs[i].GetType();
                 }
             }
+
             return result;
         }
         #endregion
-
         #region PRIVATE_METHODS
         /// <summary>
         /// Creates the URI connection.
@@ -317,7 +337,17 @@ namespace hessiancsharp.client
         /// <returns>Request instance</returns>
         private WebRequest OpenConnection(Uri uri)
         {
-            WebRequest request = WebRequest.Create(uri);
+            Uri RequestUri = null;
+            if (m_CHessianProxyFactory.BaseAddress == null)
+                RequestUri = uri;
+            else
+                RequestUri = new Uri(m_CHessianProxyFactory.BaseAddress, uri);
+
+            WebRequest request = WebRequest.Create(RequestUri);
+
+            //³¬Ê±Ê±¼ä
+            request.Timeout = (int)m_CHessianProxyFactory.Timeout.TotalSeconds * 1000;
+
             if (this.m_credentials != null)
             {
                 request.Credentials = this.m_credentials;
@@ -335,6 +365,7 @@ namespace hessiancsharp.client
             return new CHessianInput(stream);
         }
 
+
         /// <summary>
         /// Instantiation of the hessian output (not cached)
         /// </summary>
@@ -347,7 +378,7 @@ namespace hessiancsharp.client
         }
 
 #if COMPACT_FRAMEWORK
-// do CF stuff		
+			// do CF stuff		
 #else
         private void AddCustomHeadersToRequest(WebRequest request, HttpSessionState session)
         {
@@ -361,6 +392,7 @@ namespace hessiancsharp.client
             }
         }
 #endif
+
         #endregion
     }
 }

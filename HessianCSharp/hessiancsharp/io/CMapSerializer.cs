@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -38,50 +38,50 @@ using System;
 using System.Collections;
 #endregion
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
-    /// <summary>
-    /// Serializing of Maps.
-    /// </summary>
-    public class CMapSerializer : AbstractSerializer
-    {
-        #region PUBLIC_METHODS
-        /// <summary>
-        /// Writes map in the output stream
-        /// </summary>
-        /// <param name="obj"> object to write</param>
-        /// <param name="abstractHessianOutput">Instance of the hessian output</param>
-        public override void WriteObject(object obj, AbstractHessianOutput abstractHessianOutput)
-        {
-            if (abstractHessianOutput.AddRef(obj))
-            {
-                return;
-            }
+	/// <summary>
+	/// Serializing of Maps.
+	/// </summary>
+	public class CMapSerializer: AbstractSerializer 
+	{
+		#region PUBLIC_METHODS
+		/// <summary>
+		/// Writes map in the output stream
+		/// </summary>
+		/// <param name="obj"> Object to write</param>
+		/// <param name="abstractHessianOutput">Instance of the hessian output</param>
+		public override void WriteObject(object obj, AbstractHessianOutput abstractHessianOutput)
+		{
+			if (abstractHessianOutput.AddRef(obj))
+				return;
 
-            IDictionary dictionary = (IDictionary)obj;
-            Type mapType = obj.GetType();
-            if (mapType.Equals(typeof(Hashtable)))
-            {
-                abstractHessianOutput.WriteMapBegin(null);
-            }
-            else
-            {
-                abstractHessianOutput.WriteMapBegin(mapType.Name);
-            }
+			IDictionary dictionary = (IDictionary) obj;
+			
 
-            IDictionaryEnumerator enumerator = dictionary.GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                object objKey = enumerator.Key;
+			Type mapType = obj.GetType();
+			if (mapType.Equals(typeof(Hashtable)) )
+			{
+				abstractHessianOutput.WriteMapBegin(null);
+			}
+			else 
+			{
+				abstractHessianOutput.WriteMapBegin(mapType.Name);
+			}
 
-                abstractHessianOutput.WriteObject(objKey);
+			IDictionaryEnumerator enumerator = dictionary.GetEnumerator();
+			while (enumerator.MoveNext()) 
+			{
+				object objKey = enumerator.Key;
 
-                object objValue = enumerator.Value;
+				abstractHessianOutput.WriteObject(objKey);
 
-                abstractHessianOutput.WriteObject(objValue);
-            }
-            abstractHessianOutput.WriteMapEnd();
-        }
-        #endregion
-    }
+				object objValue = enumerator.Value;
+
+				abstractHessianOutput.WriteObject(objValue);
+			}
+			abstractHessianOutput.WriteMapEnd();
+		}
+		#endregion
+	}
 }

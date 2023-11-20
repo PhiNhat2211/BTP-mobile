@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VMT_Data_JAT2</RootNamespace>
     <AssemblyName>VMT_Data</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -70,8 +72,8 @@
       <Project>{2F97EAEE-2B88-46D8-AAF8-817962512ECA}</Project>
       <Name>HessianComm</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\HessianCSharp\HessianCSharp.csproj">
-      <Project>{981C2E02-11B4-49DA-A462-48C9AC1FD095}</Project>
+    <ProjectReference Include="..\..\HessianCSharp\hessiancsharp\HessianCSharp.csproj">
+      <Project>{77feadbd-e777-44a6-8b8e-339d93fe089e}</Project>
       <Name>HessianCSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\UDPComm\UDPComm.csproj">

@@ -10,7 +10,7 @@ using VMT_Data_JAT2.Objects;
 using System.Reflection;
 using HessianComm.Objects;
 using HessianComm;
-using hessiancsharp.Class;
+using HessianCSharp.Class;
 using System.IO;
 
 namespace VMT_Data_JAT2
@@ -620,7 +620,7 @@ namespace VMT_Data_JAT2
         {
             if (UserInfo.IsUseHessian)
             {
-                hessiancsharp.Class.HessianList hessianList = new hessiancsharp.Class.HessianList();
+                HessianList hessianList = new HessianList();
 
                 hessianList.Add(RMG.RMG_User.gMchnID);
                 hessianList.Add(RMG.RMG_User.gMchnTp);
@@ -680,7 +680,7 @@ namespace VMT_Data_JAT2
         {
             if (UserInfo.IsUseHessian)
             {
-                hessiancsharp.Class.HessianList hessianList = new hessiancsharp.Class.HessianList();
+                HessianList hessianList = new HessianList();
 
                 HessianComm.Objects.JobStatusType jobStatus = new HessianComm.Objects.JobStatusType();
                 jobStatus.name = bActive ? "JOB_PROCESSING" : "JOB_INACTIVE";
@@ -700,7 +700,7 @@ namespace VMT_Data_JAT2
         {
             if (UserInfo.IsUseHessian)
             {
-                hessiancsharp.Class.HessianList hessianList = new hessiancsharp.Class.HessianList();
+                HessianList hessianList = new HessianList();
 
                 HessianComm.Objects.JobStatusType jobStatus = new HessianComm.Objects.JobStatusType();
                 jobStatus.name = bActive ? "JOB_PROCESSING" : "JOB_INACTIVE";
@@ -871,7 +871,7 @@ namespace VMT_Data_JAT2
 
         public static void SetPickedContainer_Ask(VMT_Data_JAT2.Objects.RMG.VD_RMG_HandleJobDone_Send target)
         {
-            var hessianList = new hessiancsharp.Class.HessianList();
+            var hessianList = new HessianList();
 
             hessianList.Add(UserInfo.gMchnID);
             hessianList.Add(UserInfo.gMchnTp);
@@ -884,7 +884,7 @@ namespace VMT_Data_JAT2
 
         public static void SetDetwinJob_Ask(String jobKey)
         {
-            hessiancsharp.Class.HessianList hessianList = new hessiancsharp.Class.HessianList();
+            HessianList hessianList = new HessianList();
             hessianList.Add(jobKey);
             hessianList.Add(UserInfo.gUserID);
             HessianComm.HessianAPI.SetDetwinJob(hessianList);
@@ -976,7 +976,7 @@ namespace VMT_Data_JAT2
 
         public static void SetJobReOnChassis_Ask(String jobKey, String twinJobKey = "")
         {
-            var hessianList = new hessiancsharp.Class.HessianList();
+            var hessianList = new HessianList();
             hessianList.Add(jobKey);
             hessianList.Add(twinJobKey);
             hessianList.Add(UserInfo.gUserID);
@@ -986,7 +986,7 @@ namespace VMT_Data_JAT2
         // Get Driver Job History
         public static void GetDriverJobHistory_Ask()
         {
-            var hessianList = new hessiancsharp.Class.HessianList();
+            var hessianList = new HessianList();
             String machineId = RMG.RMG_User.gMchnID;
             String userId = RMG.RMG_User.gUserID;
             hessianList.Add(machineId);
@@ -996,7 +996,7 @@ namespace VMT_Data_JAT2
 
         public static void CheckYcDeTwin(String ownItvNo, String changeItvNo)
         {
-            var hessianList = new hessiancsharp.Class.HessianList();
+            var hessianList = new HessianList();
             hessianList.Add(ownItvNo);
             hessianList.Add(changeItvNo);
             HessianComm.HessianAPI.CheckYcDeTwin(hessianList);
@@ -1004,7 +1004,7 @@ namespace VMT_Data_JAT2
 
         public static void SetBestPick(String aprchLn, String jobId)
         {
-            var hessianList = new hessiancsharp.Class.HessianList();
+            var hessianList = new HessianList();
             hessianList.Add(VMT_Data_JAT2.Objects.UserInfo.gMchnID);
             hessianList.Add(VMT_Data_JAT2.Objects.UserInfo.gMchnTp);
             hessianList.Add(aprchLn);
@@ -1015,7 +1015,7 @@ namespace VMT_Data_JAT2
 
         public static void Validate4LoadingSwapping_Ask(String cntrNo, String machineID, String chssPsn)
         {
-            var hessianList = new hessiancsharp.Class.HessianList();
+            var hessianList = new HessianList();
             hessianList.Add(cntrNo);
             hessianList.Add(machineID);
             hessianList.Add(chssPsn);
@@ -1024,7 +1024,7 @@ namespace VMT_Data_JAT2
 
         public static void InitPLCMessage_Ask()
         {
-            var hessianList = new hessiancsharp.Class.HessianList();
+            var hessianList = new HessianList();
             hessianList.Add(UserInfo.gMchnID);
             hessianList.Add(UserInfo.gUserID);
             HessianComm.HessianAPI.InitPLCMessage(hessianList);
@@ -1073,7 +1073,7 @@ namespace VMT_Data_JAT2
         }
         public static void ReleasePLCLock_Ask(String jobKey, String mnchnId, String userId, String msgSeq)
         {
-            var hessianList = new hessiancsharp.Class.HessianList();
+            var hessianList = new HessianList();
             hessianList.Add(jobKey);
             hessianList.Add(mnchnId);
             hessianList.Add(userId);
@@ -1082,7 +1082,7 @@ namespace VMT_Data_JAT2
         }
         public static void GetEmptySwappingTargetList_Ask(String cntrNo, String regoNo)
         {
-            HessianList hessianList = new hessiancsharp.Class.HessianList();
+            HessianList hessianList = new HessianList();
             hessianList.Add(UserInfo.gUserID);
             hessianList.Add(cntrNo);
             hessianList.Add(regoNo);
@@ -1099,7 +1099,7 @@ namespace VMT_Data_JAT2
         }
         public static void DoEmptySwap_Ask(RTG.EmptySwapListSend emptySwapListSend)
         {
-            var hessianList = new hessiancsharp.Class.HessianList();
+            var hessianList = new HessianList();
             hessianList.Add(UserInfo.gUserID); //userId
             hessianList.Add(emptySwapListSend.orgCntrNo); //orgCntrNo
             hessianList.Add(emptySwapListSend.newCntrNo); //newCntrNo

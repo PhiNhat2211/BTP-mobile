@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -36,41 +36,51 @@
 #region NAMESPACES
 using System;
 using System.Collections;
+using System.Data;
+using System.Reflection;
 #endregion
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
-    /// Serializing of the Lists.
+    /// Serializing an object for known object types.
+    /// Analog to the JavaSerializer - Class from 
+    /// the Hessian implementation
     /// </summary>
-    public class CCollectionSerializer : AbstractSerializer
+    public class CDataTableSerializer : AbstractSerializer
     {
         #region PUBLIC_METHODS
+
         /// <summary>
-        /// Writes list objects (That extends from ICollection-Interfaces)
+        /// Serialiaztion of objects
         /// </summary>
-        /// <param name="objList">List object</param>
+        /// <param name="obj">Object to serialize</param>
         /// <param name="abstractHessianOutput">HessianOutput - Instance</param>
-        public override void WriteObject(object objList, AbstractHessianOutput abstractHessianOutput)
+        public override void WriteObject(object obj, AbstractHessianOutput abstractHessianOutput)
         {
-            if (abstractHessianOutput.AddRef(objList))
+            if (abstractHessianOutput.AddRef(obj))
                 return;
-
-            // TODO auch generische Listen schreiben
-
-            ICollection collection = (ICollection)objList;
-            Type type = objList.GetType();
-            if (type.Equals(typeof(ArrayList)))
-                abstractHessianOutput.WriteListBegin(collection.Count, null);
-            else
-                abstractHessianOutput.WriteListBegin(collection.Count, objList.GetType().FullName);
-            IEnumerator enumerator = collection.GetEnumerator();
-            while (enumerator.MoveNext())
+            var dt = obj as DataTable;
+            abstractHessianOutput.WriteMapBegin(obj.GetType().FullName);
+            abstractHessianOutput.WriteString(dt.TableName);
+            foreach (DataColumn column in dt.Columns)
             {
-                object value = enumerator.Current;
-                abstractHessianOutput.WriteObject(value);
+                abstractHessianOutput.WriteString(column.ColumnName);
+                abstractHessianOutput.WriteString(column.DataType.FullName);
             }
-            abstractHessianOutput.WriteListEnd();
+            abstractHessianOutput.WriteMapEnd();
+
+            abstractHessianOutput.WriteMapBegin(null);
+            foreach (DataRow dr in dt.Rows)
+            {
+                abstractHessianOutput.WriteMapBegin(null);
+                foreach (object value in dr.ItemArray)
+                {
+                    abstractHessianOutput.WriteObject(value);
+                }
+                abstractHessianOutput.WriteMapEnd();
+            }
+            abstractHessianOutput.WriteMapEnd();
         }
         #endregion
     }

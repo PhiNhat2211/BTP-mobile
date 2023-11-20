@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -38,7 +38,7 @@ using System;
 using System.Collections;
 #endregion
 
-namespace hessiancsharp.io
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Deserializing of arrays
@@ -50,32 +50,50 @@ namespace hessiancsharp.io
         /// Type of the array objects
         /// </summary>
         private Type m_componentType;
+
+        private Type m_type;
+
         #endregion
+
         #region PROPERTIES
         /// <summary>
         /// Type property
-        /// <value>Type</value>
         /// </summary>
         public Type Type
         {
             get
             {
-                return typeof(Object[]);
+                return m_type;
             }
         }
         #endregion
 
         #region CONSTRUCTORS
         /// <summary>
-        /// Initializes a new instance of the CArrayDeserializer class
+        /// Constructor.
         /// </summary>
         /// <param name="componentABSTRACTDeserializer">Deserializer for the instances in the array</param>
         public CArrayDeserializer(AbstractDeserializer componentABSTRACTDeserializer)
         {
             if (componentABSTRACTDeserializer != null)
                 m_componentType = componentABSTRACTDeserializer.GetOwnType();
+
+            if (m_componentType != null)
+            {
+                try
+                {
+                    m_type = m_componentType.MakeArrayType();
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            if (m_type == null)
+                m_type = typeof(object[]);
         }
         #endregion
+
         #region PUBLIC_METHODS
         /// <summary>
         /// Returns the type of the reader
@@ -92,23 +110,23 @@ namespace hessiancsharp.io
         /// <param name="abstractHessianInput">HessianInput</param>
         /// <param name="intLength">Length of data</param>
         /// <returns>Array data</returns>
-        public override object ReadList(AbstractHessianInput abstractHessianInput, int intLength)
+        public override Object ReadList(AbstractHessianInput abstractHessianInput, int intLength)
         {
             if (intLength >= 0)
             {
-                Object[] arrResult = createArray(intLength);
+                Array arrResult = createArray(intLength);
 
                 abstractHessianInput.AddRef(arrResult);
 
                 if (m_componentType != null)
                 {
                     for (int i = 0; i < arrResult.Length; i++)
-                        arrResult[i] = abstractHessianInput.ReadObject(m_componentType);
+                        arrResult.SetValue(abstractHessianInput.ReadObject(m_componentType), i); //arrResult[i] = abstractHessianInput.ReadObject(m_componentType);
                 }
                 else
                 {
                     for (int i = 0; i < arrResult.Length; i++)
-                        arrResult[i] = abstractHessianInput.ReadObject();
+                        arrResult.SetValue(abstractHessianInput.ReadObject(), i); //arrResult[i] = abstractHessianInput.ReadObject();
                 }
 
                 abstractHessianInput.ReadListEnd();
@@ -121,32 +139,51 @@ namespace hessiancsharp.io
                 if (m_componentType != null)
                 {
                     while (!abstractHessianInput.IsEnd())
-                    {
                         colList.Add(abstractHessianInput.ReadObject(m_componentType));
-                    }
                 }
                 else
                 {
                     while (!abstractHessianInput.IsEnd())
-                    {
                         colList.Add(abstractHessianInput.ReadObject());
-                    }
                 }
 
                 abstractHessianInput.ReadListEnd();
 
-                Object[] arrResult = createArray(colList.Count);
+                Array arrResult = createArray(colList.Count);
                 for (int i = 0; i < arrResult.Length; i++)
-                    arrResult[i] = colList[i];
+                    arrResult.SetValue(colList[i], i); //arrResult[i] = colList[i];
                 return arrResult;
             }
+        }
+
+        /// <summary>
+        /// Reads the array
+        /// </summary>
+        public override Object ReadLengthList(AbstractHessianInput abstractHessianInput, int length)
+        {
+            Array data = createArray(length);
+
+            abstractHessianInput.AddRef(data);
+
+            if (m_componentType != null)
+            {
+                for (int i = 0; i < data.Length; i++)
+                    data.SetValue(abstractHessianInput.ReadObject(m_componentType), i); //data[i] = abstractHessianInput.ReadObject(m_componentType);
+            }
+            else
+            {
+                for (int i = 0; i < data.Length; i++)
+                    data.SetValue(abstractHessianInput.ReadObject(), i); //data[i] = abstractHessianInput.ReadObject();
+            }
+
+            return data;
         }
 
         /// <summary>
         /// Overriden toString - Method
         /// </summary>
         /// <returns>String description of the used Instances</returns>
-        public override string ToString()
+        public override String ToString()
         {
             return "ArrayDeserializer[" + m_componentType + "]";
         }
@@ -155,31 +192,33 @@ namespace hessiancsharp.io
         /// Reads object
         /// </summary>
         /// <param name="abstractHessianInput">Instance of AbstractHessianInput</param>
-        /// <returns>object that was read</returns>
+        /// <returns>Object that was read</returns>
         public override object ReadObject(AbstractHessianInput abstractHessianInput)
         {
             int intCode = abstractHessianInput.ReadListStart();
             switch (intCode)
             {
-                case CHessianInput.PROT_NULL:
+                case CHessianProtocolConstants.PROT_NULL:
                     return null;
-                case CHessianInput.PROT_REF_TYPE:
+                case CHessianProtocolConstants.PROT_REF_TYPE:
                     return abstractHessianInput.ReadRef();
             }
             int intLength = abstractHessianInput.ReadLength();
             return ReadList(abstractHessianInput, intLength);
         }
+
         #endregion
         #region PROTECTED_METHODS
+
         /// <summary>
         /// Creates new array with given length
         /// </summary>
         /// <param name="intLength">Length of the array</param>
         /// <returns>Array-Instance</returns>
-        protected internal virtual Object[] createArray(int intLength)
+        protected internal virtual Array createArray(int intLength)
         {
             if (m_componentType != null)
-                return (Object[])Array.CreateInstance(m_componentType, intLength);
+                return Array.CreateInstance(m_componentType, intLength);
             else
                 return new Object[intLength];
         }

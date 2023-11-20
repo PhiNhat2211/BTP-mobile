@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.org
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,38 +22,58 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.org
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
 ******************************************************************************************************
-* Last change: 2005-12-25
-* 2005-12-26 initial class definition by Dimitri Minich.
-* ....
+* Last change: 2005-08-14
+* By Andre Voltmann	
+* Licence added.
 ******************************************************************************************************
 */
 
 #region NAMESPACES
 using System;
+using System.Collections;
 #endregion
 
-namespace burlapcsharp.io
+namespace HessianCSharp.io
 {
-    public class CBurlapException : Exception
+    /// <summary>
+    /// Serializing of the Lists.
+    /// </summary>
+    public class CEnumerableSerializer : AbstractSerializer
     {
-        #region CONSTRUCTORS
+        #region PUBLIC_METHODS
         /// <summary>
-        /// Initializes a new instance of the CBurlapException class
+        /// Writes list objects (That extends from ICollection-Interfaces)
         /// </summary>
-        /// <param name="strMessage">Exception-Message</param>
-        public CBurlapException(string strMessage)
-            : base(strMessage)
+        /// <param name="objList">List object</param>
+        /// <param name="abstractHessianOutput">HessianOutput - Instance</param>
+        public override void WriteObject(object objList, AbstractHessianOutput abstractHessianOutput)
         {
-        }
+            if (abstractHessianOutput.AddRef(objList))
+                return;
 
-        public CBurlapException(string strMessage, Exception e)
-            : base(strMessage, e)
-        {
+            // TODO auch generische Listen schreiben
+            IEnumerable collection = (IEnumerable)objList;
+            bool hasEnd;
+            if (objList is ArrayList)
+                hasEnd = abstractHessianOutput.WriteListBegin(((ICollection)objList).Count, objList.GetType().FullName);
+            else if (objList is ICollection)
+                hasEnd = abstractHessianOutput.WriteListBegin(((ICollection)objList).Count, objList.GetType().FullName);
+            else
+                hasEnd = abstractHessianOutput.WriteListBegin(-1, null);
+
+            IEnumerator enumerator = collection.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                Object value = enumerator.Current;
+                abstractHessianOutput.WriteObject(value);
+            }
+            if (hasEnd)
+                abstractHessianOutput.WriteListEnd();
         }
         #endregion
     }

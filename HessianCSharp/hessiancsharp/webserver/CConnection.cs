@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.com
+* http://www.HessianCSharp.com
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.com	
+* You can find all contact information on http://www.HessianCSharp.com	
 ******************************************************************************************************
 *
 *
@@ -38,11 +38,10 @@ using System;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
-using hessiancsharp.io;
-using hessiancsharp.server;
+using HessianCSharp.io;
+using HessianCSharp.server;
 #endregion
-
-namespace hessiancsharp.webserver
+namespace HessianCSharp.webserver
 {
     /// <summary>
     /// This class handles socketconnections request and respons.
@@ -50,32 +49,27 @@ namespace hessiancsharp.webserver
     public class CConnection
     {
         #region CLASS_FIELDS
-        private const string serverID = "HessianServer V0.1";
         private Socket m_socket = null;
-        private Type m_apiType = null;
-        private object m_Service;
         private Stream m_stream;
-        private string m_serviceUrl;        
+        private const string serverID = "HessianServer V0.1";
         private static byte[] OK = StrToByteArray(" 200 OK\r\n");
         //For reading Headerlines
         private byte[] m_buffer;
         #endregion
 
+
+
         #region CONSTRUCTORS
         /// <summary>
-        /// Initializes a new instance of the CConnection class. 
-        /// Creates a web server at the specified port number for the specified Service.
+        /// Constructor. Creates a web server at the specified port number for the specified Service.
         /// </summary>
         /// <param name="socket_">The socket for client and server</param>
         /// <param name="serviceUrl_">The serviceUrl "/test/myservice.hessian"</param>
         /// <param name="type_">The Type of Serviceobject</param>
         /// <param name="service_">Servicobject</param>	
-        public CConnection(Socket socket_, string serviceUrl_, Type type_, object service_)
+        public CConnection(Socket socket_)
         {
-            m_serviceUrl = serviceUrl_;
             m_socket = socket_;
-            m_apiType = type_;
-            m_Service = service_;
         }
         #endregion
 
@@ -89,35 +83,43 @@ namespace hessiancsharp.webserver
             //Get references to sockets input & output streams			
             m_stream = new NetworkStream(m_socket, FileAccess.ReadWrite, true);
             MemoryStream memoryStream = new MemoryStream();
+            //BufferedStream bs = new BufferedStream(m_stream);
+
+            var serviceUrl = string.Empty;
             //Reads the Header of HTTP Message
             try
             {
-                ReadHeaders();
+                serviceUrl = ReadHeaders();
             }
-            catch (NotSupportedException)
+            catch (NotSupportedException e)
             {
                 SendError(500, "Close");
+                m_socket.Shutdown(SocketShutdown.Both);
                 m_socket.Close();
                 m_stream.Close();
                 return;
             }
-
             AbstractHessianInput inHessian = new CHessianInput(m_stream);
             AbstractHessianOutput tempOutHessian = new CHessianOutput(memoryStream);
-            // Proxy object			
+
+            /// Proxy object			
             CHessianSkeleton objectSkeleton = null;
             try
             {
-                objectSkeleton = new CHessianSkeleton(m_apiType, m_Service);
+                var m_Service = ServiceFactory.SelectService(serviceUrl);
+                if (m_Service == null) throw new NotSupportedException("This ServiceUrl is not supported");
+                objectSkeleton = new CHessianSkeleton(m_Service.GetType(), m_Service);
+                //SendOk(bs, 0);
                 objectSkeleton.invoke(inHessian, tempOutHessian);
                 WriteResponse(memoryStream.ToArray());
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                SendError(500, "Close");
+                SendError(500, e.GetBaseException().Message);
             }
             finally
             {
+                m_socket.Shutdown(SocketShutdown.Both);
                 m_socket.Close();
                 m_stream.Close();
             }
@@ -153,25 +155,25 @@ namespace hessiancsharp.webserver
             SendString(string.Format("Date:{0}\r\n", DateTime.Now));
             SendString(string.Format("Server:{0}\r\n", serverID));
             SendString("Content-Type: text/html; charset=utf-8\r\n");
-            SendString("Connection: close\r\n");
+            SendString("Connection: close\r\n\r\n");
         }
 
         /// <summary>
         /// It puts all lines for ok-Header in m_stream
         /// </summary>
-        protected void SendOk(Stream ns_, int intLength)
+        protected void SendOk(Stream ns_, int intLength = 0)
         {
             SendString("HTTP/1.1 200 OK\r\n");
             SendString(string.Format("Date:{0}\r\n", DateTime.Now));
             SendString(string.Format("Server:{0}\r\n", serverID));
-            SendString(string.Format("Content-Length: {0}\r\n", intLength));
+            if (intLength != 0) SendString(string.Format("Content-Length: {0}\r\n", intLength));
             SendString("Content-Type: text/xml\r\n\r\n");
         }
 
         /// <summary>
         /// It puts the string in m_stream
         /// </summary>
-        protected virtual void SendString(string msg_)
+        protected virtual void SendString(String msg_)
         {
             byte[] buff;
             buff = Encoding.ASCII.GetBytes(msg_);
@@ -190,41 +192,46 @@ namespace hessiancsharp.webserver
         /// <summary>
         /// The whole header will be read here
         /// </summary>
-        private void ReadHeaders()
+        private string ReadHeaders()
         {
-            string line = null;
+            String line = null;
+            string serviceUrl = null;
             do
             {
                 line = ReadHeaderLine();
 
                 if (line != null)
                 {
-                    string lineLower = line.ToLower();
+                    String lineLower = line.ToLower();
                     if (lineLower.StartsWith("post"))
                     {
                         string command = CommandArg(lineLower);
-                        string serviceUrl = GetServiceUrl(command);
-                        //Check the URL, it should be the same url like serviceUrl
-                        if (!CheckServiceUrl(m_serviceUrl, serviceUrl))
-                        {
-                            throw new NotSupportedException("This ServiceUrl is not supported");
-                        }
+                        serviceUrl = GetServiceUrl(command);
+                        ////Check the URL, it should be the same url like serviceUrl
+                        ////if (!CheckServiceUrl(m_serviceUrl, serviceUrl))
+                        ////{
+                        ////    throw new NotSupportedException("This ServiceUrl is not supported");
+                        ////}
+
                     }
                     /*
-                    if (lineLower.StartsWith("content-length:"))
-                    {
+               if (lineLower.StartsWith("content-length:"))
+               {
                        
-                    }
-                    if (lineLower.StartsWith("connection:"))
-                    {
+               }
+               if (lineLower.StartsWith("connection:"))
+               {
                        
-                    }
-                    if (lineLower.StartsWith("authorization: basic "))
-                    {
+               }
+               if (lineLower.StartsWith("authorization: basic "))
+               {
                       
-                    }*/
+               }*/
+
                 }
+
             } while (line != null && line.Length != 0);
+            return serviceUrl;
         }
 
         /// <summary>
@@ -256,7 +263,6 @@ namespace hessiancsharp.webserver
             {
                 idx++;
             }
-
             if (idx >= command.Length)
             {
                 return string.Empty;
@@ -267,7 +273,6 @@ namespace hessiancsharp.webserver
             {
                 idx++;
             }
-
             if (idx >= command.Length)
             {
                 return string.Empty;
@@ -302,13 +307,12 @@ namespace hessiancsharp.webserver
         /// <summary>
         /// Reads a line of Header
         /// </summary>
-        private string ReadHeaderLine()
+        private String ReadHeaderLine()
         {
             if (m_buffer == null)
             {
                 m_buffer = new byte[2048];
             }
-
             int next;
             int count = 0;
             for (; ; )
@@ -327,8 +331,10 @@ namespace hessiancsharp.webserver
                     throw new IOException("HTTP Header too long");
                 }
             }
-
             return Encoding.UTF8.GetString(m_buffer, 0, count);
+
         }
+
+
     }
 }

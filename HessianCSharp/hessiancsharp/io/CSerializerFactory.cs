@@ -2,7 +2,7 @@
 ***************************************************************************************************** 
 * HessianCharp - The .Net implementation of the Hessian Binary Web Service Protocol (www.caucho.com) 
 * Copyright (C) 2004-2005  by D. Minich, V. Byelyenkiy, A. Voltmann
-* http://www.hessiancsharp.org
+* http://www.HessianCSharp.org
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 * http://www.gnu.org/licenses/lgpl.html
 * or in the license.txt file in your source directory.
 ******************************************************************************************************  
-* You can find all contact information on http://www.hessiancsharp.org
+* You can find all contact information on http://www.HessianCSharp.org
 ******************************************************************************************************
 *
 *
@@ -41,10 +41,10 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Reflection;
-using hessiancsharp.Class;
-#endregion
+using System.Runtime.Serialization;
 
-namespace hessiancsharp.io
+#endregion
+namespace HessianCSharp.io
 {
     /// <summary>
     /// Factory for helper-classes for Serialiazation and Deserialization
@@ -77,6 +77,19 @@ namespace hessiancsharp.io
         /// Cache for deserializer
         /// </summary>
         private static Hashtable m_htCachedDeserializerMap = null;
+
+        /// <summary>
+        /// serializerLock
+        /// </summary>
+        private static object serializerLock = new object();
+
+        /// <summary>
+        /// derializerLock
+        /// </summary>
+        private static object deserializerLock = new object();
+
+        private IDeserializer _hashMapDeserializer;
+        private IDeserializer _arrayListDeserializer;
         #endregion
 
 #if COMPACT_FRAMEWORK
@@ -85,15 +98,21 @@ namespace hessiancsharp.io
 		/// </summary>
 		private IList m_assamblyFiles = null; 		
 #endif
+
+
+
         #region STATIC_CONSTRUCTORS
         /// <summary>
         /// Static initalization
         /// </summary>
         static CSerializerFactory()
         {
+
+
             m_htDeserializerMap = new Hashtable();
             m_htSerializerMap = new Hashtable();
             m_htTypeMap = new Hashtable();
+
             addBasic(typeof(char), "char", CSerializationConstants.CHARACTER);
             addBasic(typeof(byte), "byte", CSerializationConstants.BYTE);
             addBasic(typeof(sbyte), "sbyte", CSerializationConstants.SBYTE);
@@ -104,6 +123,7 @@ namespace hessiancsharp.io
             addBasic(typeof(long), "long", CSerializationConstants.LONG);
             addBasic(typeof(float), "float", CSerializationConstants.FLOAT);
             addBasic(typeof(bool), "bool", CSerializationConstants.BOOLEAN);
+
             addBasic(typeof(bool[]), "[bool", CSerializationConstants.BOOLEAN_ARRAY);
             addBasic(typeof(byte[]), "[byte", CSerializationConstants.BYTE_ARRAY);
             addBasic(typeof(short[]), "[short", CSerializationConstants.SHORT_ARRAY);
@@ -115,16 +135,41 @@ namespace hessiancsharp.io
             addBasic(typeof(string[]), "[string", CSerializationConstants.STRING_ARRAY);
             addBasic(typeof(sbyte[]), "[sbyte", CSerializationConstants.SBYTE_ARRAY);
             addBasic(typeof(DateTime), "date", CSerializationConstants.DATE);
-            // addBasic(typeof(Object[]), "[object", CSerializationConstants.OBJECT_ARRAY);
+
+
+            //addBasic(typeof(Object[]), "[object", BasicSerializer.OBJECT_ARRAY);
             m_htCachedDeserializerMap = new Hashtable();
             m_htCachedSerializerMap = new Hashtable();
-            m_htSerializerMap.Add(typeof(System.Decimal), new CStringValueSerializer());
-            m_htDeserializerMap.Add(typeof(System.Decimal), new CDecimalDeserializer());
+            //m_htSerializerMap.Add(typeof(System.Decimal), new CStringValueSerializer());
+
+            //m_htDeserializerMap.Add(typeof(System.Decimal), new CDecimalDeserializer());
+
             m_htSerializerMap.Add(typeof(System.IO.FileInfo), new CStringValueSerializer());
-            m_htDeserializerMap.Add(typeof(System.IO.FileInfo), new CStringValueDeserializer(typeof(System.IO.FileInfo)));
+            m_htDeserializerMap.Add(typeof(System.IO.FileInfo),
+                new CStringValueDeserializer(typeof(System.IO.FileInfo)));
+
+            m_htSerializerMap.Add(typeof(System.Data.DataTable), new CDataTableSerializer());
+            m_htDeserializerMap.Add(typeof(System.Data.DataTable), new CDataTableDeserializer());
+
+            m_htSerializerMap.Add(typeof(System.Data.DataSet), new CDataSetSerializer());
+            m_htDeserializerMap.Add(typeof(System.Data.DataSet), new CDataSetDeserializer());
+
             //m_htSerializerMap.Add(typeof (System.DateTime), new CDateSerializer());
             //m_htDeserializerMap.Add(typeof (System.DateTime), new CDateDeserializer());
+
+            m_htSerializerMap.Add(typeof(decimal), new CDecimalSerializer());
+            m_htTypeMap.Add(CDecimalSerializer.PROT_DECIMAL_TYPE, new CDecimalDeserializer());
+
+            m_htSerializerMap.Add(typeof(DBNull), new CDBNullSerializer());
+            m_htTypeMap.Add(CDBNullSerializer.PROT_DBNULL_TYPE, new CDBNullDeserializer());
+
+            m_htSerializerMap.Add(typeof(Guid), new CGUIDSerializer());
+            m_htTypeMap.Add(CGUIDSerializer.PROT_GUID_TYPE, new CGUIDDeserializer());
+
+            m_htSerializerMap.Add(typeof(System.Globalization.CultureInfo), new CCultureInfoSerializer());
+            m_htTypeMap.Add(CCultureInfoSerializer.PROT_LOCALE_TYPE, new CCultureInfoDeserializer());
         }
+
         #endregion
 
         #region PRIVATE_METHODS
@@ -141,6 +186,7 @@ namespace hessiancsharp.io
             m_htDeserializerMap.Add(type, abstractDeserializer);
             m_htTypeMap.Add(strTypeName, abstractDeserializer);
         }
+
         #endregion
 
         #region PUBLIC_METHODS
@@ -156,17 +202,13 @@ namespace hessiancsharp.io
             {
                 // TODO: Serialisieren von Nullbaren Typen und generischen
                 // Listen
-                //if (typeof(HessianStringList<string>).IsAssignableFrom(type))
-                //{
-                //    abstractSerializer = new CArraySerializer();
-                //}
                 if (typeof(IDictionary).IsAssignableFrom(type))
                 {
                     abstractSerializer = new CMapSerializer();
                 }
-                else if (typeof(IList).IsAssignableFrom(type))
+                else if (typeof(IEnumerable).IsAssignableFrom(type))
                 {
-                    abstractSerializer = new CCollectionSerializer();
+                    abstractSerializer = new CEnumerableSerializer();
                 }
                 else if (typeof(Stream).IsAssignableFrom(type))
                 {
@@ -180,17 +222,40 @@ namespace hessiancsharp.io
                 {
                     abstractSerializer = new CArraySerializer();
                 }
+                else if (type.IsEnum)
+                {
+                    abstractSerializer = new CEnumSerializer();
+                }
+                else if (typeof(ISerializable).IsAssignableFrom(type))
+                {
+                    abstractSerializer = new CISerializableSerializer();
+                }
                 else
                 {
-                    if (m_htCachedSerializerMap[type.FullName] != null)
+
+                    if (m_htCachedSerializerMap.ContainsKey(type.FullName))
                     {
                         abstractSerializer = (AbstractSerializer)m_htCachedSerializerMap[type.FullName];
                     }
                     else
                     {
-                        abstractSerializer = new CObjectSerializer(type);
-                        m_htCachedSerializerMap.Add(type.FullName, abstractSerializer);
+                        //加锁防止多线程同时添加同一类型
+                        lock (serializerLock)
+                        {
+                            //可能有一个线程已经添加，这里再判断一次
+                            abstractSerializer = (AbstractSerializer)m_htCachedSerializerMap[type.FullName];
+                            if (abstractSerializer != null)
+                                return abstractSerializer;
+                            else
+                            {
+                                abstractSerializer = new CObjectSerializer(type);
+                                m_htCachedSerializerMap.Add(type.FullName, abstractSerializer);
+                                //abstractSerializer = new CJsonSerializer();
+                                //m_htCachedSerializerMap.Add(type.FullName, abstractSerializer);
+                            }
+                        }
                     }
+
                 }
             }
             return abstractSerializer;
@@ -220,15 +285,23 @@ namespace hessiancsharp.io
                 {
                     abstractDeserializer = new CArrayDeserializer(GetDeserializer(type.GetElementType()));
                 }
+                else if (type.IsEnum)
+                {
+                    abstractDeserializer = new CEnumDeserializer(type);
+                }
                 else if (typeof(IList).IsAssignableFrom(type) ||
                     (type.IsGenericType &&
-                    typeof(System.Collections.Generic.List<>).IsAssignableFrom(type.GetGenericTypeDefinition())))
+                    typeof(System.Collections.Generic.IEnumerable<>).IsAssignableFrom(type.GetGenericTypeDefinition())))
                 {
-                    abstractDeserializer = new CCollectionDeserializer(type);
+                    abstractDeserializer = new CEnumerableDeserializer(type);
                 }
                 else if (typeof(Exception).IsAssignableFrom(type))
                 {
                     abstractDeserializer = new CExceptionDeserializer(type);
+                }
+                else if (typeof(ISerializable).IsAssignableFrom(type))
+                {
+                    abstractDeserializer = new CISerializableDeserializer(type);
                 }
                 else
                 {
@@ -238,12 +311,25 @@ namespace hessiancsharp.io
                     }
                     else
                     {
-                        abstractDeserializer = new CObjectDeserializer(type);
-                        m_htCachedDeserializerMap.Add(type.FullName, abstractDeserializer);
+                        //加锁防止多线程同时添加同一类型
+                        lock (deserializerLock)
+                        {
+                            //可能有一个线程已经添加，这里再判断一次
+                            abstractDeserializer = (AbstractDeserializer)m_htCachedDeserializerMap[type.FullName];
+                            if (abstractDeserializer != null)
+                                return abstractDeserializer;
+                            else
+                            {
+                                abstractDeserializer = new CObjectDeserializer(type);
+                                m_htCachedDeserializerMap.Add(type.FullName, abstractDeserializer);
+                            }
+                        }
+
                     }
                 }
             }
             return abstractDeserializer;
+
         }
 
         /// <summary>
@@ -254,9 +340,7 @@ namespace hessiancsharp.io
         public AbstractDeserializer GetDeserializer(string strType)
         {
             if (strType == null || strType.Equals(""))
-            {
                 return null;
-            }
 
             AbstractDeserializer abstractDeserializer = null;
 
@@ -291,6 +375,7 @@ namespace hessiancsharp.io
 					}
 				}
 #else
+
                 // do other stuff
                 try
                 {
@@ -307,14 +392,14 @@ namespace hessiancsharp.io
                         }
                     }
                     if (t != null)
-                    {
                         abstractDeserializer = GetDeserializer(t);
-                    }
+
                 }
                 catch (Exception)
                 {
                 }
 #endif
+
             }
 
             /* TODO: Implementieren Type.GetType(type) geht nicht, man muss die Assembly eingeben.
@@ -323,8 +408,71 @@ namespace hessiancsharp.io
             return abstractDeserializer;
         }
 
+        /// <summary>
+        /// Reads the object as a map.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="expectedType"></param>
+        /// <returns></returns>
+        public IDeserializer GetObjectDeserializer(String type, Type expectedType)
+        {
+            IDeserializer reader = GetObjectDeserializer(type);
+
+            if (expectedType == null
+            || expectedType == reader.GetOwnType()
+            || expectedType.IsAssignableFrom(reader.GetOwnType())
+            || reader.IsReadResolve()
+            || typeof(IHessianHandle).IsAssignableFrom(reader.GetOwnType()))
+            {
+                return reader;
+            }
+
+            return GetDeserializer(expectedType);
+        }
+
+        /// <summary>
+        /// Reads the object as a map.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="expectedType"></param>
+        /// <returns></returns>
+        public IDeserializer GetListDeserializer(String type, Type expectedType)
+        {
+            IDeserializer reader = GetListDeserializer(type);
+
+            if (expectedType == null
+            || expectedType.Equals(reader.GetOwnType())
+            || expectedType.IsAssignableFrom(reader.GetOwnType()))
+            {
+                return reader;
+            }
+
+            return GetDeserializer(expectedType);
+        }
+
+        /// <summary>
+        /// Reads the object as a map.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public IDeserializer GetListDeserializer(String type)
+        {
+            IDeserializer deserializer = GetDeserializer(type);
+
+            if (deserializer != null)
+                return deserializer;
+            else if (_arrayListDeserializer != null)
+                return _arrayListDeserializer;
+            else
+            {
+                _arrayListDeserializer = new CEnumerableDeserializer(typeof(ArrayList));
+
+                return _arrayListDeserializer;
+            }
+        }
+
 #if COMPACT_FRAMEWORK
-        // do CF stuff
+				// do CF stuff
 		/// <summary>
 		/// Returns a List of files in current directory with extension ".exe" and ".dll".
 		/// </summary>		
@@ -340,6 +488,7 @@ namespace hessiancsharp.io
 				//Create A new Instance from DirectoryInfo, to Get information
 				//About The current directory strDirectory
 				DirectoryInfo CurDir = new  DirectoryInfo(currentDirectory);
+            
 
 				//Array Holds Files and thier information
 				FileInfo[] FilesArray;            
@@ -359,12 +508,15 @@ namespace hessiancsharp.io
 
 					if(curfileInfo.Extension == ".exe")
 					{
-						string name = curfileInfo.Name.Substring(0,curfileInfo.Name.IndexOf(".exe"));						
+						string name = curfileInfo.Name.Substring(0,curfileInfo.Name.IndexOf(".exe"));
+						
 						result.Add(name);
+						//
 					}
 					else if(curfileInfo.Extension == ".dll")
 					{
-						string name = curfileInfo.Name.Substring(0,curfileInfo.Name.IndexOf(".dll"));						
+						string name = curfileInfo.Name.Substring(0,curfileInfo.Name.IndexOf(".dll"));
+						
 						result.Add(name);
 					}					
 				}				
@@ -376,14 +528,17 @@ namespace hessiancsharp.io
 			}
 			return result;
 		}
+
 #endif
+
+
         /// <summary>
         /// Reads the object as a map. (Hashtable)
         /// </summary>
         /// <param name="abstractHessianInput">HessianInput instance to read from</param>
         /// <param name="strType">Type of the map (can be null)</param>
-        /// <returns>object read from stream</returns>
-        public object ReadMap(AbstractHessianInput abstractHessianInput, string strType)
+        /// <returns>Object read from stream</returns>
+        public Object ReadMap(AbstractHessianInput abstractHessianInput, string strType)
         {
             AbstractDeserializer abstractDeserializer = GetDeserializer(strType);
 
@@ -397,18 +552,21 @@ namespace hessiancsharp.io
         /// <summary>
         /// Returns the Deserializer - instance that reads object as a map
         /// </summary>
-        /// <param name="strType">object - Type</param>
+        /// <param name="strType">Object - Type</param>
         /// <returns>Deserializer object</returns>
-        public AbstractDeserializer GetObjectDeserializer(string strType)
+        public IDeserializer GetObjectDeserializer(string strType)
         {
-            AbstractDeserializer abstractDeserializer = GetDeserializer(strType);
-            if (abstractDeserializer != null)
-            {
-                return abstractDeserializer;
-            }
+            IDeserializer deserializer = GetDeserializer(strType);
+
+            if (deserializer != null)
+                return deserializer;
+            else if (_hashMapDeserializer != null)
+                return _hashMapDeserializer;
             else
             {
-                return new CMapDeserializer(typeof(Hashtable));
+                _hashMapDeserializer = new CMapDeserializer(typeof(Hashtable));
+
+                return _hashMapDeserializer;
             }
         }
 
@@ -419,18 +577,34 @@ namespace hessiancsharp.io
         /// <param name="intLength">Length of data</param>
         /// <param name="strType">Type of the array objects</param>
         /// <returns>Array data</returns>
-        public object ReadList(AbstractHessianInput abstractHessianInput, int intLength, string strType)
+        public Object ReadList(AbstractHessianInput abstractHessianInput, int intLength, string strType)
         {
             AbstractDeserializer abstractDeserializer = GetDeserializer(strType);
 
             if (abstractDeserializer != null)
-            {
                 return abstractDeserializer.ReadList(abstractHessianInput, intLength);
-            }
             else
-                return new CCollectionDeserializer(typeof(ArrayList)).ReadList(
+                return new CEnumerableDeserializer(typeof(ArrayList)).ReadList(
                     abstractHessianInput,
                     intLength);
+        }
+
+        /**
+ * Returns the serializer for a class.
+ *
+ * @param cl the class of the object that needs to be serialized.
+ *
+ * @return a serializer object for the serialization.
+ */
+        public ISerializer GetObjectSerializer(Type expectedType)
+        {
+            ISerializer serializer = GetSerializer(expectedType);
+            return serializer;
+        }
+
+        public static CSerializerFactory CreateDefault()
+        {
+            return new CSerializerFactory();
         }
         #endregion
     }

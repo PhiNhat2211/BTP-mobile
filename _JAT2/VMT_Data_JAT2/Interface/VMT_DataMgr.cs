@@ -593,9 +593,13 @@ namespace VMT_Data_JAT2
             using (MemoryStream ms = new MemoryStream())
             {
                 BinaryFormatter s = new BinaryFormatter();
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
                 s.Serialize(ms, obj);
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
                 ms.Position = 0;
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
                 T t = (T)s.Deserialize(ms);
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
                 s = null;
                 return t;
             }

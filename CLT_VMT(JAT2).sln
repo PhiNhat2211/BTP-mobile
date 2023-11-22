@@ -1,31 +1,28 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMT_RMG", "_JAT2\VMT_RMG\VMT_RMG.csproj", "{AB412D37-E49D-43B1-B4F4-1E83C63C848D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMT_Data_JAT2", "_JAT2\VMT_Data_JAT2\VMT_Data_JAT2.csproj", "{7C64ED8B-AF11-4483-B81D-74A5CC549DB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VMT_Data_JAT2", "_JAT2\VMT_Data_JAT2\VMT_Data_JAT2.csproj", "{7C64ED8B-AF11-4483-B81D-74A5CC549DB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{36DC71F7-B929-4E76-AA61-BB58F3CBC17E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{36DC71F7-B929-4E76-AA61-BB58F3CBC17E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HessianComm", "HessianComm\HessianComm.csproj", "{2F97EAEE-2B88-46D8-AAF8-817962512ECA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HessianComm", "HessianComm\HessianComm.csproj", "{2F97EAEE-2B88-46D8-AAF8-817962512ECA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMT_Res", "VMT_Res\VMT_Res.csproj", "{8CC27843-97CF-4FA8-AEC4-3B91275DC04C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VMT_Res", "VMT_Res\VMT_Res.csproj", "{8CC27843-97CF-4FA8-AEC4-3B91275DC04C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPSocketComm", "WPSocketComm\WPSocketComm.csproj", "{3D321321-DBD4-4CCD-B3F6-04FA60B8E435}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPSocketComm", "WPSocketComm\WPSocketComm.csproj", "{3D321321-DBD4-4CCD-B3F6-04FA60B8E435}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1DC79701-D861-4AF5-823C-8FAA8AC63DB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UDPComm", "UDPComm\UDPComm.csproj", "{39DE44D8-4D0F-46E0-A151-1DBC7E28AD83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UDPComm", "UDPComm\UDPComm.csproj", "{39DE44D8-4D0F-46E0-A151-1DBC7E28AD83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMT_ITV", "_JAT2\VMT_ITV\VMT_ITV.csproj", "{F6F2FCA8-CD3B-4828-BBA0-CA07F0CF336B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VMT_YT", "_JAT2\VMT_YT\VMT_YT.csproj", "{616844CA-B6A1-43A9-A2DA-7C4D967F0438}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HessianCSharp", "HessianCSharp\hessiancsharp\HessianCSharp.csproj", "{77FEADBD-E777-44A6-8B8E-339D93FE089E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{FB9E70E1-CF8F-4C25-9EEE-D0B96C389E15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HessianCSharp", "HessianCSharp\hessiancsharp\HessianCSharp.csproj", "{77FEADBD-E777-44A6-8B8E-339D93FE089E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,8 +110,8 @@ Global
 		{39DE44D8-4D0F-46E0-A151-1DBC7E28AD83}.Release|x86.ActiveCfg = Release|Any CPU
 		{F6F2FCA8-CD3B-4828-BBA0-CA07F0CF336B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F6F2FCA8-CD3B-4828-BBA0-CA07F0CF336B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6F2FCA8-CD3B-4828-BBA0-CA07F0CF336B}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{F6F2FCA8-CD3B-4828-BBA0-CA07F0CF336B}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F6F2FCA8-CD3B-4828-BBA0-CA07F0CF336B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F6F2FCA8-CD3B-4828-BBA0-CA07F0CF336B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{F6F2FCA8-CD3B-4828-BBA0-CA07F0CF336B}.Debug|x86.ActiveCfg = Debug|x86
 		{F6F2FCA8-CD3B-4828-BBA0-CA07F0CF336B}.Debug|x86.Build.0 = Debug|x86
 		{F6F2FCA8-CD3B-4828-BBA0-CA07F0CF336B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -153,18 +150,6 @@ Global
 		{77FEADBD-E777-44A6-8B8E-339D93FE089E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{77FEADBD-E777-44A6-8B8E-339D93FE089E}.Release|x86.ActiveCfg = Release|Any CPU
 		{77FEADBD-E777-44A6-8B8E-339D93FE089E}.Release|x86.Build.0 = Release|Any CPU
-		{FB9E70E1-CF8F-4C25-9EEE-D0B96C389E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB9E70E1-CF8F-4C25-9EEE-D0B96C389E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB9E70E1-CF8F-4C25-9EEE-D0B96C389E15}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{FB9E70E1-CF8F-4C25-9EEE-D0B96C389E15}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{FB9E70E1-CF8F-4C25-9EEE-D0B96C389E15}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{FB9E70E1-CF8F-4C25-9EEE-D0B96C389E15}.Debug|x86.Build.0 = Debug|Any CPU
-		{FB9E70E1-CF8F-4C25-9EEE-D0B96C389E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB9E70E1-CF8F-4C25-9EEE-D0B96C389E15}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB9E70E1-CF8F-4C25-9EEE-D0B96C389E15}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{FB9E70E1-CF8F-4C25-9EEE-D0B96C389E15}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{FB9E70E1-CF8F-4C25-9EEE-D0B96C389E15}.Release|x86.ActiveCfg = Release|Any CPU
-		{FB9E70E1-CF8F-4C25-9EEE-D0B96C389E15}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

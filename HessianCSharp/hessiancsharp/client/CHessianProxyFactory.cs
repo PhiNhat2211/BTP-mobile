@@ -158,9 +158,9 @@ namespace HessianCSharp.client
         /// <param name="type">the interface the proxy class needs to implement</param>
         /// <param name="strUrl">the URL where the client object is located</param>
         /// <returns>a proxy to the object with the specified interface</returns>
-        public Object Create(Type type, string strUrl)
+        public Object Create<T>(Type type, string strUrl)
         {
-            return CreateHessianStandardProxy(strUrl, type);
+            return CreateHessianStandardProxy<T>(strUrl, type);
         }
 
         public T Create<T>()
@@ -176,7 +176,7 @@ namespace HessianCSharp.client
                 var type = typeof(T);
                 url = "/" + (type.Namespace + "." + type.Name).Replace(".", "/") + _urlSuffix;
             }
-            return (T)CreateHessianStandardProxy(url, typeof(T));
+            return (T)CreateHessianStandardProxy<T>(url, typeof(T));
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace HessianCSharp.client
         /// <param name="type">the interface the proxy class needs to implement</param>
         /// <param name="strUrl">the URL where the client object is located</param>
         /// <returns>a proxy to the object with the specified interface</returns>
-        private object CreateHessianStandardProxy(string strUrl, Type type)
+        private object CreateHessianStandardProxy<T>(string strUrl, Type type)
         {
 
 #if COMPACT_FRAMEWORK
@@ -195,11 +195,11 @@ namespace HessianCSharp.client
 #else
             if ((m_username == null) && (m_password == null))
             {
-                return new CHessianProxyStandardImpl(type, this, new Uri(strUrl, System.UriKind.RelativeOrAbsolute)).GetTransparentProxy();
+                return new CHessianProxyStandardImpl().Create<T>(type, this, new Uri(strUrl, System.UriKind.RelativeOrAbsolute));
             }
             else
             {
-                return new CHessianProxyStandardImpl(type, this, new Uri(strUrl, System.UriKind.RelativeOrAbsolute), m_username, m_password).GetTransparentProxy();
+                return new CHessianProxyStandardImpl().Create<T>(type, this, new Uri(strUrl, System.UriKind.RelativeOrAbsolute), m_username, m_password);
             }
 #endif
 

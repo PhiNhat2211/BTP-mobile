@@ -1,102 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2F97EAEE-2B88-46D8-AAF8-817962512ECA}</ProjectGuid>
+    <TargetFramework>net7.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HessianComm</RootNamespace>
-    <AssemblyName>HessianComm</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>HessianComm</AssemblyTitle>
+    <Product>HessianComm</Product>
+    <Copyright>Copyright ©  2014</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
     <OutputPath>$(SolutionDir)\Lib\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
     <OutputPath>$(SolutionDir)\Lib\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\HessianCSharp\hessiancsharp\HessianCSharp.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HessianCommMgt.cs" />
-    <Compile Include="HessianComm.cs" />
-    <Compile Include="HessianExecuteThreadPriority.cs" />
-    <Compile Include="HessianMgtExecuteThread.cs" />
-    <Compile Include="HessianExecuteThread.cs" />
-    <Compile Include="HessianParameter.cs" />
-    <Compile Include="Interface\IfDefineControl.cs" />
-    <Compile Include="Interface\IfJobControl.cs" />
-    <Compile Include="Interface\IfMachineControl.cs" />
-    <Compile Include="Interface\IfSystemControl.cs" />
-    <Compile Include="Interface\IfUserControl.cs" />
-    <Compile Include="Interface\IfContainerControl.cs" />
-    <Compile Include="Objects\ChassisInventory.cs" />
-    <Compile Include="Objects\ChassisOrder.cs" />
-    <Compile Include="Objects\Container.cs" />
-    <Compile Include="Objects\Inventory.cs" />
-    <Compile Include="Objects\JobStatusType.cs" />
-    <Compile Include="Objects\LandingInfo.cs" />
-    <Compile Include="Objects\Location.cs" />
-    <Compile Include="Objects\LocationType.cs" />
-    <Compile Include="Objects\Login.cs" />
-    <Compile Include="Objects\LogOut.cs" />
-    <Compile Include="Objects\Machine.cs" />
-    <Compile Include="Objects\MachineStop.cs" />
-    <Compile Include="Objects\Spreader.cs" />
-    <Compile Include="Objects\SpreaderMode.cs" />
-    <Compile Include="Objects\SpreaderStatus.cs" />
-    <Compile Include="Objects\SpreaderType.cs" />
-    <Compile Include="Objects\StsTask.cs" />
-    <Compile Include="Objects\VmtDomain.cs" />
-    <Compile Include="Objects\VmtWorkOrder.cs" />
-    <Compile Include="Objects\Task.cs" />
-    <Compile Include="Objects\User.cs" />
-    <Compile Include="Objects\Vessel.cs" />
-    <Compile Include="Objects\YardBlock.cs" />
-    <Compile Include="Objects\YardBlockBay.cs" />
-    <Compile Include="Objects\YtTask.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{36DC71F7-B929-4E76-AA61-BB58F3CBC17E}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HessianCSharp\hessiancsharp\HessianCSharp.csproj">
-      <Project>{77feadbd-e777-44a6-8b8e-339d93fe089e}</Project>
-      <Name>HessianCSharp</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

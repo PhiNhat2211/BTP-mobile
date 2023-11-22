@@ -79,7 +79,7 @@ namespace HessianComm
             {
                 if (this._vmtSwapService == null)
                 {
-                    this._vmtSwapService = (VmtSwapService)this.factory.Create(typeof(VmtSwapService), "http://" + this._ip + ":" + this._port + _hessian_VmtSwapService);
+                    this._vmtSwapService = (VmtSwapService)this.factory.Create<VmtSwapService>(typeof(VmtSwapService), "http://" + this._ip + ":" + this._port + _hessian_VmtSwapService);
                 }
 
                 return this._vmtSwapService;

@@ -275,7 +275,7 @@ namespace HessianComm
             {
                 if (this._systemControl == null)
                 {
-                    this._systemControl = (IfSystemControl)this.factory.Create(typeof(IfSystemControl), "http://" + this._ip + ":" + this._port + _hessian_System);
+                    this._systemControl = (IfSystemControl)this.factory.Create<IfSystemControl>(typeof(IfSystemControl), "http://" + this._ip + ":" + this._port + _hessian_System);
                 }
 
                 return this._systemControl;
@@ -288,7 +288,7 @@ namespace HessianComm
             {
                 if (this._userControl == null)
                 {
-                    this._userControl = (IfVmtUserControl)this.factory.Create(typeof(IfVmtUserControl), "http://" + this._ip + ":" + this._port + _hessian_User);
+                    this._userControl = (IfVmtUserControl)this.factory.Create<IfVmtUserControl>(typeof(IfVmtUserControl), "http://" + this._ip + ":" + this._port + _hessian_User);
                 }
 
                 return this._userControl;
@@ -301,7 +301,7 @@ namespace HessianComm
             {
                 if (this._vmtMachineControl == null)
                 {
-                    this._vmtMachineControl = (IfVmtMachineControl)this.factory.Create(typeof(IfVmtMachineControl), "http://" + this._ip + ":" + this._port + _hessian_VmtMachine);
+                    this._vmtMachineControl = (IfVmtMachineControl)this.factory.Create<IfVmtMachineControl>(typeof(IfVmtMachineControl), "http://" + this._ip + ":" + this._port + _hessian_VmtMachine);
                 }
 
                 return this._vmtMachineControl;
@@ -315,7 +315,7 @@ namespace HessianComm
             {
                 if (this._jobControl == null)
                 {
-                    this._jobControl = (IfJobControl)this.factory.Create(typeof(IfJobControl), "http://" + this._ip + ":" + this._port + _hessian_Job);
+                    this._jobControl = (IfJobControl)this.factory.Create<IfJobControl>(typeof(IfJobControl), "http://" + this._ip + ":" + this._port + _hessian_Job);
                 }
 
                 return this._jobControl;
@@ -328,7 +328,7 @@ namespace HessianComm
             {
                 if (this._vmtDefineControl == null)
                 {
-                    this._vmtDefineControl = (IfVmtDefineControl)this.factory.Create(typeof(IfVmtDefineControl), "http://" + this._ip + ":" + this._port + _hessian_VmtDefine);
+                    this._vmtDefineControl = (IfVmtDefineControl)this.factory.Create<IfVmtDefineControl>(typeof(IfVmtDefineControl), "http://" + this._ip + ":" + this._port + _hessian_VmtDefine);
                 }
 
                 return this._vmtDefineControl;
@@ -341,7 +341,7 @@ namespace HessianComm
             {
                 if (this._containerControl == null)
                 {
-                    this._containerControl = (IfContainerControl)this.factory.Create(typeof(IfContainerControl), "http://" + this._ip + ":" + this._port + _hessian_Container);
+                    this._containerControl = (IfContainerControl)this.factory.Create<IfContainerControl>(typeof(IfContainerControl), "http://" + this._ip + ":" + this._port + _hessian_Container);
                 }
 
                 return this._containerControl;
@@ -354,7 +354,7 @@ namespace HessianComm
             {
                 if (this._vmtWorkOrderControl == null)
                 {
-                    this._vmtWorkOrderControl = (IfVmtWorkOrderControl)this.factory.Create(typeof(IfVmtWorkOrderControl), "http://" + this._ip + ":" + this._port + _hessian_VmtWorkOrder);
+                    this._vmtWorkOrderControl = (IfVmtWorkOrderControl)this.factory.Create<IfVmtWorkOrderControl>(typeof(IfVmtWorkOrderControl), "http://" + this._ip + ":" + this._port + _hessian_VmtWorkOrder);
                 }
 
                 return this._vmtWorkOrderControl;
@@ -367,7 +367,7 @@ namespace HessianComm
             {
                 if (this._ifVmtPLCControl == null)
                 {
-                    this._ifVmtPLCControl = (IfVmtPLCControl)this.factory.Create(typeof(IfVmtPLCControl), "http://" + this._ip + ":" + this._port + _hessian_IfVmtPLC);
+                    this._ifVmtPLCControl = (IfVmtPLCControl)this.factory.Create<IfVmtPLCControl>(typeof(IfVmtPLCControl), "http://" + this._ip + ":" + this._port + _hessian_IfVmtPLC);
                 }
 
                 return this._ifVmtPLCControl;
@@ -380,7 +380,7 @@ namespace HessianComm
             {
                 if (this._vmtPLCControl == null)
                 {
-                    this._vmtPLCControl = (VmtPLCControl)this.factory.Create(typeof(VmtPLCControl), "http://" + this._ip + ":" + this._port + _hessian_VmtPLC);
+                    this._vmtPLCControl = (VmtPLCControl)this.factory.Create<VmtPLCControl>(typeof(VmtPLCControl), "http://" + this._ip + ":" + this._port + _hessian_VmtPLC);
                 }
 
                 return this._vmtPLCControl;
@@ -393,7 +393,7 @@ namespace HessianComm
             {
                 if (this._vmtContainerControl == null)
                 {
-                    this._vmtContainerControl = (IfVmtContainerControl)this.factory.Create(typeof(IfVmtContainerControl), "http://" + this._ip + ":" + this._port + _hessian_VmtContainer);
+                    this._vmtContainerControl = (IfVmtContainerControl)this.factory.Create<IfVmtContainerControl>(typeof(IfVmtContainerControl), "http://" + this._ip + ":" + this._port + _hessian_VmtContainer);
                 }
 
                 return this._vmtContainerControl;
@@ -405,7 +405,7 @@ namespace HessianComm
             {
                 if (this._vmtEmptySwapControl == null)
                 {
-                    this._vmtEmptySwapControl = (IfVmtEmptySwapControl)this.factory.Create(typeof(IfVmtEmptySwapControl), "http://" + this._ip + ":" + this._port + _hessian_VmtEmptySwap);
+                    this._vmtEmptySwapControl = (IfVmtEmptySwapControl)this.factory.Create<IfVmtEmptySwapControl>(typeof(IfVmtEmptySwapControl), "http://" + this._ip + ":" + this._port + _hessian_VmtEmptySwap);
                 }
 
                 return this._vmtEmptySwapControl;
@@ -417,7 +417,7 @@ namespace HessianComm
             {
                 if (this._vmtSwapControl == null)
                 {
-                    this._vmtSwapControl = (IfVmtSwapControl)this.factory.Create(typeof(IfVmtSwapControl), "http://" + this._ip + ":" + this._port + _hessian_VmtSwap);
+                    this._vmtSwapControl = (IfVmtSwapControl)this.factory.Create<IfVmtSwapControl>(typeof(IfVmtSwapControl), "http://" + this._ip + ":" + this._port + _hessian_VmtSwap);
                 }
 
                 return this._vmtSwapControl;
@@ -430,7 +430,7 @@ namespace HessianComm
             {
                 if (this._vmtSwapService == null)
                 {
-                    this._vmtSwapService = (VmtSwapService)this.factory.Create(typeof(VmtSwapService), "http://" + this._ip + ":" + this._port + _hessian_VmtSwapService);
+                    this._vmtSwapService = (VmtSwapService)this.factory.Create<VmtSwapService>(typeof(VmtSwapService), "http://" + this._ip + ":" + this._port + _hessian_VmtSwapService);
                 }
 
                 return this._vmtSwapService;

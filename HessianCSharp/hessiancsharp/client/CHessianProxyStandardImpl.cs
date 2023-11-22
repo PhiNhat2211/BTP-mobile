@@ -33,17 +33,17 @@
 ******************************************************************************************************
 */
 using System;
+using System.Linq;
 using System.Reflection;
-using System.Runtime.Remoting;
-using System.Runtime.Remoting.Messaging;
-using System.Runtime.Remoting.Proxies;
+using System.Security.Policy;
+using System.Threading.Tasks;
 
 namespace HessianCSharp.client
 {
     /// <summary>
     /// Proxy that works with .NET - Remote proxy framework
     /// </summary>
-    public class CHessianProxyStandardImpl : RealProxy, IRemotingTypeInfo, IHessianProxyStandard
+    public class CHessianProxyStandardImpl : DispatchProxy, IHessianProxyStandard
     {
         #region CLASS_FIELDS
         /// <summary>
@@ -57,21 +57,34 @@ namespace HessianCSharp.client
         #endregion
 
         #region CONSTRUCTORS
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="proxyType">Interface type that has to be proxied</param>
-        /// <param name="hessianProxyFactory">HessianProxyFactory - Instance</param>
-        /// <param name="uri">Server-Proxy uri</param>
-        public CHessianProxyStandardImpl(Type proxyType, CHessianProxyFactory hessianProxyFactory, Uri uri)
-            : base(typeof(IHessianProxyStandard))
+
+        public CHessianProxyStandardImpl()
+        {
+                
+        }
+
+        public T Create<T>(Type proxyType, CHessianProxyFactory hessianProxyFactory, Uri uri)
+        {
+            object proxy = Create<T, CHessianProxyStandardImpl>();
+            ((CHessianProxyStandardImpl)proxy).SetParams(proxyType, hessianProxyFactory, uri);
+            
+            return (T)proxy;
+        }
+
+        public T Create<T>(Type proxyType, CHessianProxyFactory hessianProxyFactory, Uri uri, string username, string password)
+        {
+            object proxy = Create<T, CHessianProxyStandardImpl>();
+            ((CHessianProxyStandardImpl)proxy).SetParams(proxyType, hessianProxyFactory, uri, username, password);
+            return (T)proxy;
+        }
+
+        private void SetParams(Type proxyType, CHessianProxyFactory hessianProxyFactory, Uri uri)
         {
             this.m_proxyType = proxyType;
             this.m_methodCaller = new CHessianMethodCaller(hessianProxyFactory, uri);
         }
 
-        public CHessianProxyStandardImpl(Type proxyType, CHessianProxyFactory hessianProxyFactory, Uri uri, string username, string password)
-            : base(typeof(IHessianProxyStandard))
+        private void SetParams(Type proxyType, CHessianProxyFactory hessianProxyFactory, Uri uri, string username, string password)
         {
             this.m_proxyType = proxyType;
             this.m_methodCaller = new CHessianMethodCaller(hessianProxyFactory, uri, username, password);
@@ -80,26 +93,29 @@ namespace HessianCSharp.client
         #endregion
 
         /// <summary>
-        /// This reflective method for invoking methods. Overriden from RealProxy.
-        /// Handles the object invocation. This method wrapps an instance call to the hessian 
-        /// requests, sends it to the hessian service and translates the reply of this call to the C# - data type
-        /// <see cref="System.Runtime.Remoting.Proxies.RealProxy"/>
+        /// Checks whether the proxy representing the specified object 
+        /// type can be cast to the type represented by the IRemotingTypeInfo interface
         /// </summary>
-        /// <param name="msg"></param>
-        /// <returns></returns>
-        public override IMessage Invoke(IMessage msg)
+        /// <param name="fromType">Cast - Type</param>
+        /// <param name="obj">Proxy object</param>
+        /// <returns>True if the cast type equals or is assingable from the interface type,
+        /// wich was used for proxy initialization
+        /// </returns>
+        public bool CanCastTo(Type fromType, object obj)
         {
-            // Convert to a MethodCallMessage
-            IMethodCallMessage methodMessage = new MethodCallMessageWrapper((IMethodCallMessage)msg);
-            MethodInfo methodInfo = this.GetMethodInfoForMethodBase(methodMessage);
-            Type[] argumentTypes = CHessianMethodCaller.GetArgTypes(methodMessage.Args);
+            return fromType.Equals(this.m_proxyType) || fromType.IsAssignableFrom(this.m_proxyType);
+        }
+ 
+        protected override object Invoke(MethodInfo methodInfo, object[] args)
+        {
+            Type[] argumentTypes = CHessianMethodCaller.GetArgTypes(args);
             object objReturnValue = null;
             if (methodInfo != null)
             {
                 if (methodInfo.Name.Equals("Equals") && argumentTypes != null &&
                     argumentTypes.Length == 1 && argumentTypes[0].IsAssignableFrom((typeof(Object))))
                 {
-                    Object value = methodMessage.Args[0];
+                    Object value = args[0];
                     if (value == null)
                     {
                         objReturnValue = false;
@@ -132,53 +148,18 @@ namespace HessianCSharp.client
                 }
                 else
                 {
-                    objReturnValue = this.m_methodCaller.DoHessianMethodCall(methodMessage.Args, methodInfo);
+                    objReturnValue = this.m_methodCaller.DoHessianMethodCall(args, methodInfo);
                 }
             }
             else
             {
-                if (methodMessage.MethodName.Equals("GetType") && (methodMessage.ArgCount == 0))
+                if (methodInfo.Name.Equals("GetType") && (args.Length == 0))
                 {
                     objReturnValue = this.m_proxyType;
                 }
             }
-            // Create the return message (ReturnMessage)
-            return new ReturnMessage(objReturnValue, methodMessage.Args, methodMessage.ArgCount, methodMessage.LogicalCallContext, methodMessage);
 
-
-        }
-        /// <summary>
-        /// Checks whether the proxy representing the specified object 
-        /// type can be cast to the type represented by the IRemotingTypeInfo interface
-        /// </summary>
-        /// <param name="fromType">Cast - Type</param>
-        /// <param name="obj">Proxy object</param>
-        /// <returns>True if the cast type equals or is assingable from the interface type,
-        /// wich was used for proxy initialization
-        /// </returns>
-        public bool CanCastTo(Type fromType, object obj)
-        {
-            return fromType.Equals(this.m_proxyType) || fromType.IsAssignableFrom(this.m_proxyType);
-        }
-
-        /// <summary>
-        /// Gets the name of the interface type, 
-        /// that has to be proxied 
-        /// </summary>
-        public string TypeName
-        {
-            get { return m_proxyType.Name; }
-            set { }
-        }
-        /// <summary>
-        /// Gets method info instance, according to the given method base
-        /// </summary>
-        /// <param name="methodMessage">Method message, that describes the method call</param>
-        /// <returns>MethodInfo - Instance</returns>
-        private MethodInfo GetMethodInfoForMethodBase(IMethodCallMessage methodMessage)
-        {
-            var types = (Type[])methodMessage.MethodSignature;//CHessianMethodCaller.GetArgTypes(methodMessage.Args);
-            return this.m_proxyType.GetMethod(methodMessage.MethodName, types);
+            return objReturnValue;
         }
     }
 }

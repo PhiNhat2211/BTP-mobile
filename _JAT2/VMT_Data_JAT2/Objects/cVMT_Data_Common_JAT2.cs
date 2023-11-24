@@ -24,7 +24,7 @@ namespace VMT_Data_JAT2.Objects
             MchnTp_RMG,
         }
 
-        public static String gMchnID = "";
+        public static String gMchnID = "16";
         public static String gMchnTp = "YT";
         public static String gUserID = "";
         public static String gUserPW = "";

@@ -87,23 +87,23 @@ namespace VMT_Data_JAT2
                 HessianMgtAPI.Init(gHessianServerMgtIP, nPortMgt, VMT_DataMgr.HessianCommMgtResultCallback);
                 HessianMgtAPI.Start();
 
-                if (isStandAlone)
-                {
-                    if (isTestMode)
-                    { }
-                    else
-                        VMT_DataMgr_Common.StartPolling_Ask(HessianCommType.KeepAliveStandAlone);
-                }
-                else
-                {
-                    if (UserInfo.gMchnTp == "YT")
-                        VMT_DataMgr_Common.StartPollingPriority_Ask(HessianCommType.KeepAlive);
-                    else
-                        VMT_DataMgr_Common.StartPolling_Ask(HessianCommType.KeepAlive);
-                }
+                //if (isStandAlone)
+                //{
+                //    if (isTestMode)
+                //    { }
+                //    else
+                //        VMT_DataMgr_Common.StartPolling_Ask(HessianCommType.KeepAliveStandAlone);
+                //}
+                //else
+                //{
+                //    if (UserInfo.gMchnTp == "YT")
+                //        VMT_DataMgr_Common.StartPollingPriority_Ask(HessianCommType.KeepAlive);
+                //    else
+                //        VMT_DataMgr_Common.StartPolling_Ask(HessianCommType.KeepAlive);
+                //}
 
-                if (UserInfo.GetMchnTp() == UserInfo.MchnTp.MchnTp_ITV)
-                    VMT_DataMgr_Common.StartPolling_Ask(HessianCommType.DGPSAlive);
+                //if (UserInfo.GetMchnTp() == UserInfo.MchnTp.MchnTp_ITV)
+                //    VMT_DataMgr_Common.StartPolling_Ask(HessianCommType.DGPSAlive);
             }
 
             //if (UserInfo.IsUseTCP)
